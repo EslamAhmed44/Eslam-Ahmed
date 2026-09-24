@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import {
@@ -27,13 +27,60 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const router = useRouter();
+  const [checkingAuth, setCheckingAuth] = useState(pathname !== '/admin/login');
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  // If on login page, render plain without sidebar
+  // Verify authentication whenever route changes (defense-in-depth)
+  useEffect(() => {
+    if (pathname === '/admin/login') {
+      setCheckingAuth(false);
+      return;
+    }
+
+    let isMounted = true;
+    fetch('/api/admin/check-session')
+      .then((res) => res.json())
+      .then((data) => {
+        if (!isMounted) return;
+        if (!data.authenticated) {
+          window.location.href = `/admin/login?redirect=${encodeURIComponent(pathname)}`;
+        } else {
+          setCheckingAuth(false);
+        }
+      })
+      .catch(() => {
+        if (!isMounted) return;
+        window.location.href = `/admin/login?redirect=${encodeURIComponent(pathname)}`;
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [pathname]);
+
+  // If on login page, render plain without CMS sidebar
   if (pathname === '/admin/login') {
     return <>{children}</>;
   }
+
+  // If verifying authentication, show secure loading state (prevent flash of CMS content)
+  if (checkingAuth) {
+    return (
+      <div className="min-h-screen bg-[#07090D] flex flex-col items-center justify-center p-6 text-[#94A3B8]">
+        <div className="w-12 h-12 rounded-2xl bg-[#151A23] border border-[#F0F3F6]/10 flex items-center justify-center text-[#F59E0B] mb-4 shadow-xl">
+          <Shield className="w-6 h-6 animate-pulse" />
+        </div>
+        <div className="text-xs font-mono text-[#F0F3F6] tracking-wider uppercase">Verifying Admin Access...</div>
+      </div>
+    );
+  }
+
+  // If on dedicated Message Admin Portal, render plain without CMS sidebar (only after auth verification)
+  if (pathname.startsWith('/admin/messages')) {
+    return <>{children}</>;
+  }
+
+
 
   const navItems = [
     { href: '/admin', label: 'Overview', icon: LayoutDashboard },
@@ -51,10 +98,10 @@ export default function AdminLayout({
   const handleLogout = async () => {
     try {
       await fetch('/api/admin/logout', { method: 'POST' });
-      router.push('/admin/login');
-      router.refresh();
     } catch {
-      router.push('/admin/login');
+      // ignore
+    } finally {
+      window.location.href = '/admin/login';
     }
   };
 

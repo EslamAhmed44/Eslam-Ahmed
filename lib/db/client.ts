@@ -3,8 +3,11 @@ import path from 'path';
 import {
   AppData,
   Experience,
+  InquiryStatus,
   MediaFile,
+  PreferredContactMethod,
   Project,
+  ProjectInquiry,
   ProjectVideo,
   ServiceItem,
   SiteSettings,
@@ -101,7 +104,9 @@ export function readLocalStore(): AppData {
       throw new Error(`Store file not found at ${storeFilePath}`);
     }
     const raw = fs.readFileSync(storeFilePath, 'utf-8');
-    return JSON.parse(raw) as AppData;
+    const parsed = JSON.parse(raw) as AppData;
+    parsed.inquiries = parsed.inquiries || [];
+    return parsed;
   } catch (error) {
     console.error('Failed to read local store:', error);
     throw error;
@@ -317,6 +322,7 @@ export async function getSiteData(includeDrafts: boolean = false): Promise<AppDa
             uploadedAt: m.uploaded_at,
           })),
           categories: DEFAULT_CATEGORIES,
+          inquiries: [],
         };
 
         if (!includeDrafts) {
@@ -340,6 +346,7 @@ export async function getSiteData(includeDrafts: boolean = false): Promise<AppDa
     ...data,
     categories: data.categories || DEFAULT_CATEGORIES,
     projects: (data.projects || []).map((p) => normalizeProject(p)),
+    inquiries: data.inquiries || [],
   };
 
   if (includeDrafts) {
@@ -877,3 +884,132 @@ export async function deleteMediaFile(id: string): Promise<boolean> {
 
   return true;
 }
+
+// ----------------------------------------------------
+// PROJECT INQUIRIES
+// ----------------------------------------------------
+export async function saveInquiry(
+  inquiry: Omit<ProjectInquiry, 'id' | 'createdAt' | 'status'> & {
+    id?: string;
+    status?: InquiryStatus;
+    createdAt?: string;
+  }
+): Promise<ProjectInquiry> {
+  const store = readLocalStore();
+  store.inquiries = store.inquiries || [];
+
+  const saved: ProjectInquiry = {
+    id: inquiry.id || `inq-${Date.now()}`,
+    name: inquiry.name,
+    contactMethod: inquiry.contactMethod,
+    email: inquiry.email || '',
+    whatsapp: inquiry.whatsapp || '',
+    services: inquiry.services || [],
+    description: inquiry.description,
+    budget: inquiry.budget || '',
+    referenceLinks: inquiry.referenceLinks || [],
+    referenceFiles: inquiry.referenceFiles || [],
+    googleDriveUrl: inquiry.googleDriveUrl || '',
+    status: inquiry.status || 'unread',
+    createdAt: inquiry.createdAt || new Date().toISOString(),
+  };
+
+  store.inquiries.unshift(saved);
+  writeLocalStore(store);
+
+  const supabase = createServerClient();
+  if (supabase && isServerSupabaseConfigured()) {
+    try {
+      await supabase.from('project_inquiries').insert({
+        name: saved.name,
+        contact_method: saved.contactMethod,
+        email: saved.email || null,
+        whatsapp: saved.whatsapp || null,
+        services: saved.services,
+        description: saved.description,
+        budget: saved.budget || null,
+        reference_links: saved.referenceLinks,
+        reference_files: saved.referenceFiles,
+        google_drive_url: saved.googleDriveUrl || null,
+        status: saved.status,
+      });
+    } catch (e) {
+      console.warn('Supabase inquiry insert error:', e);
+    }
+  }
+
+  return saved;
+}
+
+export async function getInquiries(): Promise<ProjectInquiry[]> {
+  const supabase = createServerClient();
+  if (supabase && isServerSupabaseConfigured()) {
+    try {
+      const { data, error } = await supabase
+        .from('project_inquiries')
+        .select('*')
+        .order('created_at', { ascending: false });
+      if (!error && data) {
+        return data.map((inq: any) => ({
+          id: inq.id,
+          name: inq.name,
+          contactMethod: inq.contact_method || 'Email',
+          email: inq.email || '',
+          whatsapp: inq.whatsapp || '',
+          services: inq.services || [],
+          description: inq.description || '',
+          budget: inq.budget || '',
+          referenceLinks: inq.reference_links || [],
+          referenceFiles: inq.reference_files || [],
+          googleDriveUrl: inq.google_drive_url || '',
+          status: inq.status || 'unread',
+          createdAt: inq.created_at || new Date().toISOString(),
+        }));
+      }
+    } catch (e) {
+      console.warn('Supabase getInquiries error:', e);
+    }
+  }
+
+  const store = readLocalStore();
+  return store.inquiries || [];
+}
+
+export async function updateInquiryStatus(id: string, status: InquiryStatus): Promise<boolean> {
+  const store = readLocalStore();
+  store.inquiries = store.inquiries || [];
+  const inq = store.inquiries.find((i) => i.id === id);
+  if (inq) {
+    inq.status = status;
+    writeLocalStore(store);
+  }
+
+  const supabase = createServerClient();
+  if (supabase && isServerSupabaseConfigured()) {
+    try {
+      await supabase.from('project_inquiries').update({ status }).eq('id', id);
+    } catch (e) {
+      console.warn('Supabase update inquiry status error:', e);
+    }
+  }
+
+  return true;
+}
+
+export async function deleteInquiry(id: string): Promise<boolean> {
+  const store = readLocalStore();
+  store.inquiries = (store.inquiries || []).filter((i) => i.id !== id);
+  writeLocalStore(store);
+
+  const supabase = createServerClient();
+  if (supabase && isServerSupabaseConfigured()) {
+    try {
+      await supabase.from('project_inquiries').delete().eq('id', id);
+    } catch (e) {
+      console.warn('Supabase delete inquiry error:', e);
+    }
+  }
+
+  return true;
+}
+

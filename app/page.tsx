@@ -69,7 +69,12 @@ export default async function HomePage() {
       </main>
 
       {/* Footer */}
-      <Footer socialLinks={socialLinks} />
+      <Footer
+        socialLinks={socialLinks}
+        contactEmail={settings.contactEmail}
+        whatsappUrl={settings.whatsappUrl}
+        linkedinUrl={settings.linkedinUrl}
+      />
     </div>
   );
 }

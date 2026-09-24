@@ -160,6 +160,25 @@ export interface MediaFile {
   uploadedAt: string;
 }
 
+export type PreferredContactMethod = 'Email' | 'WhatsApp' | 'Both';
+export type InquiryStatus = 'unread' | 'read' | 'archived';
+
+export interface ProjectInquiry {
+  id: string;
+  name: string;
+  contactMethod: PreferredContactMethod;
+  email?: string;
+  whatsapp?: string;
+  services: string[];
+  description: string;
+  budget?: string;
+  referenceLinks?: string[];
+  referenceFiles?: string[];
+  googleDriveUrl?: string;
+  status: InquiryStatus;
+  createdAt: string;
+}
+
 export interface AppData {
   settings: SiteSettings;
   projects: Project[];
@@ -170,4 +189,5 @@ export interface AppData {
   socialLinks: SocialLink[];
   media: MediaFile[];
   categories?: string[];
+  inquiries?: ProjectInquiry[];
 }

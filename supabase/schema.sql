@@ -154,6 +154,23 @@ CREATE TABLE IF NOT EXISTS public.media_files (
     uploaded_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now())
 );
 
+-- 9. Project Inquiries Table
+CREATE TABLE IF NOT EXISTS public.project_inquiries (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    name TEXT NOT NULL,
+    contact_method TEXT NOT NULL,
+    email TEXT,
+    whatsapp TEXT,
+    services JSONB DEFAULT '[]'::jsonb,
+    description TEXT NOT NULL,
+    budget TEXT,
+    reference_links JSONB DEFAULT '[]'::jsonb,
+    reference_files JSONB DEFAULT '[]'::jsonb,
+    google_drive_url TEXT,
+    status TEXT NOT NULL DEFAULT 'unread' CHECK (status IN ('unread', 'read', 'archived')),
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now())
+);
+
 -- ========================================================
 -- ROW LEVEL SECURITY (RLS) POLICIES
 -- ========================================================
@@ -166,6 +183,7 @@ ALTER TABLE public.services ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.testimonials ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.social_links ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.media_files ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.project_inquiries ENABLE ROW LEVEL SECURITY;
 
 -- Public can read published items
 CREATE POLICY "Public can view site settings" ON public.site_settings FOR SELECT USING (true);
@@ -178,6 +196,9 @@ CREATE POLICY "Public can view published testimonials" ON public.testimonials FO
 CREATE POLICY "Public can view active social links" ON public.social_links FOR SELECT USING (is_active = true);
 CREATE POLICY "Public can view media" ON public.media_files FOR SELECT USING (true);
 
+-- Public can only insert inquiries (cannot read, edit, or delete)
+CREATE POLICY "Public can submit project inquiries" ON public.project_inquiries FOR INSERT WITH CHECK (true);
+
 -- Authenticated admin has full access
 CREATE POLICY "Admin full access site_settings" ON public.site_settings FOR ALL TO authenticated USING (true);
 CREATE POLICY "Admin full access projects" ON public.projects FOR ALL TO authenticated USING (true);
@@ -188,6 +209,7 @@ CREATE POLICY "Admin full access services" ON public.services FOR ALL TO authent
 CREATE POLICY "Admin full access testimonials" ON public.testimonials FOR ALL TO authenticated USING (true);
 CREATE POLICY "Admin full access social_links" ON public.social_links FOR ALL TO authenticated USING (true);
 CREATE POLICY "Admin full access media_files" ON public.media_files FOR ALL TO authenticated USING (true);
+CREATE POLICY "Admin full access project_inquiries" ON public.project_inquiries FOR ALL TO authenticated USING (true);
 
 -- ========================================================
 -- STORAGE BUCKET CONFIGURATION

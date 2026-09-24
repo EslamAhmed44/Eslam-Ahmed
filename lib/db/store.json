@@ -524,5 +524,22 @@
       "sizeBytes": 15000,
       "uploadedAt": "2024-01-06T10:00:00Z"
     }
+  ],
+  "inquiries": [
+    {
+      "id": "inq-1790285995359",
+      "name": "MOHAMED SAKR",
+      "contactMethod": "WhatsApp",
+      "email": "",
+      "whatsapp": "+201065242093",
+      "services": [],
+      "description": "POSTER",
+      "budget": "Under $50",
+      "referenceLinks": [],
+      "referenceFiles": [],
+      "googleDriveUrl": "",
+      "status": "read",
+      "createdAt": "2026-09-24T21:39:55.359Z"
+    }
   ]
 }

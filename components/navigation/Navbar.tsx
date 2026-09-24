@@ -53,15 +53,13 @@ export const Navbar: React.FC<NavbarProps> = ({ cvUrl = '/cv/Islam_Ahmed_CV.pdf'
           <Link
             href="#home"
             className="flex items-center gap-2 group text-xl font-bold tracking-tighter text-[#F0F3F6]"
+            aria-label="Home"
           >
             <span className="relative flex items-center justify-center w-9 h-9 rounded-full bg-[#151A23] border border-[#F0F3F6]/15 group-hover:border-[#F59E0B] transition-colors duration-300">
               <span className="text-[#F0F3F6] group-hover:text-[#F59E0B] transition-colors">
                 IA
               </span>
               <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-[#F59E0B] ring-2 ring-[#07090D]" />
-            </span>
-            <span className="inline font-mono text-xs sm:text-sm tracking-wider text-[#94A3B8] group-hover:text-white transition-colors">
-              ISLAM AHMED
             </span>
           </Link>
 

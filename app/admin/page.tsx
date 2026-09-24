@@ -17,9 +17,17 @@ import {
   Sparkles,
 } from 'lucide-react';
 
+import { checkAdminSession } from '@/lib/auth/session';
+import { redirect } from 'next/navigation';
+
 export const revalidate = 0;
 
 export default async function AdminOverviewPage() {
+  const isAdmin = await checkAdminSession();
+  if (!isAdmin) {
+    redirect('/admin/login?redirect=/admin');
+  }
+
   const data = await getSiteData(true);
   const isSupabaseActive = isServerSupabaseConfigured();
 

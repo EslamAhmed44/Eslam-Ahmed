@@ -55,7 +55,15 @@ export async function POST(
   // 2. LOGOUT
   if (action === 'logout') {
     await destroyAdminSession();
-    return NextResponse.json({ success: true });
+    const res = NextResponse.json({ success: true });
+    res.cookies.set('eslam_admin_session', '', {
+      path: '/',
+      maxAge: 0,
+      expires: new Date(0),
+      httpOnly: true,
+      sameSite: 'lax',
+    });
+    return res;
   }
 
   // All subsequent routes require Admin authentication

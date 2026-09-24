@@ -83,3 +83,30 @@ export const MessengerIcon: React.FC<{ className?: string }> = ({ className = 'w
   </svg>
 );
 
+export const AdminBirdMessageIcon: React.FC<{ className?: string }> = ({ className = 'w-4 h-4' }) => (
+  <svg
+    className={className}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.75"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    aria-hidden="true"
+  >
+    {/* Geometric flying bird / dove: wing, head and beak */}
+    <path d="M12 11.5L15.5 2.5c1.3 1.5 2.3 2.7 5.3 2.7l2 0.3-2.6 2.5c-1.4 1.1-3 1.6-4.7 1.6" />
+    {/* Tail feathers */}
+    <path d="M11.5 11.5c-3-1.3-5.5-3.3-7.7-5.5 2 2.8 4.7 4.8 7.4 5.5" />
+    {/* Talons / connection holding the message bubble */}
+    <line x1="12.5" y1="11.5" x2="12.5" y2="13.5" />
+    <line x1="15.5" y1="11" x2="15.5" y2="13.5" />
+    {/* Speech / message bubble carried beneath */}
+    <path d="M6.5 13.5h10c2.2 0 4 1.5 4 3.5s-1.8 3.5-4 3.5h-5l-4 2.5v-2.5h-1c-2.2 0-4-1.5-4-3.5s1.8-3.5 4-3.5z" />
+    {/* Minimalist confidential inquiry accents */}
+    <circle cx="9.5" cy="17" r="0.85" fill="currentColor" stroke="none" />
+    <circle cx="13.5" cy="17" r="0.85" fill="currentColor" stroke="none" />
+  </svg>
+);
+
+

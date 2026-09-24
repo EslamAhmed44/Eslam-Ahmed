@@ -3,7 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useLanguage } from '../navigation/LanguageContext';
-import { ArrowUp, Lock } from 'lucide-react';
+import { ArrowUp, Mail } from 'lucide-react';
 import { SocialLink } from '@/lib/types';
 import {
   WhatsAppIcon,
@@ -12,54 +12,42 @@ import {
   VimeoIcon,
   YouTubeIcon,
   InstagramIcon,
+  AdminBirdMessageIcon,
 } from '../ui/Icons';
 
 interface FooterProps {
-  socialLinks: SocialLink[];
+  socialLinks?: SocialLink[];
+  contactEmail?: string;
+  whatsappUrl?: string;
+  linkedinUrl?: string;
 }
 
-export const Footer: React.FC<FooterProps> = ({ socialLinks }) => {
+export const Footer: React.FC<FooterProps> = ({
+  socialLinks,
+  contactEmail,
+  whatsappUrl,
+  linkedinUrl,
+}) => {
   const { t } = useLanguage();
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // Configure visible social channels: WhatsApp, LinkedIn, and the third configured social channel
-  const whatsappLink = socialLinks?.find((s) => s.platform.toLowerCase().includes('whatsapp')) || {
-    id: 'soc-whatsapp',
-    platform: 'WhatsApp',
-    url: 'https://wa.me/201092463750',
-  };
+  // Resolve actual configured links behind icons (reusing CMS settings where possible)
+  const resolvedWhatsapp =
+    whatsappUrl ||
+    socialLinks?.find((s) => s.platform.toLowerCase().includes('whatsapp'))?.url ||
+    'https://wa.me/201092463750';
 
-  const linkedinLink = socialLinks?.find((s) => s.platform.toLowerCase().includes('linkedin')) || {
-    id: 'soc-linkedin',
-    platform: 'LinkedIn',
-    url: 'https://www.linkedin.com/in/eslam-ahmed-a7bb0a308/',
-  };
+  const resolvedEmail = contactEmail
+    ? `mailto:${contactEmail}`
+    : 'mailto:smsma4140@gmail.com';
 
-  const thirdLink = socialLinks?.find(
-    (s) =>
-      !s.platform.toLowerCase().includes('whatsapp') &&
-      !s.platform.toLowerCase().includes('linkedin')
-  ) || {
-    id: 'soc-behance',
-    platform: 'Behance',
-    url: 'https://www.behance.net',
-  };
-
-  const visibleSocials = [whatsappLink, linkedinLink, thirdLink];
-
-  const renderSocialIcon = (platform: string) => {
-    const p = platform.toLowerCase();
-    if (p.includes('whatsapp')) return <WhatsAppIcon className="w-4 h-4" />;
-    if (p.includes('linkedin')) return <LinkedInIcon className="w-4 h-4" />;
-    if (p.includes('behance')) return <BehanceIcon className="w-4 h-4" />;
-    if (p.includes('vimeo')) return <VimeoIcon className="w-4 h-4" />;
-    if (p.includes('youtube')) return <YouTubeIcon className="w-4 h-4" />;
-    if (p.includes('instagram')) return <InstagramIcon className="w-4 h-4" />;
-    return <BehanceIcon className="w-4 h-4" />;
-  };
+  const resolvedLinkedin =
+    linkedinUrl ||
+    socialLinks?.find((s) => s.platform.toLowerCase().includes('linkedin'))?.url ||
+    'https://www.linkedin.com/in/eslam-ahmed-a7bb0a308/';
 
   return (
     <footer className="relative bg-[#07090D] border-t border-[#F0F3F6]/08 py-16 text-[#94A3B8] text-sm">
@@ -67,11 +55,8 @@ export const Footer: React.FC<FooterProps> = ({ socialLinks }) => {
         <div className="flex flex-col lg:flex-row items-center justify-between gap-8 mb-12">
           {/* Brand */}
           <div className="flex items-center gap-3">
-            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-[#151A23] border border-[#F0F3F6]/15 text-xs font-bold text-[#F0F3F6]">
+            <span className="flex items-center justify-center w-8 h-8 rounded-full bg-[#151A23] border border-[#F0F3F6]/15 text-xs font-bold text-[#F0F3F6]" title="IA">
               IA
-            </span>
-            <span className="font-mono text-xs tracking-wider text-[#F0F3F6] uppercase">
-              Islam Ahmed
             </span>
           </div>
 
@@ -94,53 +79,77 @@ export const Footer: React.FC<FooterProps> = ({ socialLinks }) => {
             </a>
           </div>
 
-          {/* Social Icons + Admin Link + Back to top */}
+          {/* Social Icons + Subtle Admin Trigger + Back to top */}
           <div className="flex flex-wrap items-center justify-center gap-5">
-            {/* Clean Recognizable Social Icons */}
+            {/* Clean Clickable Social/Contact Icons ONLY (no raw text) */}
             <div className="flex items-center gap-2.5" aria-label="Social and Contact Links">
-              {visibleSocials.map((link) => (
-                <a
-                  key={link.id}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={link.platform}
-                  title={link.platform}
-                  className="w-9 h-9 rounded-full flex items-center justify-center bg-[#151A23] border border-[#F0F3F6]/10 text-[#94A3B8] hover:text-[#F59E0B] hover:border-[#F59E0B]/40 hover:bg-[#1A202C] hover:scale-105 active:scale-95 transition-all duration-300 ease-out"
-                >
-                  {renderSocialIcon(link.platform)}
-                </a>
-              ))}
+              {/* WhatsApp */}
+              <a
+                href={resolvedWhatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="WhatsApp"
+                title="WhatsApp"
+                className="w-9 h-9 rounded-full flex items-center justify-center bg-[#151A23] border border-[#F0F3F6]/10 text-[#94A3B8] hover:text-[#25D366] hover:border-[#25D366]/40 hover:bg-[#1A202C] hover:scale-105 active:scale-95 transition-all duration-300 ease-out"
+              >
+                <WhatsAppIcon className="w-4 h-4" />
+              </a>
+
+              {/* Email */}
+              <a
+                href={resolvedEmail}
+                aria-label="Email"
+                title="Email"
+                className="w-9 h-9 rounded-full flex items-center justify-center bg-[#151A23] border border-[#F0F3F6]/10 text-[#94A3B8] hover:text-[#F59E0B] hover:border-[#F59E0B]/40 hover:bg-[#1A202C] hover:scale-105 active:scale-95 transition-all duration-300 ease-out"
+              >
+                <Mail className="w-4 h-4" />
+              </a>
+
+              {/* LinkedIn */}
+              <a
+                href={resolvedLinkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+                title="LinkedIn"
+                className="w-9 h-9 rounded-full flex items-center justify-center bg-[#151A23] border border-[#F0F3F6]/10 text-[#94A3B8] hover:text-[#0A66C2] hover:border-[#0A66C2]/40 hover:bg-[#1A202C] hover:scale-105 active:scale-95 transition-all duration-300 ease-out"
+              >
+                <LinkedInIcon className="w-4 h-4" />
+              </a>
             </div>
 
             <div className="h-4 w-px bg-[#F0F3F6]/10 hidden sm:block" />
 
-            {/* Back to top & Quick Admin Login Link */}
-            <div className="flex items-center gap-4">
-              <Link
-                href="/admin/login"
-                className="flex items-center gap-1.5 text-xs text-[#94A3B8]/70 hover:text-[#F59E0B] transition-colors"
-                title="Quick Admin Login"
-              >
-                <Lock className="w-3.5 h-3.5" />
-                <span>{t('footer.adminLink')}</span>
-              </Link>
-
+            {/* Back to top & Creative Admin Message Icon */}
+            <div className="flex items-center gap-3">
               <button
                 onClick={scrollToTop}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#151A23] border border-[#F0F3F6]/10 text-xs font-semibold text-[#F0F3F6] hover:border-[#F59E0B]/50 transition-colors"
                 aria-label="Back to top"
               >
-                <span>{t('footer.backToTop')}</span>
                 <ArrowUp className="w-3 h-3 text-[#F59E0B]" />
+                <span>{t('footer.backToTop')}</span>
               </button>
+
+              {/* Elegant divider */}
+              <span className="h-3.5 w-px bg-[#F0F3F6]/15 select-none" aria-hidden="true" />
+
+              {/* Creative Admin Message Icon */}
+              <Link
+                href="/admin/messages"
+                className="group relative w-8 h-8 rounded-full flex items-center justify-center bg-[#151A23] border border-[#F0F3F6]/10 text-[#94A3B8] hover:text-[#F59E0B] hover:border-[#F59E0B]/40 hover:bg-[#1A202C] hover:scale-105 hover:-translate-y-0.5 active:scale-95 transition-all duration-300 ease-out shadow-sm hover:shadow-[0_0_12px_rgba(245,158,11,0.25)] focus:outline-none focus:ring-1 focus:ring-[#F59E0B]/50"
+                title="Admin Messages"
+                aria-label="Admin Messages"
+              >
+                <AdminBirdMessageIcon className="w-4 h-4 transition-transform duration-300 group-hover:-rotate-3 group-hover:scale-105" />
+              </Link>
             </div>
           </div>
         </div>
 
         {/* Bottom copyright line */}
         <div className="pt-8 border-t border-[#F0F3F6]/05 flex flex-col sm:flex-row items-center justify-between text-xs text-[#94A3B8]/50 gap-4">
-          <p>© {new Date().getFullYear()} Islam Ahmed. {t('footer.rights')}</p>
+          <p>© {new Date().getFullYear()} IA. {t('footer.rights')}</p>
           <p className="font-mono">Engineered for Cinematic Motion & High-End Agency Standards</p>
         </div>
       </div>
