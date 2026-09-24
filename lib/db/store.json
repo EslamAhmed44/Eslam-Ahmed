@@ -67,11 +67,11 @@
       "images": [
         "/uploads/1790262555578-F1.png"
       ],
-      "videoUrl": "/uploads/1790262718546-patientbook.mp4",
+      "videoUrl": "/uploads/1790264937419-patientbook.mp4",
       "videos": [
         {
-          "id": "vid-1790262702541-1",
-          "url": "/uploads/1790262718546-patientbook.mp4",
+          "id": "vid-1790264933784-1",
+          "url": "/uploads/1790264937419-patientbook.mp4",
           "title": "Motion Video 1",
           "type": "direct"
         }
@@ -100,7 +100,7 @@
       "sortOrder": 1,
       "status": "published",
       "createdAt": "2023-11-20T14:15:00Z",
-      "updatedAt": "2026-09-24T15:12:01.530Z",
+      "updatedAt": "2026-09-24T15:49:01.504Z",
       "width": 4501,
       "height": 5118,
       "aspectRatio": 0.8794,
@@ -468,6 +468,14 @@
     }
   ],
   "media": [
+    {
+      "name": "patientbook.mp4",
+      "url": "/uploads/1790264937419-patientbook.mp4",
+      "type": "video",
+      "sizeBytes": 2788670,
+      "id": "med-1790264937424",
+      "uploadedAt": "2026-09-24T15:48:57.424Z"
+    },
     {
       "name": "patientbook.mp4",
       "url": "/uploads/1790262718546-patientbook.mp4",
