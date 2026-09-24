@@ -408,24 +408,6 @@
       "height": 1376,
       "aspectRatio": 0.5581,
       "orientation": "portrait"
-    },
-    {
-      "id": "t-2",
-      "screenshotUrl": "/images/testimonials/email-feedback-1.jpg",
-      "imageUrl": "/images/testimonials/email-feedback-1.jpg",
-      "photoUrl": "/images/testimonials/email-feedback-1.jpg",
-      "clientName": "Sarah Jenkins",
-      "projectName": "Apex Brand Identity & Motion",
-      "feedbackType": "Email",
-      "caption": "Formal approval and feedback for brand identity and motion graphics package.",
-      "captionAr": "اعتماد رسمي وثناء على حزمة الهوية البصرية والموشن جرافيك.",
-      "date": "2024",
-      "sortOrder": 2,
-      "status": "published",
-      "width": 1200,
-      "height": 896,
-      "aspectRatio": 1.3393,
-      "orientation": "landscape"
     }
   ],
   "socialLinks": [
