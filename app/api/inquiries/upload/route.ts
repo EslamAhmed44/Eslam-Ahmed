@@ -54,8 +54,9 @@ export async function POST(req: NextRequest) {
     const uniqueFilename = `inq-${Date.now()}-${safeBaseName}${ext}`;
 
     let publicUrl = `/uploads/${uniqueFilename}`;
+    let uploadedToCloud = false;
 
-    // Upload to Supabase Storage if configured
+    // 1. PRODUCTION: Upload directly to Supabase Storage in portfolio-media bucket
     const supabase = createServerClient();
     if (supabase && isServerSupabaseConfigured()) {
       try {
@@ -66,26 +67,40 @@ export async function POST(req: NextRequest) {
             upsert: true,
           });
 
-        if (!error && data) {
+        if (error) {
+          console.error('Supabase storage upload error:', error.message || error);
+        } else if (data) {
           const { data: publicData } = supabase.storage
             .from('portfolio-media')
             .getPublicUrl(`inquiries/${uniqueFilename}`);
           if (publicData?.publicUrl) {
             publicUrl = publicData.publicUrl;
+            uploadedToCloud = true;
           }
         }
-      } catch (e) {
-        console.warn('Supabase storage upload failed for reference file, saving locally:', e);
+      } catch (e: any) {
+        console.error('Supabase storage upload exception:', e?.message || e);
       }
     }
 
-    // Always ensure local backup in public/uploads
-    const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
-    if (!fs.existsSync(uploadsDir)) {
-      fs.mkdirSync(uploadsDir, { recursive: true });
+    // 2. LOCALHOST / FALLBACK: Save locally only if filesystem is writable (development)
+    // Never attempt local disk write if running on read-only serverless filesystem (Vercel)
+    if (!uploadedToCloud || !process.env.VERCEL) {
+      try {
+        const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
+        if (!fs.existsSync(uploadsDir)) {
+          fs.mkdirSync(uploadsDir, { recursive: true });
+        }
+        const localFilePath = path.join(uploadsDir, uniqueFilename);
+        fs.writeFileSync(localFilePath, buffer);
+      } catch (fsError: any) {
+        if (fsError?.code === 'EROFS' || fsError?.message?.includes('read-only')) {
+          console.warn('[Upload] Skipped local disk backup on read-only serverless filesystem.');
+        } else if (!uploadedToCloud) {
+          console.warn('Local file write error:', fsError?.message || fsError);
+        }
+      }
     }
-    const localFilePath = path.join(uploadsDir, uniqueFilename);
-    fs.writeFileSync(localFilePath, buffer);
 
     return NextResponse.json({
       success: true,
@@ -94,7 +109,7 @@ export async function POST(req: NextRequest) {
       sizeBytes: file.size,
     });
   } catch (error: any) {
-    console.error('Reference file upload error:', error);
+    console.error('Reference file upload error:', error?.message || error);
     return NextResponse.json(
       { error: 'Failed to upload file. Please try again or provide a link.' },
       { status: 500 }

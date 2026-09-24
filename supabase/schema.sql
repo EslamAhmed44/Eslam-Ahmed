@@ -230,6 +230,12 @@ ON storage.objects FOR INSERT
 TO authenticated 
 WITH CHECK (bucket_id = 'portfolio-media');
 
+-- Public upload access for Project Inquiry reference files ONLY (isolated to inquiries/ folder)
+CREATE POLICY "Public Upload Inquiries Reference Files" 
+ON storage.objects FOR INSERT 
+TO public 
+WITH CHECK (bucket_id = 'portfolio-media' AND (storage.foldername(name))[1] = 'inquiries');
+
 CREATE POLICY "Admin Update Portfolio Media" 
 ON storage.objects FOR UPDATE 
 TO authenticated 

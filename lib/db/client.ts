@@ -113,12 +113,19 @@ export function readLocalStore(): AppData {
   }
 }
 
-// Write JSON store safely
+// Write JSON store safely with serverless read-only filesystem resilience
 export function writeLocalStore(data: AppData): void {
   try {
     fs.writeFileSync(storeFilePath, JSON.stringify(data, null, 2), 'utf-8');
-  } catch (error) {
-    console.error('Failed to write local store:', error);
+  } catch (error: any) {
+    if (error?.code === 'EROFS' || error?.message?.includes('read-only')) {
+      console.warn('[LocalStore] Skipped writing to store.json on read-only serverless filesystem.');
+      return;
+    }
+    console.error('Failed to write local store:', error?.message || error);
+    if (process.env.VERCEL || process.env.NODE_ENV === 'production') {
+      return;
+    }
     throw error;
   }
 }
@@ -895,9 +902,6 @@ export async function saveInquiry(
     createdAt?: string;
   }
 ): Promise<ProjectInquiry> {
-  const store = readLocalStore();
-  store.inquiries = store.inquiries || [];
-
   const saved: ProjectInquiry = {
     id: inquiry.id || `inq-${Date.now()}`,
     name: inquiry.name,
@@ -914,27 +918,52 @@ export async function saveInquiry(
     createdAt: inquiry.createdAt || new Date().toISOString(),
   };
 
-  store.inquiries.unshift(saved);
-  writeLocalStore(store);
-
   const supabase = createServerClient();
+  let supabaseInserted = false;
+
+  // 1. PRODUCTION: Supabase is PRIMARY and AUTHORITATIVE
   if (supabase && isServerSupabaseConfigured()) {
     try {
-      await supabase.from('project_inquiries').insert({
-        name: saved.name,
-        contact_method: saved.contactMethod,
-        email: saved.email || null,
-        whatsapp: saved.whatsapp || null,
-        services: saved.services,
-        description: saved.description,
-        budget: saved.budget || null,
-        reference_links: saved.referenceLinks,
-        reference_files: saved.referenceFiles,
-        google_drive_url: saved.googleDriveUrl || null,
-        status: saved.status,
-      });
-    } catch (e) {
-      console.warn('Supabase inquiry insert error:', e);
+      const { data, error } = await supabase
+        .from('project_inquiries')
+        .insert({
+          name: saved.name,
+          contact_method: saved.contactMethod,
+          email: saved.email || null,
+          whatsapp: saved.whatsapp || null,
+          services: saved.services,
+          description: saved.description,
+          budget: saved.budget || null,
+          reference_links: saved.referenceLinks,
+          reference_files: saved.referenceFiles,
+          google_drive_url: saved.googleDriveUrl || null,
+          status: saved.status,
+        })
+        .select()
+        .single();
+
+      if (error) {
+        console.error('Supabase inquiry insert error:', error.message || error);
+      } else if (data) {
+        saved.id = data.id || saved.id;
+        saved.createdAt = data.created_at || saved.createdAt;
+        supabaseInserted = true;
+      }
+    } catch (e: any) {
+      console.error('Supabase inquiry insert exception:', e?.message || e);
+    }
+  }
+
+  // 2. LOCAL DEVELOPMENT FALLBACK: Safe local store.json update
+  // Local filesystem write errors NEVER abort a valid inquiry in production
+  try {
+    const store = readLocalStore();
+    store.inquiries = store.inquiries || [];
+    store.inquiries.unshift(saved);
+    writeLocalStore(store);
+  } catch (fsError: any) {
+    if (!supabaseInserted && !isServerSupabaseConfigured()) {
+      console.warn('[saveInquiry] Local store fallback write skipped:', fsError?.message || fsError);
     }
   }
 
@@ -976,38 +1005,46 @@ export async function getInquiries(): Promise<ProjectInquiry[]> {
 }
 
 export async function updateInquiryStatus(id: string, status: InquiryStatus): Promise<boolean> {
-  const store = readLocalStore();
-  store.inquiries = store.inquiries || [];
-  const inq = store.inquiries.find((i) => i.id === id);
-  if (inq) {
-    inq.status = status;
-    writeLocalStore(store);
-  }
-
   const supabase = createServerClient();
   if (supabase && isServerSupabaseConfigured()) {
     try {
       await supabase.from('project_inquiries').update({ status }).eq('id', id);
-    } catch (e) {
-      console.warn('Supabase update inquiry status error:', e);
+    } catch (e: any) {
+      console.warn('Supabase update inquiry status error:', e?.message || e);
     }
+  }
+
+  try {
+    const store = readLocalStore();
+    store.inquiries = store.inquiries || [];
+    const inq = store.inquiries.find((i) => i.id === id);
+    if (inq) {
+      inq.status = status;
+      writeLocalStore(store);
+    }
+  } catch (fsError: any) {
+    // Non-fatal on serverless read-only filesystem
   }
 
   return true;
 }
 
 export async function deleteInquiry(id: string): Promise<boolean> {
-  const store = readLocalStore();
-  store.inquiries = (store.inquiries || []).filter((i) => i.id !== id);
-  writeLocalStore(store);
-
   const supabase = createServerClient();
   if (supabase && isServerSupabaseConfigured()) {
     try {
       await supabase.from('project_inquiries').delete().eq('id', id);
-    } catch (e) {
-      console.warn('Supabase delete inquiry error:', e);
+    } catch (e: any) {
+      console.warn('Supabase delete inquiry error:', e?.message || e);
     }
+  }
+
+  try {
+    const store = readLocalStore();
+    store.inquiries = (store.inquiries || []).filter((i) => i.id !== id);
+    writeLocalStore(store);
+  } catch (fsError: any) {
+    // Non-fatal on serverless read-only filesystem
   }
 
   return true;
