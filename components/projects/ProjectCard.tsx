@@ -113,11 +113,25 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#07090D] via-[#07090D]/85 to-transparent pointer-events-none" />
       </div>
 
-      {/* Top Badges (Category & Detected Aspect Ratio / Video Indicator) */}
+      {/* Top Badges (Category & Detected Aspect Ratio / Video / Gallery Indicator) */}
       <div className="absolute top-5 inset-x-5 z-10 flex items-center justify-between pointer-events-none">
-        <span className="px-3 py-1 rounded-full bg-[#07090D]/80 backdrop-blur-md border border-[#F0F3F6]/15 text-xs font-semibold text-[#F0F3F6] tracking-wide">
-          {project.category}
-        </span>
+        <div className="flex flex-wrap items-center gap-1.5 max-w-[65%]">
+          {(project.categories && project.categories.length > 0 ? project.categories : [project.category])
+            .slice(0, 2)
+            .map((cat, i) => (
+              <span
+                key={i}
+                className="px-3 py-1 rounded-full bg-[#07090D]/80 backdrop-blur-md border border-[#F0F3F6]/15 text-xs font-semibold text-[#F0F3F6] tracking-wide"
+              >
+                {cat}
+              </span>
+            ))}
+          {project.categories && project.categories.length > 2 && (
+            <span className="px-2 py-0.5 rounded-full bg-[#151A23]/80 border border-[#F0F3F6]/10 text-[10px] font-mono text-[#94A3B8]">
+              +{project.categories.length - 2}
+            </span>
+          )}
+        </div>
 
         <div className="flex items-center gap-2">
           {ratioBadge && (
@@ -126,10 +140,18 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
             </span>
           )}
 
-          {project.videoUrl && (
+          {((project.videos && project.videos.length > 0) || project.videoUrl) && (
             <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F59E0B] text-[#07090D] text-xs font-bold shadow-lg">
               <Play className="w-3 h-3 fill-current" />
-              <span className="hidden sm:inline">Reel</span>
+              <span className="hidden sm:inline">
+                {project.videos && project.videos.length > 1 ? `${project.videos.length} Videos` : 'Reel'}
+              </span>
+            </span>
+          )}
+
+          {project.gallery && project.gallery.length > 0 && (
+            <span className="hidden sm:flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#10141C]/85 backdrop-blur-md border border-[#F0F3F6]/15 text-[11px] font-mono text-[#F0F3F6]">
+              <span>+{project.gallery.length} Stills</span>
             </span>
           )}
         </div>

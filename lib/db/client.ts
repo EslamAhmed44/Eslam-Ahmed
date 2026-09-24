@@ -5,6 +5,7 @@ import {
   Experience,
   MediaFile,
   Project,
+  ProjectVideo,
   ServiceItem,
   SiteSettings,
   SkillGroup,
@@ -12,6 +13,84 @@ import {
   Testimonial,
 } from '@/lib/types';
 import { createServerClient, isServerSupabaseConfigured } from '@/lib/supabase/server';
+
+export const DEFAULT_CATEGORIES = [
+  'Motion Graphics',
+  'Graphic Design',
+  'Branding',
+  'Social Media',
+  'Poster Design',
+  'Campaign Design',
+];
+
+export function normalizeProject(p: any): Project {
+  if (!p) return p;
+  const categories: string[] =
+    Array.isArray(p.categories) && p.categories.length > 0
+      ? p.categories
+      : p.category
+      ? [p.category]
+      : ['Motion Graphics'];
+
+  const gallery: string[] = Array.isArray(p.gallery)
+    ? p.gallery
+    : Array.isArray(p.images)
+    ? p.images
+    : [];
+
+  const rawVideos = Array.isArray(p.videos) ? p.videos : [];
+  let videos: ProjectVideo[] = rawVideos
+    .map((v: any, idx: number) => {
+      if (typeof v === 'string') {
+        return { id: `vid-${idx + 1}`, url: v, title: `Video ${idx + 1}` };
+      }
+      return {
+        id: v.id || `vid-${idx + 1}`,
+        url: v.url || '',
+        title: v.title || `Video ${idx + 1}`,
+        titleAr: v.titleAr,
+        type: v.type,
+      };
+    })
+    .filter((v: ProjectVideo) => Boolean(v.url));
+
+  if (videos.length === 0 && p.videoUrl) {
+    videos = [{ id: 'vid-1', url: p.videoUrl, title: 'Main Reel' }];
+  } else if (videos.length === 0 && p.video_url) {
+    videos = [{ id: 'vid-1', url: p.video_url, title: 'Main Reel' }];
+  }
+
+  const videoUrl = p.videoUrl || p.video_url || (videos[0]?.url || '');
+  const googleDriveMaterialsUrl =
+    p.googleDriveMaterialsUrl ||
+    p.google_drive_materials_url ||
+    p.googleDriveUrl ||
+    p.google_drive_url ||
+    '';
+  const tools = Array.isArray(p.tools)
+    ? p.tools
+    : Array.isArray(p.softwareUsed)
+    ? p.softwareUsed
+    : [];
+  const client = p.client || p.clientName || '';
+
+  return {
+    ...p,
+    category: categories[0] || 'Motion Graphics',
+    categories,
+    gallery,
+    images: gallery,
+    videoUrl,
+    videos,
+    googleDriveUrl: googleDriveMaterialsUrl,
+    googleDriveMaterialsUrl,
+    tools,
+    softwareUsed: tools,
+    client,
+    clientName: client,
+    status: p.status || 'published',
+  };
+}
 
 const storeFilePath = path.join(process.cwd(), 'lib', 'db', 'store.json');
 
@@ -136,36 +215,41 @@ export async function getSiteData(includeDrafts: boolean = false): Promise<AppDa
             seoKeywords: settingsData.seo_keywords || '',
             ogImageUrl: settingsData.og_image_url || '',
           },
-          projects: (projectsData || []).map((p: any) => ({
-            id: p.id,
-            slug: p.slug,
-            title: p.title,
-            titleAr: p.title_ar,
-            category: p.category,
-            description: p.description,
-            descriptionAr: p.description_ar,
-            client: p.client || '',
-            projectDate: p.project_date || '',
-            coverImage: p.cover_image,
-            gallery: p.gallery || [],
-            videoUrl: p.video_url || '',
-            youtubeUrl: p.youtube_url || '',
-            vimeoUrl: p.vimeo_url || '',
-            googleDriveUrl: p.google_drive_url || '',
-            behanceUrl: p.behance_url || '',
-            tools: p.tools || [],
-            projectUrl: p.project_url || '',
-            featured: Boolean(p.featured),
-            tags: p.tags || [],
-            sortOrder: p.sort_order || 0,
-            status: p.status || 'published',
-            width: p.width,
-            height: p.height,
-            aspectRatio: p.aspect_ratio || p.aspectRatio,
-            orientation: p.orientation,
-            createdAt: p.created_at,
-            updatedAt: p.updated_at,
-          })),
+          projects: (projectsData || []).map((p: any) =>
+            normalizeProject({
+              id: p.id,
+              slug: p.slug,
+              title: p.title,
+              titleAr: p.title_ar,
+              category: p.category,
+              categories: p.categories,
+              description: p.description,
+              descriptionAr: p.description_ar,
+              client: p.client || '',
+              projectDate: p.project_date || '',
+              coverImage: p.cover_image,
+              gallery: p.gallery || [],
+              videoUrl: p.video_url || '',
+              videos: p.videos || [],
+              youtubeUrl: p.youtube_url || '',
+              vimeoUrl: p.vimeo_url || '',
+              googleDriveUrl: p.google_drive_url || '',
+              googleDriveMaterialsUrl: p.google_drive_materials_url || p.google_drive_url || '',
+              behanceUrl: p.behance_url || '',
+              tools: p.tools || [],
+              projectUrl: p.project_url || '',
+              featured: Boolean(p.featured),
+              tags: p.tags || [],
+              sortOrder: p.sort_order || 0,
+              status: p.status || 'published',
+              width: p.width,
+              height: p.height,
+              aspectRatio: p.aspect_ratio || p.aspectRatio,
+              orientation: p.orientation,
+              createdAt: p.created_at,
+              updatedAt: p.updated_at,
+            })
+          ),
           experiences: (experiencesData || []).map((e: any) => ({
             id: e.id,
             title: e.title,
@@ -232,6 +316,7 @@ export async function getSiteData(includeDrafts: boolean = false): Promise<AppDa
             sizeBytes: m.size_bytes || 0,
             uploadedAt: m.uploaded_at,
           })),
+          categories: DEFAULT_CATEGORIES,
         };
 
         if (!includeDrafts) {
@@ -251,17 +336,23 @@ export async function getSiteData(includeDrafts: boolean = false): Promise<AppDa
 
   // Fallback to local store
   const data = readLocalStore();
+  const normalizedData: AppData = {
+    ...data,
+    categories: data.categories || DEFAULT_CATEGORIES,
+    projects: (data.projects || []).map((p) => normalizeProject(p)),
+  };
+
   if (includeDrafts) {
-    return data;
+    return normalizedData;
   }
 
   return {
-    ...data,
-    projects: data.projects.filter((p) => p.status === 'published'),
-    experiences: data.experiences.filter((e) => e.status === 'published'),
-    services: data.services.filter((s) => s.status === 'published'),
-    testimonials: data.testimonials.filter((t) => t.status === 'published'),
-    socialLinks: data.socialLinks.filter((s) => s.isActive),
+    ...normalizedData,
+    projects: normalizedData.projects.filter((p) => p.status === 'published'),
+    experiences: normalizedData.experiences.filter((e) => e.status === 'published'),
+    services: normalizedData.services.filter((s) => s.status === 'published'),
+    testimonials: normalizedData.testimonials.filter((t) => t.status === 'published'),
+    socialLinks: normalizedData.socialLinks.filter((s) => s.isActive),
   };
 }
 
@@ -326,35 +417,60 @@ export async function saveProject(project: Partial<Project> & { id?: string }): 
   const store = readLocalStore();
   const now = new Date().toISOString();
 
+  // Normalize incoming project
+  const incoming = normalizeProject(project);
+
+  // If new categories are in the project, ensure they are stored in store.categories
+  if (incoming.categories && incoming.categories.length > 0) {
+    const existingCats = store.categories || [...DEFAULT_CATEGORIES];
+    let changed = false;
+    incoming.categories.forEach((cat) => {
+      const trimmed = cat.trim();
+      if (trimmed && !existingCats.some((c) => c.toLowerCase() === trimmed.toLowerCase())) {
+        existingCats.push(trimmed);
+        changed = true;
+      }
+    });
+    if (changed || !store.categories) {
+      store.categories = existingCats;
+    }
+  }
+
   let savedProject: Project;
   const existingIndex = store.projects.findIndex((p) => p.id === project.id);
 
   if (existingIndex >= 0) {
-    savedProject = {
+    savedProject = normalizeProject({
       ...store.projects[existingIndex],
-      ...project,
+      ...incoming,
       updatedAt: now,
-    } as Project;
+    });
     store.projects[existingIndex] = savedProject;
   } else {
-    savedProject = {
+    savedProject = normalizeProject({
       id: project.id || `proj-${Date.now()}`,
       slug: project.slug || `project-${Date.now()}`,
       title: project.title || 'Untitled Project',
       titleAr: project.titleAr || '',
-      category: project.category || 'Motion Graphics',
+      category: incoming.category,
+      categories: incoming.categories,
       description: project.description || '',
       descriptionAr: project.descriptionAr || '',
-      client: project.client || '',
+      client: incoming.client,
+      clientName: incoming.client,
       projectDate: project.projectDate || new Date().getFullYear().toString(),
       coverImage: project.coverImage || '/images/projects/project-lumina-motion.jpg',
-      gallery: project.gallery || [],
-      videoUrl: project.videoUrl || '',
+      gallery: incoming.gallery,
+      images: incoming.gallery,
+      videoUrl: incoming.videoUrl,
+      videos: incoming.videos,
       youtubeUrl: project.youtubeUrl || '',
       vimeoUrl: project.vimeoUrl || '',
-      googleDriveUrl: project.googleDriveUrl || '',
+      googleDriveUrl: incoming.googleDriveMaterialsUrl,
+      googleDriveMaterialsUrl: incoming.googleDriveMaterialsUrl,
       behanceUrl: project.behanceUrl || '',
-      tools: project.tools || [],
+      tools: incoming.tools,
+      softwareUsed: incoming.tools,
       projectUrl: project.projectUrl || '',
       featured: Boolean(project.featured),
       tags: project.tags || [],
@@ -366,7 +482,7 @@ export async function saveProject(project: Partial<Project> & { id?: string }): 
       orientation: project.orientation,
       createdAt: now,
       updatedAt: now,
-    };
+    });
     store.projects.push(savedProject);
   }
 
@@ -381,6 +497,7 @@ export async function saveProject(project: Partial<Project> & { id?: string }): 
         title: savedProject.title,
         title_ar: savedProject.titleAr,
         category: savedProject.category,
+        categories: savedProject.categories,
         description: savedProject.description,
         description_ar: savedProject.descriptionAr,
         client: savedProject.client,
@@ -388,9 +505,11 @@ export async function saveProject(project: Partial<Project> & { id?: string }): 
         cover_image: savedProject.coverImage,
         gallery: savedProject.gallery,
         video_url: savedProject.videoUrl,
+        videos: savedProject.videos,
         youtube_url: savedProject.youtubeUrl,
         vimeo_url: savedProject.vimeoUrl,
         google_drive_url: savedProject.googleDriveUrl,
+        google_drive_materials_url: savedProject.googleDriveMaterialsUrl,
         behance_url: savedProject.behanceUrl,
         tools: savedProject.tools,
         project_url: savedProject.projectUrl,
@@ -406,6 +525,35 @@ export async function saveProject(project: Partial<Project> & { id?: string }): 
   }
 
   return savedProject;
+}
+
+// ----------------------------------------------------
+// CATEGORIES
+// ----------------------------------------------------
+export async function getCategories(): Promise<string[]> {
+  const data = await getSiteData(true);
+  return data.categories || DEFAULT_CATEGORIES;
+}
+
+export async function saveCategory(category: string): Promise<string[]> {
+  const store = readLocalStore();
+  const current = store.categories || [...DEFAULT_CATEGORIES];
+  const trimmed = category.trim();
+  if (trimmed && !current.some((c) => c.toLowerCase() === trimmed.toLowerCase())) {
+    current.push(trimmed);
+    store.categories = current;
+    writeLocalStore(store);
+  }
+  return store.categories || current;
+}
+
+export async function deleteCategory(category: string): Promise<string[]> {
+  const store = readLocalStore();
+  const current = store.categories || [...DEFAULT_CATEGORIES];
+  const trimmed = category.trim();
+  store.categories = current.filter((c) => c.toLowerCase() !== trimmed.toLowerCase());
+  writeLocalStore(store);
+  return store.categories;
 }
 
 export async function deleteProject(id: string): Promise<boolean> {

@@ -14,18 +14,48 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
   const { t } = useLanguage();
   const [activeFilter, setActiveFilter] = useState<string>('All');
 
+  // Dynamically collect all available unique categories from projects + defaults
+  const categoriesList = React.useMemo(() => {
+    const set = new Set<string>();
+    ['Motion Graphics', 'Graphic Design', 'Branding', 'Social Media', 'Poster Design'].forEach((c) =>
+      set.add(c)
+    );
+    projects.forEach((p) => {
+      if (Array.isArray(p.categories)) {
+        p.categories.forEach((c) => c && set.add(c));
+      } else if (p.category) {
+        set.add(p.category);
+      }
+    });
+    return Array.from(set);
+  }, [projects]);
+
   const categories = [
     { id: 'All', label: t('projects.filter.all') },
-    { id: 'Motion Graphics', label: t('projects.filter.motion') },
-    { id: 'Graphic Design', label: t('projects.filter.design') },
-    { id: 'Branding', label: t('projects.filter.branding') },
-    { id: 'Social Media', label: t('projects.filter.social') },
+    ...categoriesList.map((cat) => {
+      const lower = cat.toLowerCase();
+      let label = cat;
+      if (lower.includes('motion')) label = t('projects.filter.motion');
+      else if (lower.includes('graphic') && !lower.includes('motion')) label = t('projects.filter.design');
+      else if (lower.includes('brand')) label = t('projects.filter.branding');
+      else if (lower.includes('social')) label = t('projects.filter.social');
+      else if (lower.includes('poster')) label = t('projects.filter.poster');
+      else if (lower.includes('campaign')) label = t('projects.filter.campaign');
+      return { id: cat, label };
+    }),
   ];
 
   const filteredProjects =
     activeFilter === 'All'
       ? projects
-      : projects.filter((p) => p.category === activeFilter);
+      : projects.filter((p) => {
+          if (Array.isArray(p.categories) && p.categories.length > 0) {
+            return p.categories.some(
+              (c) => c.trim().toLowerCase() === activeFilter.trim().toLowerCase()
+            );
+          }
+          return p.category?.trim().toLowerCase() === activeFilter.trim().toLowerCase();
+        });
 
   // Layout assignment for asymmetric editorial grid
   const getLayoutVariant = (index: number): 'large' | 'tall' | 'wide' | 'standard' => {

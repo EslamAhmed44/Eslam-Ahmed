@@ -13,6 +13,7 @@ import {
   deleteSkillGroup,
   deleteSocialLink,
   deleteTestimonial,
+  deleteCategory,
   getSiteData,
   reorderProjects,
   saveExperience,
@@ -21,6 +22,7 @@ import {
   saveSkillGroup,
   saveSocialLink,
   saveTestimonial,
+  saveCategory,
   updateSettings,
 } from '@/lib/db/client';
 
@@ -106,6 +108,11 @@ export async function POST(
         return NextResponse.json({ success: true, socialLink: saved });
       }
 
+      case 'categories': {
+        const updated = await saveCategory(body.category || body.name || '');
+        return NextResponse.json({ success: true, categories: updated });
+      }
+
       default:
         return NextResponse.json({ error: `Unknown action ${action}` }, { status: 404 });
     }
@@ -185,6 +192,10 @@ export async function DELETE(
 
       case 'media':
         await deleteMediaFile(id);
+        return NextResponse.json({ success: true });
+
+      case 'categories':
+        await deleteCategory(id);
         return NextResponse.json({ success: true });
 
       default:

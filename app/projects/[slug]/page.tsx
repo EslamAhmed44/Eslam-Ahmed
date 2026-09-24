@@ -73,8 +73,17 @@ export default async function ProjectDetailPage({
 
         {/* Category & Title Header */}
         <div className="mb-12">
-          <div className="inline-block px-4 py-1.5 rounded-full bg-[#151A23] border border-[#F59E0B]/30 text-xs font-mono font-semibold text-[#F59E0B] uppercase tracking-wider mb-4">
-            {project.category}
+          <div className="flex flex-wrap items-center gap-2 mb-4">
+            {(project.categories && project.categories.length > 0 ? project.categories : [project.category]).map(
+              (cat, i) => (
+                <span
+                  key={i}
+                  className="px-4 py-1.5 rounded-full bg-[#151A23] border border-[#F59E0B]/30 text-xs font-mono font-semibold text-[#F59E0B] uppercase tracking-wider"
+                >
+                  {cat}
+                </span>
+              )
+            )}
           </div>
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-[#F0F3F6] mb-6">
             {project.title}
@@ -96,6 +105,34 @@ export default async function ProjectDetailPage({
           priority
           className="mb-16"
         />
+
+        {/* Google Drive Materials Banner (Prominent Dedicated Access to All Source Files) */}
+        {(project.googleDriveMaterialsUrl || project.googleDriveUrl) && (
+          <div className="mb-16 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-[#10141C] via-[#151A23] to-[#10141C] border border-[#F59E0B]/30 shadow-[0_0_30px_rgba(245,158,11,0.08)] flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#F59E0B] font-bold">
+                <span className="w-2 h-2 rounded-full bg-[#F59E0B] animate-ping" />
+                <span>Project Materials & Assets</span>
+              </div>
+              <h3 className="text-xl sm:text-2xl font-black text-[#F0F3F6]">
+                Google Drive Project Materials
+              </h3>
+              <p className="text-sm text-[#94A3B8] max-w-2xl font-light">
+                Access full high-resolution exports, source project files, brand assets, and production deliverables.
+              </p>
+            </div>
+
+            <a
+              href={project.googleDriveMaterialsUrl || project.googleDriveUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-full bg-gradient-to-r from-[#F59E0B] to-[#FF7A18] text-[#07090D] font-bold text-sm shadow-[0_0_24px_rgba(245,158,11,0.35)] hover:scale-105 hover:shadow-[0_0_35px_rgba(245,158,11,0.5)] transition-all whitespace-nowrap self-start sm:self-center"
+            >
+              <span>View Project Materials</span>
+              <ArrowUpRight className="w-4 h-4" />
+            </a>
+          </div>
+        )}
 
         {/* Project Meta Information Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 p-8 rounded-3xl bg-[#10141C] border border-[#F0F3F6]/10 mb-16">
@@ -120,9 +157,13 @@ export default async function ProjectDetailPage({
           <div>
             <div className="flex items-center gap-2 text-xs font-mono text-[#F59E0B] uppercase mb-1">
               <Layers className="w-3.5 h-3.5" />
-              <span>Discipline</span>
+              <span>Disciplines</span>
             </div>
-            <div className="text-base font-semibold text-[#F0F3F6]">{project.category}</div>
+            <div className="text-base font-semibold text-[#F0F3F6] truncate">
+              {project.categories && project.categories.length > 0
+                ? project.categories.join(' • ')
+                : project.category}
+            </div>
           </div>
 
           <div>
@@ -131,17 +172,21 @@ export default async function ProjectDetailPage({
               <span>Type</span>
             </div>
             <div className="text-base font-semibold text-[#F0F3F6]">
-              {project.videoUrl ? 'Motion Reel' : 'Key Visuals'}
+              {(project.videos && project.videos.length > 0) && (project.gallery && project.gallery.length > 0)
+                ? 'Mixed Media Campaign'
+                : (project.videos && project.videos.length > 0) || project.videoUrl
+                ? 'Motion & Video Reel'
+                : 'Key Visuals & Stills'}
             </div>
           </div>
         </div>
 
         {/* Tools and External Presentation Links */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-16 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-20 items-start">
           {/* Software Used */}
           <div className="md:col-span-6 p-8 rounded-3xl bg-[#151A23]/60 border border-[#F0F3F6]/08">
             <h3 className="text-sm font-mono text-[#94A3B8] uppercase tracking-wider mb-4">
-              Software & Workflow Tools
+              Software Used & Skills
             </h3>
             <div className="flex flex-wrap gap-2">
               {project.tools.map((tool, i) => (
@@ -194,14 +239,14 @@ export default async function ProjectDetailPage({
                   <ArrowUpRight className="w-4 h-4" />
                 </a>
               )}
-              {project.googleDriveUrl && (
+              {(project.googleDriveMaterialsUrl || project.googleDriveUrl) && (
                 <a
-                  href={project.googleDriveUrl}
+                  href={project.googleDriveMaterialsUrl || project.googleDriveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#10141C] border border-[#F0F3F6]/15 text-sm font-semibold text-[#F0F3F6] hover:border-[#F59E0B] hover:text-[#F59E0B] transition-colors"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#10141C] border border-[#F59E0B]/40 text-sm font-semibold text-[#F59E0B] hover:bg-[#F59E0B] hover:text-[#07090D] transition-colors"
                 >
-                  <span>Drive Assets</span>
+                  <span>Google Drive Materials</span>
                   <ArrowUpRight className="w-4 h-4" />
                 </a>
               )}
@@ -220,25 +265,117 @@ export default async function ProjectDetailPage({
           </div>
         </div>
 
-        {/* Gallery Stills */}
+        {/* Campaign Videos Showcase (Multiple Videos Support) */}
+        {project.videos && project.videos.length > 0 && (
+          <div className="mb-20">
+            <div className="flex items-center justify-between mb-8">
+              <div>
+                <h3 className="text-2xl sm:text-3xl font-black tracking-tight text-[#F0F3F6]">
+                  Campaign Videos & Motion Reels
+                </h3>
+                <p className="text-sm text-[#94A3B8] mt-1 font-light">
+                  {project.videos.length} dynamic motion video{project.videos.length > 1 ? 's' : ''} in this project
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {project.videos.map((vid, idx) => {
+                const isYouTube = vid.url.includes('youtube.com') || vid.url.includes('youtu.be');
+                const isVimeo = vid.url.includes('vimeo.com');
+
+                let embedSrc = vid.url;
+                if (isYouTube) {
+                  const match = vid.url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i);
+                  if (match && match[1]) embedSrc = `https://www.youtube.com/embed/${match[1]}`;
+                } else if (isVimeo) {
+                  const match = vid.url.match(/vimeo\.com\/(?:channels\/(?:\w+\/)?|groups\/(?:[^\/]*)\/videos\/|album\/(?:\d+)\/video\/|video\/|)(\d+)/i);
+                  if (match && match[1]) embedSrc = `https://player.vimeo.com/video/${match[1]}`;
+                }
+
+                return (
+                  <div
+                    key={vid.id || idx}
+                    className="p-5 rounded-3xl bg-[#10141C] border border-[#F0F3F6]/10 flex flex-col gap-4 shadow-xl"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm font-bold text-[#F0F3F6] truncate">
+                        {vid.title || `Motion Video ${idx + 1}`}
+                      </span>
+                      <span className="text-[11px] font-mono text-[#F59E0B] px-2.5 py-0.5 rounded-full bg-[#151A23]">
+                        {isYouTube ? 'YouTube' : isVimeo ? 'Vimeo' : 'Direct MP4'}
+                      </span>
+                    </div>
+
+                    <div className="relative aspect-video rounded-2xl overflow-hidden bg-[#07090D] border border-[#F0F3F6]/10">
+                      {isYouTube || isVimeo ? (
+                        <iframe
+                          src={embedSrc}
+                          title={vid.title || `Video ${idx + 1}`}
+                          className="w-full h-full border-0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                        />
+                      ) : (
+                        <video
+                          src={vid.url}
+                          controls
+                          playsInline
+                          preload="metadata"
+                          className="w-full h-full object-contain rounded-2xl"
+                        />
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Gallery Stills (Multiple Images Support) */}
         {project.gallery && project.gallery.length > 0 && (
           <div className="mb-20">
-            <h3 className="text-2xl font-bold tracking-tight text-[#F0F3F6] mb-8">
-              Key Visuals & Stills
-            </h3>
+            <div className="flex items-center justify-between mb-8">
+              <div>
+                <h3 className="text-2xl sm:text-3xl font-black tracking-tight text-[#F0F3F6]">
+                  Key Visuals & Campaign Stills
+                </h3>
+                <p className="text-sm text-[#94A3B8] mt-1 font-light">
+                  {project.gallery.length} visual asset{project.gallery.length > 1 ? 's' : ''} in this project gallery
+                </p>
+              </div>
+            </div>
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {project.gallery.map((imgUrl, idx) => (
                 <div
                   key={idx}
-                  className="relative aspect-video rounded-3xl overflow-hidden bg-[#10141C] border border-[#F0F3F6]/10"
+                  className="group relative rounded-3xl overflow-hidden bg-[#10141C] border border-[#F0F3F6]/10 shadow-xl transition-all duration-300 hover:border-[#F59E0B]/50"
                 >
-                  <Image
-                    src={imgUrl}
-                    alt={`${project.title} - still ${idx + 1}`}
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                  />
+                  <div className="relative aspect-video sm:aspect-[16/10] overflow-hidden">
+                    <Image
+                      src={imgUrl}
+                      alt={`${project.title} - still ${idx + 1}`}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                  </div>
+                  <div className="p-4 bg-[#10141C] flex items-center justify-between">
+                    <span className="text-xs font-mono text-[#94A3B8]">
+                      Still #{String(idx + 1).padStart(2, '0')}
+                    </span>
+                    <a
+                      href={imgUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs font-medium text-[#F59E0B] hover:underline inline-flex items-center gap-1"
+                    >
+                      <span>View Full Resolution</span>
+                      <ArrowUpRight className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
                 </div>
               ))}
             </div>

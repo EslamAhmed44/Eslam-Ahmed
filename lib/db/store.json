@@ -36,6 +36,14 @@
     "seoKeywords": "Islam Ahmed, Motion Graphics, Graphic Design, After Effects, Kinetic Typography, 3D Motion, Brand Identity, Visual Designer, Cairo, Egypt",
     "ogImageUrl": "/uploads/1790170123080-WhatsApp_Image_2026-09-15_at_3.25.16_AM.jpeg"
   },
+  "categories": [
+    "Motion Graphics",
+    "Graphic Design",
+    "Branding",
+    "Social Media",
+    "Poster Design",
+    "Campaign Design"
+  ],
   "projects": [
     {
       "id": "proj-4",
@@ -43,20 +51,34 @@
       "title": "Dr. Hazem Mahmoud Clinic — Gastroenterology & Hepatology Social Campaign",
       "titleAr": "عيادة د. حازم محمود  — حملة توعية طبية لأمراض الجهاز الهضمي والكبد",
       "category": "Social Media",
+      "categories": [
+        "Social Media",
+        "Graphic Design"
+      ],
       "description": "A professional and trustworthy social media campaign designed for Dr. Hazem’s Gastroenterology and Hepatology clinic. The design blends clean medical aesthetics, clear typography, and patient-focused visual communication to establish credibility, educate the audience, and enhance digital engagement across Facebook feeds.",
       "descriptionAr": "حملة سوشيال ميديا احترافية وموثوقة مصممة خصيصاً لعيادة الدكتور حازم لتخصص الجهاز الهضمي والكبد. يدمج التصميم بين الجماليات الطبية النظيفة، والخطوط الواضحة، والتواصل البصري المرتكز على المريض؛ لبناء الثقة، توعية الجمهور، وتعزيز التفاعل الرقمي عبر منصة فيسبوك.",
       "client": "Dr. Hazem Mahmoud Clinic",
+      "clientName": "Dr. Hazem Mahmoud Clinic",
       "projectDate": "2023",
       "coverImage": "/uploads/1790259518074-F2_.png",
       "gallery": [
         "/images/projects/project-zenith-social.jpg"
       ],
+      "images": [
+        "/images/projects/project-zenith-social.jpg"
+      ],
       "videoUrl": "",
+      "videos": [],
       "youtubeUrl": "",
       "vimeoUrl": "",
       "googleDriveUrl": "",
+      "googleDriveMaterialsUrl": "",
       "behanceUrl": "",
       "tools": [
+        "Adobe Photoshop",
+        "Adobe Illustrator"
+      ],
+      "softwareUsed": [
         "Adobe Photoshop",
         "Adobe Illustrator"
       ],

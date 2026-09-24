@@ -30,24 +30,38 @@ export interface SiteSettings {
   ogImageUrl: string;
 }
 
+export interface ProjectVideo {
+  id?: string;
+  url: string;
+  title?: string;
+  titleAr?: string;
+  type?: 'youtube' | 'vimeo' | 'mp4' | 'direct' | 'other';
+}
+
 export interface Project {
   id: string;
   slug: string;
   title: string;
   titleAr?: string;
-  category: 'Motion Graphics' | 'Graphic Design' | 'Branding' | 'Social Media';
+  category: string; // for backward compatibility, mapped to categories[0]
+  categories?: string[]; // Multiple categories support
   description: string;
   descriptionAr?: string;
   client: string;
+  clientName?: string; // alias
   projectDate: string;
   coverImage: string;
   gallery: string[];
+  images?: string[]; // alias for gallery
   videoUrl?: string;
+  videos?: ProjectVideo[]; // Multiple videos support
   youtubeUrl?: string;
   vimeoUrl?: string;
   googleDriveUrl?: string;
+  googleDriveMaterialsUrl?: string; // Dedicated Google Drive Materials link
   behanceUrl?: string;
-  tools: string[];
+  tools: string[]; // Software Used
+  softwareUsed?: string[]; // alias
   projectUrl?: string;
   featured: boolean;
   tags: string[];
@@ -155,4 +169,5 @@ export interface AppData {
   testimonials: Testimonial[];
   socialLinks: SocialLink[];
   media: MediaFile[];
+  categories?: string[];
 }
