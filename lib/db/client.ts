@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import crypto from 'crypto';
 import {
   AppData,
   Experience,
@@ -902,8 +903,24 @@ export async function saveInquiry(
     createdAt?: string;
   }
 ): Promise<ProjectInquiry> {
+  // Ensure valid UUID format for PostgreSQL UUID primary key
+  let generatedId = inquiry.id;
+  if (!generatedId) {
+    try {
+      generatedId = crypto.randomUUID();
+    } catch {
+      generatedId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+        const r = (Math.random() * 16) | 0;
+        const v = c === 'x' ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+      });
+    }
+  }
+
+  const createdAt = inquiry.createdAt || new Date().toISOString();
+
   const saved: ProjectInquiry = {
-    id: inquiry.id || `inq-${Date.now()}`,
+    id: generatedId,
     name: inquiry.name,
     contactMethod: inquiry.contactMethod,
     email: inquiry.email || '',
@@ -915,7 +932,7 @@ export async function saveInquiry(
     referenceFiles: inquiry.referenceFiles || [],
     googleDriveUrl: inquiry.googleDriveUrl || '',
     status: inquiry.status || 'unread',
-    createdAt: inquiry.createdAt || new Date().toISOString(),
+    createdAt: createdAt,
   };
 
   const supabase = createServerClient();
@@ -924,9 +941,15 @@ export async function saveInquiry(
   // 1. PRODUCTION: Supabase is PRIMARY and AUTHORITATIVE
   if (supabase && isServerSupabaseConfigured()) {
     try {
-      const { data, error } = await supabase
+      // NOTE: Do NOT chain .select() on insert here.
+      // Under Row Level Security (RLS), public users have permission to INSERT into project_inquiries,
+      // but do NOT have permission to SELECT. Chaining .select() executes an INSERT ... RETURNING *
+      // which triggers PostgreSQL SELECT RLS policy check and fails with permission denied!
+      // By supplying the pre-generated UUID and omitting .select(), the insert succeeds cleanly.
+      const { error } = await supabase
         .from('project_inquiries')
         .insert({
+          id: saved.id,
           name: saved.name,
           contact_method: saved.contactMethod,
           email: saved.email || null,
@@ -938,19 +961,17 @@ export async function saveInquiry(
           reference_files: saved.referenceFiles,
           google_drive_url: saved.googleDriveUrl || null,
           status: saved.status,
-        })
-        .select()
-        .single();
+          created_at: saved.createdAt,
+        });
 
       if (error) {
-        console.error('Supabase inquiry insert error:', error.message || error);
-      } else if (data) {
-        saved.id = data.id || saved.id;
-        saved.createdAt = data.created_at || saved.createdAt;
-        supabaseInserted = true;
+        console.error('[saveInquiry] Supabase insert error:', error.message || error);
+        throw new Error(`Database insert failed: ${error.message || 'Unknown database error'}`);
       }
+      supabaseInserted = true;
     } catch (e: any) {
-      console.error('Supabase inquiry insert exception:', e?.message || e);
+      console.error('[saveInquiry] Supabase insert exception:', e?.message || e);
+      throw e;
     }
   }
 
@@ -959,8 +980,11 @@ export async function saveInquiry(
   try {
     const store = readLocalStore();
     store.inquiries = store.inquiries || [];
-    store.inquiries.unshift(saved);
-    writeLocalStore(store);
+    // Prevent duplicate entries
+    if (!store.inquiries.some((i) => i.id === saved.id)) {
+      store.inquiries.unshift(saved);
+      writeLocalStore(store);
+    }
   } catch (fsError: any) {
     if (!supabaseInserted && !isServerSupabaseConfigured()) {
       console.warn('[saveInquiry] Local store fallback write skipped:', fsError?.message || fsError);
@@ -978,28 +1002,39 @@ export async function getInquiries(): Promise<ProjectInquiry[]> {
         .from('project_inquiries')
         .select('*')
         .order('created_at', { ascending: false });
-      if (!error && data) {
+
+      if (error) {
+        console.error('[getInquiries] Supabase select error:', error.message || error);
+        // In production/serverless, do NOT fall back to stale store.json if Supabase returned an error
+        if (process.env.VERCEL || process.env.NODE_ENV === 'production') {
+          return [];
+        }
+      } else if (data) {
         return data.map((inq: any) => ({
           id: inq.id,
           name: inq.name,
           contactMethod: inq.contact_method || 'Email',
           email: inq.email || '',
           whatsapp: inq.whatsapp || '',
-          services: inq.services || [],
+          services: Array.isArray(inq.services) ? inq.services : [],
           description: inq.description || '',
           budget: inq.budget || '',
-          referenceLinks: inq.reference_links || [],
-          referenceFiles: inq.reference_files || [],
+          referenceLinks: Array.isArray(inq.reference_links) ? inq.reference_links : [],
+          referenceFiles: Array.isArray(inq.reference_files) ? inq.reference_files : [],
           googleDriveUrl: inq.google_drive_url || '',
           status: inq.status || 'unread',
           createdAt: inq.created_at || new Date().toISOString(),
         }));
       }
-    } catch (e) {
-      console.warn('Supabase getInquiries error:', e);
+    } catch (e: any) {
+      console.error('[getInquiries] Supabase select exception:', e?.message || e);
+      if (process.env.VERCEL || process.env.NODE_ENV === 'production') {
+        return [];
+      }
     }
   }
 
+  // Local development fallback
   const store = readLocalStore();
   return store.inquiries || [];
 }
@@ -1008,7 +1043,13 @@ export async function updateInquiryStatus(id: string, status: InquiryStatus): Pr
   const supabase = createServerClient();
   if (supabase && isServerSupabaseConfigured()) {
     try {
-      await supabase.from('project_inquiries').update({ status }).eq('id', id);
+      const { error } = await supabase
+        .from('project_inquiries')
+        .update({ status })
+        .eq('id', id);
+      if (error) {
+        console.error('[updateInquiryStatus] Supabase error:', error.message || error);
+      }
     } catch (e: any) {
       console.warn('Supabase update inquiry status error:', e?.message || e);
     }
@@ -1033,7 +1074,13 @@ export async function deleteInquiry(id: string): Promise<boolean> {
   const supabase = createServerClient();
   if (supabase && isServerSupabaseConfigured()) {
     try {
-      await supabase.from('project_inquiries').delete().eq('id', id);
+      const { error } = await supabase
+        .from('project_inquiries')
+        .delete()
+        .eq('id', id);
+      if (error) {
+        console.error('[deleteInquiry] Supabase error:', error.message || error);
+      }
     } catch (e: any) {
       console.warn('Supabase delete inquiry error:', e?.message || e);
     }
@@ -1041,7 +1088,8 @@ export async function deleteInquiry(id: string): Promise<boolean> {
 
   try {
     const store = readLocalStore();
-    store.inquiries = (store.inquiries || []).filter((i) => i.id !== id);
+    store.inquiries = store.inquiries || [];
+    store.inquiries = store.inquiries.filter((i) => i.id !== id);
     writeLocalStore(store);
   } catch (fsError: any) {
     // Non-fatal on serverless read-only filesystem

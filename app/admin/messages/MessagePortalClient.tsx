@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import {
   MessageSquare,
@@ -40,6 +40,18 @@ export function MessagePortalClient({ initialInquiries = [] }: MessagePortalClie
   const [activeTab, setActiveTab] = useState<'all' | 'unread' | 'read' | 'archived'>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [actionLoadingId, setActionLoadingId] = useState<string | null>(null);
+
+  // Sync state if initialInquiries updates
+  useEffect(() => {
+    if (initialInquiries) {
+      setInquiries(initialInquiries);
+    }
+  }, [initialInquiries]);
+
+  // Always fetch latest inquiries from authoritative API on client mount
+  useEffect(() => {
+    fetchInquiries();
+  }, []);
 
   const fetchInquiries = async () => {
     setLoading(true);

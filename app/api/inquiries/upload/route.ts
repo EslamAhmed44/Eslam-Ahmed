@@ -3,6 +3,9 @@ import fs from 'fs';
 import path from 'path';
 import { createServerClient, isServerSupabaseConfigured } from '@/lib/supabase/server';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 // Allowed MIME types and extensions
 const ALLOWED_MIME_TYPES = new Set([
   'image/jpeg',

@@ -3,6 +3,9 @@ import { saveInquiry, getInquiries, updateInquiryStatus, deleteInquiry } from '@
 import { checkAdminSession } from '@/lib/auth/session';
 import { PreferredContactMethod } from '@/lib/types';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_REGEX = /^\+?[0-9\s\-()]{6,25}$/;
 
