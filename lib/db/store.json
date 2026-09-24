@@ -60,19 +60,26 @@
       "client": "Dr. Hazem Mahmoud Clinic",
       "clientName": "Dr. Hazem Mahmoud Clinic",
       "projectDate": "2023",
-      "coverImage": "/uploads/1790259518074-F2_.png",
+      "coverImage": "/uploads/1790259518074-F2_.png ",
       "gallery": [
-        "/images/projects/project-zenith-social.jpg"
+        "/uploads/1790262555578-F1.png"
       ],
       "images": [
-        "/images/projects/project-zenith-social.jpg"
+        "/uploads/1790262555578-F1.png"
       ],
-      "videoUrl": "",
-      "videos": [],
+      "videoUrl": "/uploads/1790262718546-patientbook.mp4",
+      "videos": [
+        {
+          "id": "vid-1790262702541-1",
+          "url": "/uploads/1790262718546-patientbook.mp4",
+          "title": "Motion Video 1",
+          "type": "direct"
+        }
+      ],
       "youtubeUrl": "",
       "vimeoUrl": "",
-      "googleDriveUrl": "",
-      "googleDriveMaterialsUrl": "",
+      "googleDriveUrl": "https://drive.google.com/drive/folders/1kxQCYMEdoaYxHjwnZYAu-3eLVqWIV3sp?usp=sharing",
+      "googleDriveMaterialsUrl": "https://drive.google.com/drive/folders/1kxQCYMEdoaYxHjwnZYAu-3eLVqWIV3sp?usp=sharing",
       "behanceUrl": "",
       "tools": [
         "Adobe Photoshop",
@@ -93,11 +100,12 @@
       "sortOrder": 1,
       "status": "published",
       "createdAt": "2023-11-20T14:15:00Z",
-      "updatedAt": "2026-09-24T14:24:46.669Z",
+      "updatedAt": "2026-09-24T15:12:01.530Z",
       "width": 4501,
       "height": 5118,
       "aspectRatio": 0.8794,
-      "orientation": "portrait"
+      "orientation": "portrait",
+      "ratioLabel": "0.88:1"
     }
   ],
   "experiences": [
@@ -460,6 +468,22 @@
     }
   ],
   "media": [
+    {
+      "name": "patientbook.mp4",
+      "url": "/uploads/1790262718546-patientbook.mp4",
+      "type": "video",
+      "sizeBytes": 2788670,
+      "id": "med-1790262718549",
+      "uploadedAt": "2026-09-24T15:11:58.549Z"
+    },
+    {
+      "name": "F1.png",
+      "url": "/uploads/1790262555578-F1.png",
+      "type": "image",
+      "sizeBytes": 11733425,
+      "id": "med-1790262555586",
+      "uploadedAt": "2026-09-24T15:09:15.586Z"
+    },
     {
       "name": "F2_.png",
       "url": "/uploads/1790259518074-F2_.png",
