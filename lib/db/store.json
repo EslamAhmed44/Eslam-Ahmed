@@ -1,0 +1,638 @@
+{
+  "settings": {
+    "siteTitle": "Islam Ahmed — Premium Motion & Graphic Designer",
+    "siteDescription": "Portfolio of Islam Ahmed, an elite Graphic & Motion Graphic Designer specializing in cinematic motion design, kinetic typography, 3D visual storytelling, and luxury brand identity.",
+    "designerName": "Islam Ahmed",
+    "designerNameAr": "إسلام أحمد",
+    "heroHeadline": "Hello",
+    "heroHeadlineAr": "مرحبًا",
+    "rotatingRoles": [
+      "Motion Graphic Designer",
+      "Graphic Designer",
+      "Visual Designer"
+    ],
+    "rotatingRolesAr": [
+      "مصمم موشن جرافيك",
+      "مصمم جرافيك",
+      "مصمم بصري"
+    ],
+    "shortBio": "Crafting visual identities and kinetic narratives that blur the boundary between graphic clarity and cinematic emotion.",
+    "shortBioAr": "صناعة هويات بصرية وسرديات حركية تدمج بين الوضوح الجرافيكي والعمق السينمائي المعبر.",
+    "longBio": "With over 2 years of dedicated commercial and agency experience, I empower brands, studios, and creators to express bold ideas through purposeful motion graphics, luxury typography, and bespoke visual identity systems. Every frame is engineered with mathematical precision, artistic sensibility, and storytelling intent.",
+    "longBioAr": "مع أكثر من عامين من الخبرة المكثفة في الوكالات الإبداعية والمشاريع المستقلة، أساعد العلامات التجارية والاستوديوهات على التعبير عن أفكارها الجريئة من خلال موشن جرافيك هادف، وطباعة بصرية فاخرة، وهويات فريدة من نوعها. كل إطار مصمم بدقة فنية، وإحساس بصري عميق، ورؤية سردية متكاملة.",
+    "stats": {
+      "experienceYears": "2+",
+      "projectsCount": "35+",
+      "clientsCount": "20+",
+      "toolsCount": "+25"
+    },
+    "contactEmail": "smsma4140@gmail.com",
+    "whatsappNumber": "+201092463750",
+    "whatsappUrl": "https://wa.me/201092463750",
+    "linkedinUrl": "https://www.linkedin.com/in/eslam-ahmed-a7bb0a308/",
+    "cvUrl": "/cv/Islam_Ahmed_CV.pdf",
+    "customCursorEnabled": true,
+    "defaultLanguage": "en",
+    "seoKeywords": "Islam Ahmed, Motion Graphics, Graphic Design, After Effects, Kinetic Typography, 3D Motion, Brand Identity, Visual Designer, Cairo, Egypt",
+    "ogImageUrl": "/uploads/1790170123080-WhatsApp_Image_2026-09-15_at_3.25.16_AM.jpeg"
+  },
+  "projects": [
+    {
+      "id": "proj-4",
+      "slug": "modernism-editorial-system",
+      "title": "Modernism '24 — Editorial Typography & Social System",
+      "titleAr": "مودرنيزم 24 — نظام طباعي وتحريري لمنصات التواصل",
+      "category": "Social Media",
+      "description": "High-fashion social motion campaign blending Swiss International Typographic Style, aggressive asymmetric grids, and kinetic Instagram story frames for an avant-garde fashion showcase.",
+      "descriptionAr": "حملة موشن لمنصات التواصل تجمع بين النمط الطباعي السويسري، والشبكات غير المتماثلة الجريئة، وإطارات قصص متحركة لفعالية أزياء طليعية.",
+      "client": "Mode Studio Paris",
+      "projectDate": "2023",
+      "coverImage": "/uploads/1790170312205-F1.png",
+      "gallery": [
+        "/images/projects/project-zenith-social.jpg"
+      ],
+      "videoUrl": "",
+      "youtubeUrl": "",
+      "vimeoUrl": "",
+      "googleDriveUrl": "",
+      "behanceUrl": "https://www.behance.net",
+      "tools": [
+        "Illustrator",
+        "After Effects",
+        "Photoshop"
+      ],
+      "projectUrl": "",
+      "featured": true,
+      "tags": [
+        "Social Campaign",
+        "Swiss Style",
+        "Kinetic Posters",
+        "Fashion"
+      ],
+      "sortOrder": 1,
+      "status": "published",
+      "createdAt": "2023-11-20T14:15:00Z",
+      "updatedAt": "2026-09-23T13:31:55.116Z",
+      "width": 4500,
+      "height": 4963,
+      "aspectRatio": 0.9067,
+      "orientation": "portrait"
+    },
+    {
+      "id": "proj-1",
+      "slug": "lumina-kinetic-identity",
+      "title": "Lumina — 3D Kinetic Brand Motion",
+      "titleAr": "لومينا — هوية حركية ثلاثية الأبعاد",
+      "category": "Motion Graphics",
+      "description": "A luxury cinematic brand launch film exploring fluid dynamics, metallic amber currents, and bold dimensional typography designed for high-profile visual agency reveals.",
+      "descriptionAr": "فيلم إطلاق سينمائي فاخر يستكشف السوائل الحركية وتيارات العنبر المعدنية مع كتابة بصرية ثلاثية الأبعاد مصممة لإطلاق هوية وكالة بصرية رائدة.",
+      "client": "Aura Visual Group",
+      "projectDate": "2024",
+      "coverImage": "/images/projects/project-lumina-motion.jpg",
+      "gallery": [
+        "/images/projects/project-lumina-motion.jpg",
+        "/images/projects/project-aurora-campaign.jpg"
+      ],
+      "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+      "youtubeUrl": "",
+      "vimeoUrl": "https://vimeo.com/76979871",
+      "googleDriveUrl": "",
+      "behanceUrl": "https://www.behance.net",
+      "tools": [
+        "After Effects",
+        "Cinema 4D",
+        "Octane Render",
+        "Premiere Pro"
+      ],
+      "projectUrl": "",
+      "featured": true,
+      "tags": [
+        "3D Motion",
+        "Kinetic Typography",
+        "Brand Film",
+        "Octane"
+      ],
+      "sortOrder": 2,
+      "status": "published",
+      "createdAt": "2024-01-15T10:00:00Z",
+      "updatedAt": "2024-01-15T10:00:00Z",
+      "width": 1376,
+      "height": 768,
+      "aspectRatio": 1.7917,
+      "orientation": "landscape"
+    },
+    {
+      "id": "proj-2",
+      "slug": "aurelia-luxury-branding",
+      "title": "Aurelia — Luxury Editorial Goods Identity",
+      "titleAr": "أوريليا — هوية فاخرة للبضائع التحريرية",
+      "category": "Branding",
+      "description": "Comprehensive visual identity and packaging system for an artisanal luxury house. Incorporates hot foil gold stamping, tactile dark charcoal papers, and modern serif typography.",
+      "descriptionAr": "هوية بصرية شاملة ونظام تغليف لدار سلع فاخرة. تتضمن ختم الذهب الحراري، وأوراق الفحم الداكنة الفاخرة، مع طباعة سيريف عصرية متميزة.",
+      "client": "Aurelia Luxury Goods",
+      "projectDate": "2024",
+      "coverImage": "/images/projects/project-vortex-brand.jpg",
+      "gallery": [
+        "/images/projects/project-vortex-brand.jpg"
+      ],
+      "videoUrl": "",
+      "youtubeUrl": "",
+      "vimeoUrl": "",
+      "googleDriveUrl": "",
+      "behanceUrl": "https://www.behance.net",
+      "tools": [
+        "Photoshop",
+        "Illustrator",
+        "InDesign"
+      ],
+      "projectUrl": "",
+      "featured": true,
+      "tags": [
+        "Brand Identity",
+        "Packaging",
+        "Gold Foil",
+        "Editorial"
+      ],
+      "sortOrder": 3,
+      "status": "published",
+      "createdAt": "2024-02-10T12:00:00Z",
+      "updatedAt": "2024-02-10T12:00:00Z",
+      "width": 1376,
+      "height": 768,
+      "aspectRatio": 1.7917,
+      "orientation": "landscape"
+    },
+    {
+      "id": "proj-3",
+      "slug": "chroma-labs-campaign",
+      "title": "Chroma Labs — Broadcast Motion & 3D Visuals",
+      "titleAr": "كروما لابس — موشن جرافيك وبث ثلاثي الأبعاد",
+      "category": "Motion Graphics",
+      "description": "A high-octane broadcast commercial package featuring floating chrome monoliths, particle physics, and radiant amber light trails orchestrated to a heavy bass sonic soundtrack.",
+      "descriptionAr": "حزمة إعلانية للبث التلفزيوني والرقمي تتميز بمجسمات كروم طافية، وتأثيرات جسيمات ضوئية عنبرية تتزامن مع إيقاع صوتي قوي.",
+      "client": "Chroma Labs Media",
+      "projectDate": "2024",
+      "coverImage": "/images/projects/project-aurora-campaign.jpg",
+      "gallery": [
+        "/images/projects/project-aurora-campaign.jpg",
+        "/images/projects/project-lumina-motion.jpg"
+      ],
+      "videoUrl": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+      "youtubeUrl": "",
+      "vimeoUrl": "https://vimeo.com/76979871",
+      "googleDriveUrl": "",
+      "behanceUrl": "https://www.behance.net",
+      "tools": [
+        "After Effects",
+        "Blender",
+        "DaVinci Resolve"
+      ],
+      "projectUrl": "",
+      "featured": true,
+      "tags": [
+        "Broadcast Design",
+        "Particle FX",
+        "Commercial",
+        "Sound Sync"
+      ],
+      "sortOrder": 4,
+      "status": "published",
+      "createdAt": "2024-03-05T09:30:00Z",
+      "updatedAt": "2024-03-05T09:30:00Z",
+      "width": 1376,
+      "height": 768,
+      "aspectRatio": 1.7917,
+      "orientation": "landscape"
+    }
+  ],
+  "experiences": [
+    {
+      "id": "exp-1",
+      "title": "Lead Motion Graphic Designer",
+      "titleAr": "كبير مصممي الموشن جرافيك",
+      "company": "Studio Vertex",
+      "companyAr": "ستوديو فيرتكس",
+      "startDate": "2024-01-01",
+      "endDate": "",
+      "isPresent": true,
+      "description": "Directing motion design and kinetic brand narratives for international commercial clients. Developing high-impact 3D visual campaigns, title sequences, and social advertising frameworks.",
+      "descriptionAr": "قيادة تصاميم الموشن جرافيك وسرديات العلامات التجارية للعملاء الدوليين. تطوير حملات بصرية ثلاثية الأبعاد وتسلسلات سينمائية مبتكرة.",
+      "sortOrder": 1,
+      "status": "published"
+    },
+    {
+      "id": "exp-2",
+      "title": "Senior Graphic & Visual Designer",
+      "titleAr": "مصمم جرافيك وبصريات متقدم",
+      "company": "Horizon Creative Agency",
+      "companyAr": "وكالة هورايزون الإبداعية",
+      "startDate": "2023-02-01",
+      "endDate": "2023-12-31",
+      "isPresent": false,
+      "description": "Produced end-to-end brand identity systems, typography guidelines, and digital marketing materials across luxury retail, technology, and entertainment verticals.",
+      "descriptionAr": "تنفيذ أنظمة هوية بصرية كاملة وإرشادات الطباعة الرقمية لقطاعات التجزئة الفاخرة والتكنولوجيا والترفيه.",
+      "sortOrder": 2,
+      "status": "published"
+    },
+    {
+      "id": "exp-3",
+      "title": "Freelance Motion & Visual Designer",
+      "titleAr": "مصمم موشن وجرافيك حر",
+      "company": "Independent Practice",
+      "companyAr": "أعمال حرة ومستقلة",
+      "startDate": "2022-06-01",
+      "endDate": "2023-01-31",
+      "isPresent": false,
+      "description": "Collaborated with indie game developers, startup founders, and music producers to craft kinetic typography videos, logo reveals, and social-first promotional media.",
+      "descriptionAr": "التعاون مع مطوري المشاريع الناشئة وصناع المحتوى لإنتاج فيديوهات تايبوجرافي حركية وتحريك شعارات ومواد ترويجية مبتكرة.",
+      "sortOrder": 3,
+      "status": "published"
+    }
+  ],
+  "skillGroups": [
+    {
+      "id": "group-1",
+      "title": "Design Fundamentals & Brand Identity",
+      "titleAr": "أسس التصميم والهوية البصرية",
+      "sortOrder": 1,
+      "skills": [
+        {
+          "id": "s-1",
+          "name": "Composition",
+          "sortOrder": 1
+        },
+        {
+          "id": "s-2",
+          "name": "Color Theory",
+          "sortOrder": 2
+        },
+        {
+          "id": "s-3",
+          "name": "Typography",
+          "sortOrder": 3
+        },
+        {
+          "id": "s-4",
+          "name": "Layout",
+          "sortOrder": 4
+        },
+        {
+          "id": "s-5",
+          "name": "Brand Identity",
+          "sortOrder": 5
+        }
+      ]
+    },
+    {
+      "id": "group-2",
+      "title": "Motion Graphics & Animation",
+      "titleAr": "الموشن جرافيك والتحريك",
+      "sortOrder": 2,
+      "skills": [
+        {
+          "id": "s-6",
+          "name": "After Effects",
+          "sortOrder": 1
+        },
+        {
+          "id": "s-7",
+          "name": "Motion Design",
+          "sortOrder": 2
+        },
+        {
+          "id": "s-8",
+          "name": "Kinetic Typography",
+          "sortOrder": 3
+        },
+        {
+          "id": "s-9",
+          "name": "Logo Animation",
+          "sortOrder": 4
+        },
+        {
+          "id": "s-10",
+          "name": "Transitions",
+          "sortOrder": 5
+        }
+      ]
+    },
+    {
+      "id": "group-3",
+      "title": "Photography & Visual Processing",
+      "titleAr": "معالجة الصور والبصريات",
+      "sortOrder": 3,
+      "skills": [
+        {
+          "id": "s-11",
+          "name": "Photo Retouching",
+          "sortOrder": 1
+        },
+        {
+          "id": "s-12",
+          "name": "Color Correction",
+          "sortOrder": 2
+        },
+        {
+          "id": "s-13",
+          "name": "Visual Composition",
+          "sortOrder": 3
+        },
+        {
+          "id": "s-14",
+          "name": "Lighting",
+          "sortOrder": 4
+        },
+        {
+          "id": "s-15",
+          "name": "Visual Processing",
+          "sortOrder": 5
+        }
+      ]
+    },
+    {
+      "id": "group-4",
+      "title": "AI Tools & Workflow",
+      "titleAr": "أدوات الذكاء الاصطناعي والإنتاج",
+      "sortOrder": 4,
+      "skills": [
+        {
+          "id": "s-16",
+          "name": "Prompt Design",
+          "sortOrder": 1
+        },
+        {
+          "id": "s-17",
+          "name": "Generative Visuals",
+          "sortOrder": 2
+        },
+        {
+          "id": "s-18",
+          "name": "Image Enhancement",
+          "sortOrder": 3
+        },
+        {
+          "id": "s-19",
+          "name": "AI-assisted Workflow",
+          "sortOrder": 4
+        },
+        {
+          "id": "s-20",
+          "name": "Creative Automation",
+          "sortOrder": 5
+        }
+      ]
+    },
+    {
+      "id": "group-5",
+      "title": "Software Proficiency",
+      "titleAr": "إتقان البرامج الاحترافية",
+      "sortOrder": 5,
+      "skills": [
+        {
+          "id": "s-21",
+          "name": "Photoshop",
+          "sortOrder": 1
+        },
+        {
+          "id": "s-22",
+          "name": "Illustrator",
+          "sortOrder": 2
+        },
+        {
+          "id": "s-23",
+          "name": "Premiere Pro",
+          "sortOrder": 3
+        },
+        {
+          "id": "s-24",
+          "name": "After Effects",
+          "sortOrder": 4
+        },
+        {
+          "id": "s-25",
+          "name": "InDesign",
+          "sortOrder": 5
+        },
+        {
+          "id": "s-26",
+          "name": "Lightroom",
+          "sortOrder": 6
+        }
+      ]
+    },
+    {
+      "id": "group-6",
+      "title": "Soft Skills",
+      "titleAr": "المهارات الشخصية والتواصل",
+      "sortOrder": 6,
+      "skills": [
+        {
+          "id": "s-27",
+          "name": "Creative Problem Solving",
+          "sortOrder": 1
+        },
+        {
+          "id": "s-28",
+          "name": "Communication",
+          "sortOrder": 2
+        },
+        {
+          "id": "s-29",
+          "name": "Attention to Detail",
+          "sortOrder": 3
+        },
+        {
+          "id": "s-30",
+          "name": "Time Management",
+          "sortOrder": 4
+        },
+        {
+          "id": "s-31",
+          "name": "Adaptability",
+          "sortOrder": 5
+        }
+      ]
+    }
+  ],
+  "services": [
+    {
+      "id": "srv-3",
+      "title": "Social Ads & Motion Promos",
+      "titleAr": "إعلانات موشن لمنصات التواصل",
+      "category": "Motion Graphics & Video Editing",
+      "description": "Scroll-stopping vertical and square motion advertisements tailored specifically for high conversion on Instagram, TikTok, LinkedIn, and YouTube.",
+      "descriptionAr": "إعلانات موشن عمولية ومربعة مصممة خصيصاً لجذب الانتباه وزيادة التفاعل والتحويلات على المنصات الرقمية.",
+      "sortOrder": 3,
+      "status": "published"
+    },
+    {
+      "id": "srv-4",
+      "title": "Kinetic Typography",
+      "titleAr": "تايبوجرافي حركي إيقاعي",
+      "category": "Motion Graphics & Video Editing",
+      "description": "Rhythmically synchronized typographic choreography pairing words with spoken audio, sound design, and musical beats for emotional impact.",
+      "descriptionAr": "تصميم وتزامن طباعي حركي يواكب النبرات الصوتية والإيقاعات الموسيقية لصناعة تأثير عاطفي قوي.",
+      "sortOrder": 4,
+      "status": "published"
+    },
+    {
+      "id": "srv-5",
+      "title": "Brand Identity Systems",
+      "titleAr": "أنظمة الهوية البصرية المتكاملة",
+      "category": "Graphic Design & Brand Identity",
+      "description": "Comprehensive visual systems from logo marks and color palettes to editorial grid guidelines, packaging, and brand book specifications.",
+      "descriptionAr": "أنظمة بصرية شاملة تبدأ من رسم الشعار والألوان وحتى قواعد الشبكات التحريرية والتغليف ودليل الهوية.",
+      "sortOrder": 5,
+      "status": "published"
+    },
+    {
+      "id": "srv-6",
+      "title": "Social Design Systems",
+      "titleAr": "قوالب وتصاميم السوشيال ميديا",
+      "category": "Graphic Design & Brand Identity",
+      "description": "Cohesive digital design templates and campaign visuals that maintain uncompromising luxury aesthetics across all social touchpoints.",
+      "descriptionAr": "قوالب وهوية رقمية متناسقة تحافظ على الطابع الفاخر عبر جميع حساباتك وحملاتك الرقمية.",
+      "sortOrder": 6,
+      "status": "published"
+    },
+    {
+      "id": "srv-7",
+      "title": "Print & Marketing Collateral",
+      "titleAr": "المطبوعات والمواد الترويجية",
+      "category": "Graphic Design & Brand Identity",
+      "description": "High-end brochures, editorial lookbooks, business stationery, and large-format exhibition displays crafted with strict pre-press perfection.",
+      "descriptionAr": "كتيبات فاخرة، بطاقات أعمال، ومطبوعات للمعارض مصممة بأعلى معايير الدقة والجاهزية للطباعة الفاخرة.",
+      "sortOrder": 7,
+      "status": "published"
+    },
+    {
+      "id": "srv-8",
+      "title": "Digital Art & Key Visuals",
+      "titleAr": "الفنون الرقمية والمفاتيح البصرية",
+      "category": "Graphic Design & Brand Identity",
+      "description": "Bespoke digital artwork, futuristic key visuals, and conceptual posters designed to anchor major campaigns and product launches.",
+      "descriptionAr": "أعمال فنية رقمية حصرية ومفاتيح بصرية تمنح حملاتك وإعلاناتك شخصية مميزة لا تُنسى.",
+      "sortOrder": 8,
+      "status": "published"
+    }
+  ],
+  "testimonials": [
+    {
+      "id": "t-1",
+      "clientName": "Marcus Vance",
+      "position": "Creative Director",
+      "company": "Vance Media London",
+      "photoUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=250&q=80",
+      "quote": "Islam has an extraordinary eye for kinetic rhythm. His motion graphics transformed our client's product launch into a breathtaking cinematic experience. He meets every deadline with perfection.",
+      "quoteAr": "يمتلك إسلام رؤية استثنائية لإيقاع الحركة. حولت لمساته في الموشن جرافيك إطلاق منتج عملائنا إلى تجربة سينمائية مبهرة، مع التزام تام بالمواعيد.",
+      "sortOrder": 1,
+      "status": "published"
+    },
+    {
+      "id": "t-2",
+      "clientName": "Sarah Al-Mansoor",
+      "position": "Head of Marketing",
+      "company": "Horizon Agency Dubai",
+      "photoUrl": "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=250&q=80",
+      "quote": "Working with Islam on our brand identity and social motion assets was a masterclass in collaboration. He understood our luxury positioning instantly and delivered beyond expectations.",
+      "quoteAr": "العمل مع إسلام على هويتنا ومواد الموشن كان تجربة ملهمة. فهم تموضعنا الفاخر في السوق فوراً وقدم مخرجات فاقت كل التوقعات.",
+      "sortOrder": 2,
+      "status": "published"
+    },
+    {
+      "id": "t-1790207887754",
+      "clientName": "hazem",
+      "position": "ceo",
+      "company": "clinic ",
+      "photoUrl": "/uploads/1790207945207-Screenshot_2026-09-23_214641.png",
+      "quote": "v.good",
+      "quoteAr": "[hl]",
+      "sortOrder": 3,
+      "status": "published"
+    }
+  ],
+  "socialLinks": [
+    {
+      "id": "soc-1",
+      "platform": "WhatsApp",
+      "url": "https://wa.me/201092463750",
+      "icon": "MessageSquare",
+      "sortOrder": 1,
+      "isActive": true
+    }
+  ],
+  "media": [
+    {
+      "name": "Screenshot 2026-09-23 214641.png",
+      "url": "/uploads/1790207945207-Screenshot_2026-09-23_214641.png",
+      "type": "image",
+      "sizeBytes": 1013276,
+      "id": "med-1790207945210",
+      "uploadedAt": "2026-09-23T23:59:05.210Z"
+    },
+    {
+      "name": "F1.png",
+      "url": "/uploads/1790170312205-F1.png",
+      "type": "image",
+      "sizeBytes": 11733425,
+      "id": "med-1790170312212",
+      "uploadedAt": "2026-09-23T13:31:52.212Z"
+    },
+    {
+      "name": "WhatsApp Image 2026-09-15 at 3.25.16 AM.jpeg",
+      "url": "/uploads/1790170123080-WhatsApp_Image_2026-09-15_at_3.25.16_AM.jpeg",
+      "type": "image",
+      "sizeBytes": 91129,
+      "id": "med-1790170123083",
+      "uploadedAt": "2026-09-23T13:28:43.083Z"
+    },
+    {
+      "id": "med-1",
+      "name": "islam-ahmed.jpg",
+      "url": "/images/islam-ahmed.jpg",
+      "type": "image",
+      "sizeBytes": 284000,
+      "uploadedAt": "2024-01-01T10:00:00Z"
+    },
+    {
+      "id": "med-2",
+      "name": "project-lumina-motion.jpg",
+      "url": "/images/projects/project-lumina-motion.jpg",
+      "type": "image",
+      "sizeBytes": 420000,
+      "uploadedAt": "2024-01-02T10:00:00Z"
+    },
+    {
+      "id": "med-3",
+      "name": "project-vortex-brand.jpg",
+      "url": "/images/projects/project-vortex-brand.jpg",
+      "type": "image",
+      "sizeBytes": 380000,
+      "uploadedAt": "2024-01-03T10:00:00Z"
+    },
+    {
+      "id": "med-4",
+      "name": "project-aurora-campaign.jpg",
+      "url": "/images/projects/project-aurora-campaign.jpg",
+      "type": "image",
+      "sizeBytes": 490000,
+      "uploadedAt": "2024-01-04T10:00:00Z"
+    },
+    {
+      "id": "med-5",
+      "name": "project-zenith-social.jpg",
+      "url": "/images/projects/project-zenith-social.jpg",
+      "type": "image",
+      "sizeBytes": 410000,
+      "uploadedAt": "2024-01-05T10:00:00Z"
+    },
+    {
+      "id": "med-6",
+      "name": "Islam_Ahmed_CV.pdf",
+      "url": "/cv/Islam_Ahmed_CV.pdf",
+      "type": "pdf",
+      "sizeBytes": 15000,
+      "uploadedAt": "2024-01-06T10:00:00Z"
+    }
+  ]
+}

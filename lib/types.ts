@@ -1,0 +1,144 @@
+export type Status = 'published' | 'draft' | 'hidden';
+
+export interface SiteSettings {
+  siteTitle: string;
+  siteDescription: string;
+  designerName: string;
+  designerNameAr: string;
+  heroHeadline: string;
+  heroHeadlineAr: string;
+  rotatingRoles: string[];
+  rotatingRolesAr: string[];
+  shortBio: string;
+  shortBioAr: string;
+  longBio: string;
+  longBioAr: string;
+  stats: {
+    experienceYears: string;
+    projectsCount: string;
+    clientsCount: string;
+    toolsCount: string;
+  };
+  contactEmail: string;
+  whatsappNumber: string;
+  whatsappUrl: string;
+  linkedinUrl: string;
+  cvUrl: string;
+  customCursorEnabled: boolean;
+  defaultLanguage: 'en' | 'ar';
+  seoKeywords: string;
+  ogImageUrl: string;
+}
+
+export interface Project {
+  id: string;
+  slug: string;
+  title: string;
+  titleAr?: string;
+  category: 'Motion Graphics' | 'Graphic Design' | 'Branding' | 'Social Media';
+  description: string;
+  descriptionAr?: string;
+  client: string;
+  projectDate: string;
+  coverImage: string;
+  gallery: string[];
+  videoUrl?: string;
+  youtubeUrl?: string;
+  vimeoUrl?: string;
+  googleDriveUrl?: string;
+  behanceUrl?: string;
+  tools: string[];
+  projectUrl?: string;
+  featured: boolean;
+  tags: string[];
+  sortOrder: number;
+  status: Status;
+  width?: number;
+  height?: number;
+  aspectRatio?: number;
+  orientation?: 'portrait' | 'landscape' | 'square';
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Experience {
+  id: string;
+  title: string;
+  titleAr?: string;
+  company: string;
+  companyAr?: string;
+  startDate: string;
+  endDate?: string;
+  isPresent: boolean;
+  description: string;
+  descriptionAr?: string;
+  sortOrder: number;
+  status: Status;
+}
+
+export interface SkillItem {
+  id: string;
+  name: string;
+  level?: number;
+  sortOrder: number;
+}
+
+export interface SkillGroup {
+  id: string;
+  title: string;
+  titleAr: string;
+  sortOrder: number;
+  skills: SkillItem[];
+}
+
+export interface ServiceItem {
+  id: string;
+  title: string;
+  titleAr: string;
+  category: 'Motion Graphics & Video Editing' | 'Graphic Design & Brand Identity';
+  description: string;
+  descriptionAr: string;
+  sortOrder: number;
+  status: Status;
+}
+
+export interface Testimonial {
+  id: string;
+  clientName: string;
+  position: string;
+  company: string;
+  photoUrl: string;
+  quote: string;
+  quoteAr?: string;
+  sortOrder: number;
+  status: Status;
+}
+
+export interface SocialLink {
+  id: string;
+  platform: string;
+  url: string;
+  icon: string;
+  sortOrder: number;
+  isActive: boolean;
+}
+
+export interface MediaFile {
+  id: string;
+  name: string;
+  url: string;
+  type: 'image' | 'video' | 'pdf' | 'other';
+  sizeBytes: number;
+  uploadedAt: string;
+}
+
+export interface AppData {
+  settings: SiteSettings;
+  projects: Project[];
+  experiences: Experience[];
+  skillGroups: SkillGroup[];
+  services: ServiceItem[];
+  testimonials: Testimonial[];
+  socialLinks: SocialLink[];
+  media: MediaFile[];
+}
