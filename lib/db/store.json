@@ -4,8 +4,8 @@
     "siteDescription": "Portfolio of Islam Ahmed, an elite Graphic & Motion Graphic Designer specializing in cinematic motion design, kinetic typography, 3D visual storytelling, and luxury brand identity.",
     "designerName": "Islam Ahmed",
     "designerNameAr": "إسلام أحمد",
-    "heroHeadline": "Hello",
-    "heroHeadlineAr": "مرحبًا",
+    "heroHeadline": "Welcome to my portfolio, I'm",
+    "heroHeadlineAr": "أهلاً، أنا",
     "rotatingRoles": [
       "Motion Graphic Designer",
       "Graphic Designer",
@@ -16,14 +16,14 @@
       "مصمم جرافيك",
       "مصمم بصري"
     ],
-    "shortBio": "Crafting visual identities and kinetic narratives that blur the boundary between graphic clarity and cinematic emotion.",
-    "shortBioAr": "صناعة هويات بصرية وسرديات حركية تدمج بين الوضوح الجرافيكي والعمق السينمائي المعبر.",
-    "longBio": "With over 2 years of dedicated commercial and agency experience, I empower brands, studios, and creators to express bold ideas through purposeful motion graphics, luxury typography, and bespoke visual identity systems. Every frame is engineered with mathematical precision, artistic sensibility, and storytelling intent.",
-    "longBioAr": "مع أكثر من عامين من الخبرة المكثفة في الوكالات الإبداعية والمشاريع المستقلة، أساعد العلامات التجارية والاستوديوهات على التعبير عن أفكارها الجريئة من خلال موشن جرافيك هادف، وطباعة بصرية فاخرة، وهويات فريدة من نوعها. كل إطار مصمم بدقة فنية، وإحساس بصري عميق، ورؤية سردية متكاملة.",
+    "shortBio": "Crafting visual identities and kinetic narratives that blur the boundary between graphic clarity and cinematic emotion",
+    "shortBioAr": "صياغة هويات بصرية وسرديات حركية تطمس الحدود بين الوضوح الجرافيكي والعمق السينمائي المعبر",
+    "longBio": "Behind every compelling digital presence lies a meticulous architecture of design, movement, and light. Operating at the intersection of graphic innovation, dynamic motion graphics, and striking imagery, I take abstract visions and forge them into unforgettable digital realities that dominate screens. In a digital world full of noise, clarity is currency—and great design has a pulse. As a multidisciplinary visual engineer, I don't just build visuals; I orchestrate elements that breathe life into concepts, engage audiences, and leave an indelible",
+    "longBioAr": "وراء كل حضور رقمي ناجح هندسة دقيقة تجمع بين التصميم الحركة، والضوء. أعمل في نقطة التقاطع بين الابتكار الجرافيكي والموشن جرافيك الديناميكي والصور النابضة بالحياة  لأحول الرؤى المجرّدة إلى واقع رقمي لا يُنسى يهيمن على الشاشات. وفي عالم مليء بالصخب الوضوح هو العملة الحقيقية والتصميم العظيم ينبض دائماً بالحياة. بصفتي مهندساً ومبدعاً بصرياً متعدد التخصصات لا أكتفي بصناعة صور بل أنسق عناصر تبث الروح في الأفكار، تتفاعل بعمق مع الجمهور وتترك بصمة لا تُحسَب",
     "stats": {
-      "experienceYears": "2+",
-      "projectsCount": "35+",
-      "clientsCount": "20+",
+      "experienceYears": "1+",
+      "projectsCount": "8+",
+      "clientsCount": "4+",
       "toolsCount": "+25"
     },
     "contactEmail": "smsma4140@gmail.com",
@@ -39,15 +39,15 @@
   "projects": [
     {
       "id": "proj-4",
-      "slug": "modernism-editorial-system",
-      "title": "Modernism '24 — Editorial Typography & Social System",
-      "titleAr": "مودرنيزم 24 — نظام طباعي وتحريري لمنصات التواصل",
+      "slug": "dr-hazem-gastroenterology-campaign",
+      "title": "Dr. Hazem Mahmoud Clinic — Gastroenterology & Hepatology Social Campaign",
+      "titleAr": "عيادة د. حازم محمود  — حملة توعية طبية لأمراض الجهاز الهضمي والكبد",
       "category": "Social Media",
-      "description": "High-fashion social motion campaign blending Swiss International Typographic Style, aggressive asymmetric grids, and kinetic Instagram story frames for an avant-garde fashion showcase.",
-      "descriptionAr": "حملة موشن لمنصات التواصل تجمع بين النمط الطباعي السويسري، والشبكات غير المتماثلة الجريئة، وإطارات قصص متحركة لفعالية أزياء طليعية.",
-      "client": "Mode Studio Paris",
+      "description": "A professional and trustworthy social media campaign designed for Dr. Hazem’s Gastroenterology and Hepatology clinic. The design blends clean medical aesthetics, clear typography, and patient-focused visual communication to establish credibility, educate the audience, and enhance digital engagement across Facebook feeds.",
+      "descriptionAr": "حملة سوشيال ميديا احترافية وموثوقة مصممة خصيصاً لعيادة الدكتور حازم لتخصص الجهاز الهضمي والكبد. يدمج التصميم بين الجماليات الطبية النظيفة، والخطوط الواضحة، والتواصل البصري المرتكز على المريض؛ لبناء الثقة، توعية الجمهور، وتعزيز التفاعل الرقمي عبر منصة فيسبوك.",
+      "client": "Dr. Hazem Mahmoud Clinic",
       "projectDate": "2023",
-      "coverImage": "/uploads/1790170312205-F1.png",
+      "coverImage": "/uploads/1790259518074-F2_.png",
       "gallery": [
         "/images/projects/project-zenith-social.jpg"
       ],
@@ -55,11 +55,10 @@
       "youtubeUrl": "",
       "vimeoUrl": "",
       "googleDriveUrl": "",
-      "behanceUrl": "https://www.behance.net",
+      "behanceUrl": "",
       "tools": [
-        "Illustrator",
-        "After Effects",
-        "Photoshop"
+        "Adobe Photoshop",
+        "Adobe Illustrator"
       ],
       "projectUrl": "",
       "featured": true,
@@ -72,10 +71,10 @@
       "sortOrder": 1,
       "status": "published",
       "createdAt": "2023-11-20T14:15:00Z",
-      "updatedAt": "2026-09-23T13:31:55.116Z",
-      "width": 4500,
-      "height": 4963,
-      "aspectRatio": 0.9067,
+      "updatedAt": "2026-09-24T14:24:46.669Z",
+      "width": 4501,
+      "height": 5118,
+      "aspectRatio": 0.8794,
       "orientation": "portrait"
     }
   ],
@@ -408,24 +407,6 @@
       "height": 1376,
       "aspectRatio": 0.5581,
       "orientation": "portrait"
-    },
-    {
-      "id": "t-2",
-      "screenshotUrl": "/images/testimonials/email-feedback-1.jpg",
-      "imageUrl": "/images/testimonials/email-feedback-1.jpg",
-      "photoUrl": "/images/testimonials/email-feedback-1.jpg",
-      "clientName": "Sarah Jenkins",
-      "projectName": "Apex Brand Identity & Motion",
-      "feedbackType": "Email",
-      "caption": "Formal approval and feedback for brand identity and motion graphics package.",
-      "captionAr": "اعتماد رسمي وثناء على حزمة الهوية البصرية والموشن جرافيك.",
-      "date": "2024",
-      "sortOrder": 2,
-      "status": "published",
-      "width": 1200,
-      "height": 896,
-      "aspectRatio": 1.3393,
-      "orientation": "landscape"
     }
   ],
   "socialLinks": [
@@ -440,12 +421,12 @@
   ],
   "media": [
     {
-      "name": "Screenshot 2026-09-23 214641.png",
-      "url": "/uploads/1790207945207-Screenshot_2026-09-23_214641.png",
+      "name": "F2_.png",
+      "url": "/uploads/1790259518074-F2_.png",
       "type": "image",
-      "sizeBytes": 1013276,
-      "id": "med-1790207945210",
-      "uploadedAt": "2026-09-23T23:59:05.210Z"
+      "sizeBytes": 10413786,
+      "id": "med-1790259518081",
+      "uploadedAt": "2026-09-24T14:18:38.081Z"
     },
     {
       "name": "F1.png",
@@ -462,46 +443,6 @@
       "sizeBytes": 91129,
       "id": "med-1790170123083",
       "uploadedAt": "2026-09-23T13:28:43.083Z"
-    },
-    {
-      "id": "med-1",
-      "name": "islam-ahmed.jpg",
-      "url": "/images/islam-ahmed.jpg",
-      "type": "image",
-      "sizeBytes": 284000,
-      "uploadedAt": "2024-01-01T10:00:00Z"
-    },
-    {
-      "id": "med-2",
-      "name": "project-lumina-motion.jpg",
-      "url": "/images/projects/project-lumina-motion.jpg",
-      "type": "image",
-      "sizeBytes": 420000,
-      "uploadedAt": "2024-01-02T10:00:00Z"
-    },
-    {
-      "id": "med-3",
-      "name": "project-vortex-brand.jpg",
-      "url": "/images/projects/project-vortex-brand.jpg",
-      "type": "image",
-      "sizeBytes": 380000,
-      "uploadedAt": "2024-01-03T10:00:00Z"
-    },
-    {
-      "id": "med-4",
-      "name": "project-aurora-campaign.jpg",
-      "url": "/images/projects/project-aurora-campaign.jpg",
-      "type": "image",
-      "sizeBytes": 490000,
-      "uploadedAt": "2024-01-04T10:00:00Z"
-    },
-    {
-      "id": "med-5",
-      "name": "project-zenith-social.jpg",
-      "url": "/images/projects/project-zenith-social.jpg",
-      "type": "image",
-      "sizeBytes": 410000,
-      "uploadedAt": "2024-01-05T10:00:00Z"
     },
     {
       "id": "med-6",
