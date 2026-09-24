@@ -191,17 +191,31 @@ export async function getSiteData(includeDrafts: boolean = false): Promise<AppDa
             sortOrder: s.sort_order || 0,
             status: s.status || 'published',
           })),
-          testimonials: (testimonialsData || []).map((t: any) => ({
-            id: t.id,
-            clientName: t.client_name,
-            position: t.position,
-            company: t.company,
-            photoUrl: t.photo_url || '',
-            quote: t.quote,
-            quoteAr: t.quote_ar,
-            sortOrder: t.sort_order || 0,
-            status: t.status || 'published',
-          })),
+          testimonials: (testimonialsData || []).map((t: any) => {
+            const screenshot = t.screenshot_url || t.photo_url || '';
+            return {
+              id: t.id,
+              screenshotUrl: screenshot,
+              imageUrl: screenshot,
+              photoUrl: screenshot,
+              clientName: t.client_name || '',
+              projectName: t.project_name || '',
+              feedbackType: t.feedback_type || 'WhatsApp',
+              caption: t.caption || '',
+              captionAr: t.caption_ar || '',
+              date: t.date || '',
+              sortOrder: t.sort_order || 0,
+              status: t.status || 'published',
+              width: t.width,
+              height: t.height,
+              aspectRatio: t.aspect_ratio,
+              orientation: t.orientation,
+              position: t.position || '',
+              company: t.company || '',
+              quote: t.quote || '',
+              quoteAr: t.quote_ar || '',
+            };
+          }),
           socialLinks: (socialLinksData || []).map((l: any) => ({
             id: l.id,
             platform: l.platform,
@@ -585,21 +599,39 @@ export async function saveTestimonial(testimonial: Partial<Testimonial> & { id?:
   const store = readLocalStore();
   let saved: Testimonial;
   const idx = store.testimonials.findIndex((t) => t.id === testimonial.id);
+  const screenshotUrl = testimonial.screenshotUrl || testimonial.imageUrl || testimonial.photoUrl || '';
 
   if (idx >= 0) {
-    saved = { ...store.testimonials[idx], ...testimonial } as Testimonial;
+    saved = {
+      ...store.testimonials[idx],
+      ...testimonial,
+      screenshotUrl,
+      imageUrl: screenshotUrl,
+      photoUrl: screenshotUrl,
+    } as Testimonial;
     store.testimonials[idx] = saved;
   } else {
     saved = {
       id: testimonial.id || `t-${Date.now()}`,
+      screenshotUrl,
+      imageUrl: screenshotUrl,
+      photoUrl: screenshotUrl,
       clientName: testimonial.clientName || '',
+      projectName: testimonial.projectName || '',
+      feedbackType: testimonial.feedbackType || 'WhatsApp',
+      caption: testimonial.caption || '',
+      captionAr: testimonial.captionAr || '',
+      date: testimonial.date || '',
       position: testimonial.position || '',
       company: testimonial.company || '',
-      photoUrl: testimonial.photoUrl || '',
       quote: testimonial.quote || '',
       quoteAr: testimonial.quoteAr || '',
       sortOrder: testimonial.sortOrder ?? store.testimonials.length + 1,
       status: testimonial.status || 'published',
+      width: testimonial.width,
+      height: testimonial.height,
+      aspectRatio: testimonial.aspectRatio,
+      orientation: testimonial.orientation,
     };
     store.testimonials.push(saved);
   }

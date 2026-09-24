@@ -53,7 +53,7 @@ export default async function AdminOverviewPage() {
       icon: Wand2,
     },
     {
-      title: 'Testimonials',
+      title: 'Client Feedback',
       count: data.testimonials.length,
       published: data.testimonials.filter((t) => t.status === 'published').length,
       href: '/admin/testimonials',

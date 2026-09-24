@@ -71,7 +71,7 @@ export const Footer: React.FC<FooterProps> = ({ socialLinks }) => {
               IA
             </span>
             <span className="font-mono text-xs tracking-wider text-[#F0F3F6] uppercase">
-              Islam Ahmed Creative Studio
+              Islam Ahmed
             </span>
           </div>
 

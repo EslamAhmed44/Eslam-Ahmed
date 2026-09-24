@@ -65,10 +65,15 @@ const translations: Record<Language, Record<string, string>> = {
     'services.motionGroup': 'Motion Graphics & Video Editing',
     'services.designGroup': 'Graphic Design & Brand Identity',
 
-    // Testimonials
-    'testimonials.eyebrow': 'Endorsements',
-    'testimonials.heading': 'What Collaborators Say',
-    'testimonials.empty': 'Testimonials will be added soon.',
+    // Testimonials / Client Feedback
+    'testimonials.eyebrow': 'Authentic Feedback',
+    'testimonials.heading': 'Real Client Feedback & Reviews',
+    'testimonials.subheading': 'Unfiltered screenshots of conversations, chat praise, and reviews from trusted clients.',
+    'testimonials.clickToExpand': 'Click to enlarge',
+    'testimonials.close': 'Close (Esc)',
+    'testimonials.previous': 'Previous',
+    'testimonials.next': 'Next',
+    'testimonials.empty': 'Client feedback screenshots will appear here soon.',
 
     // Contact
     'contact.eyebrow': 'Collaboration',
@@ -151,10 +156,15 @@ const translations: Record<Language, Record<string, string>> = {
     'services.motionGroup': 'الموشن جرافيك ومونتاج الفيديو',
     'services.designGroup': 'التصميم الجرافيكي وبناء الهوية',
 
-    // Testimonials
-    'testimonials.eyebrow': 'شهادات الشركاء',
-    'testimonials.heading': 'ماذا يقول العملاء والمخرجون',
-    'testimonials.empty': 'سيتم نشر آراء العملاء قريباً.',
+    // Testimonials / Client Feedback
+    'testimonials.eyebrow': 'آراء وتقييمات العملاء',
+    'testimonials.heading': 'شهادات وانطباعات العملاء الحقيقية',
+    'testimonials.subheading': 'لقطات حقيقية من محادثات ورسائل العملاء وتقييماتهم المباشرة.',
+    'testimonials.clickToExpand': 'انقر لعرض الصورة بالحجم الكامل',
+    'testimonials.close': 'إغلاق (Esc)',
+    'testimonials.previous': 'السابق',
+    'testimonials.next': 'التالي',
+    'testimonials.empty': 'سيتم نشر لقطات آراء العملاء قريباً.',
 
     // Contact
     'contact.eyebrow': 'التعاون والمشاريع',

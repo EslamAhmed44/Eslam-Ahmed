@@ -71,3 +71,15 @@ export const InstagramIcon: React.FC<{ className?: string }> = ({ className = 'w
     <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
   </svg>
 );
+
+export const MessengerIcon: React.FC<{ className?: string }> = ({ className = 'w-4 h-4' }) => (
+  <svg
+    className={className}
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    aria-hidden="true"
+  >
+    <path d="M12 2C6.477 2 2 6.145 2 11.258c0 2.914 1.455 5.518 3.734 7.205V22l3.41-1.872c.907.252 1.87.387 2.856.387 5.523 0 10-4.145 10-9.257C22 6.145 17.523 2 12 2zm1.002 12.443l-2.55-2.72-4.977 2.72 5.474-5.814 2.613 2.72 4.914-2.72-5.474 5.814z" />
+  </svg>
+);
+

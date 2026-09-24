@@ -108,17 +108,27 @@ CREATE TABLE IF NOT EXISTS public.services (
     status TEXT DEFAULT 'published' CHECK (status IN ('published', 'draft', 'hidden'))
 );
 
--- 6. Testimonials Table
+-- 6. Testimonials Table (Client Feedback Screenshots)
 CREATE TABLE IF NOT EXISTS public.testimonials (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    client_name TEXT NOT NULL,
-    position TEXT NOT NULL,
-    company TEXT NOT NULL,
+    screenshot_url TEXT,
     photo_url TEXT,
-    quote TEXT NOT NULL,
-    quote_ar TEXT,
+    client_name TEXT DEFAULT '',
+    project_name TEXT DEFAULT '',
+    feedback_type TEXT DEFAULT 'WhatsApp',
+    caption TEXT DEFAULT '',
+    caption_ar TEXT DEFAULT '',
+    date TEXT DEFAULT '',
+    position TEXT DEFAULT '',
+    company TEXT DEFAULT '',
+    quote TEXT DEFAULT '',
+    quote_ar TEXT DEFAULT '',
     sort_order INT DEFAULT 0,
-    status TEXT DEFAULT 'published' CHECK (status IN ('published', 'draft', 'hidden'))
+    status TEXT DEFAULT 'published' CHECK (status IN ('published', 'draft', 'hidden')),
+    width INT,
+    height INT,
+    aspect_ratio NUMERIC(6,4),
+    orientation TEXT DEFAULT 'portrait'
 );
 
 -- 7. Social Links Table

@@ -43,7 +43,7 @@ export default function AdminLayout({
     { href: '/admin/experience', label: 'Experience Timeline', icon: Briefcase },
     { href: '/admin/skills', label: 'Skills & Stack', icon: Layers },
     { href: '/admin/services', label: 'Services', icon: Wand2 },
-    { href: '/admin/testimonials', label: 'Testimonials', icon: MessageSquareQuote },
+    { href: '/admin/testimonials', label: 'Client Feedback', icon: MessageSquareQuote },
     { href: '/admin/media', label: 'Media Library', icon: ImageIcon },
     { href: '/admin/settings', label: 'Site Settings & SEO', icon: Settings },
   ];

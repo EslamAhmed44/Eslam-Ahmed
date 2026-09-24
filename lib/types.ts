@@ -102,16 +102,30 @@ export interface ServiceItem {
   status: Status;
 }
 
+export type FeedbackType = 'WhatsApp' | 'Messenger' | 'Email' | 'Review' | 'Other';
+
 export interface Testimonial {
   id: string;
-  clientName: string;
-  position: string;
-  company: string;
-  photoUrl: string;
-  quote: string;
-  quoteAr?: string;
+  screenshotUrl: string; // The primary content: client feedback screenshot
+  imageUrl?: string;     // alias for screenshotUrl
+  photoUrl?: string;     // backwards compatibility
+  clientName?: string;   // optional client name
+  projectName?: string;  // optional project name
+  feedbackType?: FeedbackType | string;
+  caption?: string;      // optional short caption
+  captionAr?: string;    // optional Arabic caption
+  date?: string;         // optional date e.g. "2024" or "May 2024"
   sortOrder: number;
-  status: Status;
+  status: Status;        // 'published' | 'draft'
+  width?: number;
+  height?: number;
+  aspectRatio?: number;
+  orientation?: 'portrait' | 'landscape' | 'square';
+  // Legacy fields kept for backward compatibility:
+  position?: string;
+  company?: string;
+  quote?: string;
+  quoteAr?: string;
 }
 
 export interface SocialLink {

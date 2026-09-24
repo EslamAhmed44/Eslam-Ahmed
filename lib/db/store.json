@@ -1,6 +1,6 @@
 {
   "settings": {
-    "siteTitle": "Islam Ahmed — Premium Motion & Graphic Designer",
+    "siteTitle": "Islam Ahmed — Graphic & Motion Graphic Designer",
     "siteDescription": "Portfolio of Islam Ahmed, an elite Graphic & Motion Graphic Designer specializing in cinematic motion design, kinetic typography, 3D visual storytelling, and luxury brand identity.",
     "designerName": "Islam Ahmed",
     "designerNameAr": "إسلام أحمد",
@@ -393,36 +393,39 @@
   "testimonials": [
     {
       "id": "t-1",
-      "clientName": "Marcus Vance",
-      "position": "Creative Director",
-      "company": "Vance Media London",
-      "photoUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=250&q=80",
-      "quote": "Islam has an extraordinary eye for kinetic rhythm. His motion graphics transformed our client's product launch into a breathtaking cinematic experience. He meets every deadline with perfection.",
-      "quoteAr": "يمتلك إسلام رؤية استثنائية لإيقاع الحركة. حولت لمساته في الموشن جرافيك إطلاق منتج عملائنا إلى تجربة سينمائية مبهرة، مع التزام تام بالمواعيد.",
+      "screenshotUrl": "/images/testimonials/whatsapp-feedback-1.jpg",
+      "imageUrl": "/images/testimonials/whatsapp-feedback-1.jpg",
+      "photoUrl": "/images/testimonials/whatsapp-feedback-1.jpg",
+      "clientName": "Maya",
+      "projectName": "Motion Reel Launch",
+      "feedbackType": "WhatsApp",
+      "caption": "Client celebration after reviewing the final animation reel.",
+      "captionAr": "إشادة وانطباع العميل بعد مشاهدة ريل الموشن النهائي.",
+      "date": "2024",
       "sortOrder": 1,
-      "status": "published"
+      "status": "published",
+      "width": 768,
+      "height": 1376,
+      "aspectRatio": 0.5581,
+      "orientation": "portrait"
     },
     {
       "id": "t-2",
-      "clientName": "Sarah Al-Mansoor",
-      "position": "Head of Marketing",
-      "company": "Horizon Agency Dubai",
-      "photoUrl": "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=250&q=80",
-      "quote": "Working with Islam on our brand identity and social motion assets was a masterclass in collaboration. He understood our luxury positioning instantly and delivered beyond expectations.",
-      "quoteAr": "العمل مع إسلام على هويتنا ومواد الموشن كان تجربة ملهمة. فهم تموضعنا الفاخر في السوق فوراً وقدم مخرجات فاقت كل التوقعات.",
+      "screenshotUrl": "/images/testimonials/email-feedback-1.jpg",
+      "imageUrl": "/images/testimonials/email-feedback-1.jpg",
+      "photoUrl": "/images/testimonials/email-feedback-1.jpg",
+      "clientName": "Sarah Jenkins",
+      "projectName": "Apex Brand Identity & Motion",
+      "feedbackType": "Email",
+      "caption": "Formal approval and feedback for brand identity and motion graphics package.",
+      "captionAr": "اعتماد رسمي وثناء على حزمة الهوية البصرية والموشن جرافيك.",
+      "date": "2024",
       "sortOrder": 2,
-      "status": "published"
-    },
-    {
-      "id": "t-1790207887754",
-      "clientName": "hazem",
-      "position": "ceo",
-      "company": "clinic ",
-      "photoUrl": "/uploads/1790207945207-Screenshot_2026-09-23_214641.png",
-      "quote": "v.good",
-      "quoteAr": "[hl]",
-      "sortOrder": 3,
-      "status": "published"
+      "status": "published",
+      "width": 1200,
+      "height": 896,
+      "aspectRatio": 1.3393,
+      "orientation": "landscape"
     }
   ],
   "socialLinks": [

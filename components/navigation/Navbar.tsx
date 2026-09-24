@@ -60,7 +60,7 @@ export const Navbar: React.FC<NavbarProps> = ({ cvUrl = '/cv/Islam_Ahmed_CV.pdf'
               </span>
               <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-[#F59E0B] ring-2 ring-[#07090D]" />
             </span>
-            <span className="hidden sm:inline font-mono text-sm tracking-wider text-[#94A3B8] group-hover:text-white transition-colors">
+            <span className="inline font-mono text-xs sm:text-sm tracking-wider text-[#94A3B8] group-hover:text-white transition-colors">
               ISLAM AHMED
             </span>
           </Link>

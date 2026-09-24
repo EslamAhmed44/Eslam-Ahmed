@@ -262,3 +262,6 @@ export async function detectMediaDimensionsClient(
     }
   });
 }
+
+export const detectMediaDimensions = detectMediaDimensionsClient;
+
