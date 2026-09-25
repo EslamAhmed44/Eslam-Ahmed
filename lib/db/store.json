@@ -106,6 +106,53 @@
       "aspectRatio": 0.8794,
       "orientation": "portrait",
       "ratioLabel": "0.88:1"
+    },
+    {
+      "id": "proj-1790295800442",
+      "slug": "project-1790295800442",
+      "title": "zzzz",
+      "titleAr": "zzzzzzz",
+      "category": "Motion Graphics",
+      "categories": [
+        "Motion Graphics"
+      ],
+      "description": "zzzz",
+      "descriptionAr": "",
+      "client": "zzzzzzz",
+      "clientName": "zzzzzzz",
+      "projectDate": "2026",
+      "coverImage": "/images/projects/project-lumina-motion.jpg",
+      "gallery": [],
+      "images": [],
+      "videoUrl": "",
+      "videos": [],
+      "youtubeUrl": "",
+      "vimeoUrl": "",
+      "googleDriveUrl": "",
+      "googleDriveMaterialsUrl": "",
+      "behanceUrl": "",
+      "tools": [
+        "Adobe Photoshop",
+        "Adobe Illustrator"
+      ],
+      "softwareUsed": [
+        "Adobe Photoshop",
+        "Adobe Illustrator"
+      ],
+      "projectUrl": "",
+      "featured": true,
+      "tags": [
+        "Campaign",
+        "Design"
+      ],
+      "sortOrder": 2,
+      "status": "published",
+      "width": 1376,
+      "height": 768,
+      "aspectRatio": 1.7917,
+      "orientation": "landscape",
+      "createdAt": "2026-09-25T00:23:49.655Z",
+      "updatedAt": "2026-09-25T00:23:49.655Z"
     }
   ],
   "experiences": [
