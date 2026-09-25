@@ -53,42 +53,36 @@
       "titleAr": "عيادة د. حازم محمود  — حملة توعية طبية لأمراض الجهاز الهضمي والكبد",
       "category": "Social Media",
       "categories": [
-        "Social Media",
-        "Graphic Design"
+        "Social Media"
       ],
       "description": "A professional and trustworthy social media campaign designed for Dr. Hazem’s Gastroenterology and Hepatology clinic. The design blends clean medical aesthetics, clear typography, and patient-focused visual communication to establish credibility, educate the audience, and enhance digital engagement across Facebook feeds.",
       "descriptionAr": "حملة سوشيال ميديا احترافية وموثوقة مصممة خصيصاً لعيادة الدكتور حازم لتخصص الجهاز الهضمي والكبد. يدمج التصميم بين الجماليات الطبية النظيفة، والخطوط الواضحة، والتواصل البصري المرتكز على المريض؛ لبناء الثقة، توعية الجمهور، وتعزيز التفاعل الرقمي عبر منصة فيسبوك.",
       "client": "Dr. Hazem Mahmoud Clinic",
       "clientName": "Dr. Hazem Mahmoud Clinic",
-      "projectDate": "2023",
+      "projectDate": "2026-Feb",
       "coverImage": "/uploads/1790259518074-F2_.png ",
       "gallery": [
-        "/uploads/1790262555578-F1.png"
+        "/uploads/1790262555578-F1.png",
+        "/uploads/1790356397051-F2.png"
       ],
       "images": [
-        "/uploads/1790262555578-F1.png"
+        "/uploads/1790262555578-F1.png",
+        "/uploads/1790356397051-F2.png"
       ],
-      "videoUrl": "/uploads/1790264937419-patientbook.mp4",
-      "videos": [
-        {
-          "id": "vid-1790264933784-1",
-          "url": "/uploads/1790264937419-patientbook.mp4",
-          "title": "Motion Video 1",
-          "type": "direct"
-        }
-      ],
+      "videoUrl": "",
+      "videos": [],
       "youtubeUrl": "",
       "vimeoUrl": "",
-      "googleDriveUrl": "https://drive.google.com/drive/folders/1kxQCYMEdoaYxHjwnZYAu-3eLVqWIV3sp?usp=sharing",
-      "googleDriveMaterialsUrl": "https://drive.google.com/drive/folders/1kxQCYMEdoaYxHjwnZYAu-3eLVqWIV3sp?usp=sharing",
+      "googleDriveUrl": "https://drive.google.com/drive/folders/1L0mjAiM8hJISvJxUmiYXOlSF7GNtUywY?usp=sharing",
+      "googleDriveMaterialsUrl": "https://drive.google.com/drive/folders/1L0mjAiM8hJISvJxUmiYXOlSF7GNtUywY?usp=sharing",
       "behanceUrl": "",
       "tools": [
-        "Adobe Photoshop",
-        "Adobe Illustrator"
+        "Photoshop",
+        "Illustrator"
       ],
       "softwareUsed": [
-        "Adobe Photoshop",
-        "Adobe Illustrator"
+        "Photoshop",
+        "Illustrator"
       ],
       "projectUrl": "",
       "featured": true,
@@ -101,59 +95,16 @@
       "sortOrder": 1,
       "status": "published",
       "createdAt": "2023-11-20T14:15:00Z",
-      "updatedAt": "2026-09-24T15:49:01.504Z",
+      "updatedAt": "2026-09-25T17:18:08.546Z",
       "width": 4501,
       "height": 5118,
       "aspectRatio": 0.8794,
       "orientation": "portrait",
-      "ratioLabel": "0.88:1"
-    },
-    {
-      "id": "proj-1790295800442",
-      "slug": "project-1790295800442",
-      "title": "zzzz",
-      "titleAr": "zzzzzzz",
-      "category": "Motion Graphics",
-      "categories": [
-        "Motion Graphics"
-      ],
-      "description": "zzzz",
-      "descriptionAr": "",
-      "client": "zzzzzzz",
-      "clientName": "zzzzzzz",
-      "projectDate": "2026",
-      "coverImage": "/images/projects/project-lumina-motion.jpg",
-      "gallery": [],
-      "images": [],
-      "videoUrl": "",
-      "videos": [],
-      "youtubeUrl": "",
-      "vimeoUrl": "",
-      "googleDriveUrl": "",
-      "googleDriveMaterialsUrl": "",
-      "behanceUrl": "",
-      "tools": [
-        "Adobe Photoshop",
-        "Adobe Illustrator"
-      ],
-      "softwareUsed": [
-        "Adobe Photoshop",
-        "Adobe Illustrator"
-      ],
-      "projectUrl": "",
-      "featured": true,
-      "tags": [
-        "Campaign",
-        "Design"
-      ],
-      "sortOrder": 2,
-      "status": "published",
-      "width": 1376,
-      "height": 768,
-      "aspectRatio": 1.7917,
-      "orientation": "landscape",
-      "createdAt": "2026-09-25T00:23:49.655Z",
-      "updatedAt": "2026-09-25T00:23:49.655Z"
+      "ratioLabel": "0.88:1",
+      "skillIds": [
+        "s-21",
+        "s-22"
+      ]
     }
   ],
   "experiences": [
@@ -467,44 +418,7 @@
       "status": "published"
     }
   ],
-  "testimonials": [
-    {
-      "id": "t-1",
-      "screenshotUrl": "/images/testimonials/whatsapp-feedback-1.jpg",
-      "imageUrl": "/images/testimonials/whatsapp-feedback-1.jpg",
-      "photoUrl": "/images/testimonials/whatsapp-feedback-1.jpg",
-      "clientName": "Maya",
-      "projectName": "Motion Reel Launch",
-      "feedbackType": "WhatsApp",
-      "caption": "Client celebration after reviewing the final animation reel.",
-      "captionAr": "إشادة وانطباع العميل بعد مشاهدة ريل الموشن النهائي.",
-      "date": "2024",
-      "sortOrder": 1,
-      "status": "published",
-      "width": 768,
-      "height": 1376,
-      "aspectRatio": 0.5581,
-      "orientation": "portrait"
-    },
-    {
-      "id": "t-2",
-      "screenshotUrl": "/images/testimonials/email-feedback-1.jpg",
-      "imageUrl": "/images/testimonials/email-feedback-1.jpg",
-      "photoUrl": "/images/testimonials/email-feedback-1.jpg",
-      "clientName": "Sarah Jenkins",
-      "projectName": "Apex Brand Identity & Motion",
-      "feedbackType": "Email",
-      "caption": "Formal approval and feedback for brand identity and motion graphics package.",
-      "captionAr": "اعتماد رسمي وثناء على حزمة الهوية البصرية والموشن جرافيك.",
-      "date": "2024",
-      "sortOrder": 2,
-      "status": "published",
-      "width": 1200,
-      "height": 896,
-      "aspectRatio": 1.3393,
-      "orientation": "landscape"
-    }
-  ],
+  "testimonials": [],
   "socialLinks": [
     {
       "id": "soc-1",
@@ -517,20 +431,12 @@
   ],
   "media": [
     {
-      "name": "patientbook.mp4",
-      "url": "/uploads/1790264937419-patientbook.mp4",
-      "type": "video",
-      "sizeBytes": 2788670,
-      "id": "med-1790264937424",
-      "uploadedAt": "2026-09-24T15:48:57.424Z"
-    },
-    {
-      "name": "patientbook.mp4",
-      "url": "/uploads/1790262718546-patientbook.mp4",
-      "type": "video",
-      "sizeBytes": 2788670,
-      "id": "med-1790262718549",
-      "uploadedAt": "2026-09-24T15:11:58.549Z"
+      "name": "F2.png",
+      "url": "/uploads/1790356397051-F2.png",
+      "type": "image",
+      "sizeBytes": 10413786,
+      "id": "med-1790356397057",
+      "uploadedAt": "2026-09-25T17:13:17.057Z"
     },
     {
       "name": "F1.png",
