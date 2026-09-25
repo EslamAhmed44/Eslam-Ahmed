@@ -62,14 +62,14 @@
       "client": "Dr. Hazem Mahmoud Clinic",
       "clientName": "Dr. Hazem Mahmoud Clinic",
       "projectDate": "2026-Feb",
-      "coverImage": "/uploads/1790259518074-F2_.png ",
+      "coverImage": "/uploads/1790262555578-F1.png",
       "gallery": [
-        "/uploads/1790259518074-F2_.png ",
-        "/uploads/1790262555578-F1.png"
+        "/uploads/1790262555578-F1.png",
+        "http://localhost:3000/uploads/1790259518074-F2_.png"
       ],
       "images": [
-        "/uploads/1790259518074-F2_.png ",
-        "/uploads/1790262555578-F1.png"
+        "/uploads/1790262555578-F1.png",
+        "http://localhost:3000/uploads/1790259518074-F2_.png"
       ],
       "videoUrl": "",
       "videos": [],
@@ -99,12 +99,12 @@
       "sortOrder": 2,
       "status": "published",
       "createdAt": "2023-11-20T14:15:00Z",
-      "updatedAt": "2026-09-25T20:19:35.950Z",
-      "width": 4501,
-      "height": 5118,
-      "aspectRatio": 0.8794,
+      "updatedAt": "2026-09-25T21:23:00.598Z",
+      "width": 4500,
+      "height": 4963,
+      "aspectRatio": 0.9067,
       "orientation": "portrait",
-      "ratioLabel": "0.88:1",
+      "ratioLabel": "0.91:1",
       "skillIds": [
         "s-21",
         "s-22",
@@ -112,20 +112,17 @@
       ],
       "mediaItems": [
         {
-          "id": "med-1",
-          "type": "image",
-          "url": "/uploads/1790259518074-F2_.png ",
-          "title": "Cover Visual",
-          "sortOrder": 1,
-          "aspectRatio": 0.8794,
-          "width": 4501,
-          "height": 5118
-        },
-        {
           "id": "med-2",
           "type": "image",
           "url": "/uploads/1790262555578-F1.png",
           "title": "Image 2",
+          "sortOrder": 1
+        },
+        {
+          "id": "med-1790371378129",
+          "type": "image",
+          "url": "http://localhost:3000/uploads/1790259518074-F2_.png",
+          "title": "Artwork Image",
           "sortOrder": 2
         }
       ],
