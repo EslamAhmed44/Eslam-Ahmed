@@ -8,6 +8,7 @@ import { ArrowUpRight, Play } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { calculateMediaDimensions, getRatioLabel } from '@/lib/media/dimensions';
 import { SoftwareIcon } from '../ui/SoftwareIcon';
+import { ProjectMediaSlideshow } from './ProjectMediaSlideshow';
 
 interface ProjectCardProps {
   project: Project;
@@ -95,23 +96,43 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         style={{ backgroundImage: `url(${project.coverImage || '/images/projects/project-lumina-motion.jpg'})` }}
       />
 
-      {/* Uncropped Original Artwork Frame */}
+      {/* Uncropped Original Artwork Frame with Automatic 6s Live Slideshow */}
       <div className="absolute inset-0 p-3 sm:p-5 pb-28 sm:pb-32 flex items-center justify-center overflow-hidden">
-        <img
-          src={project.coverImage || '/images/projects/project-lumina-motion.jpg'}
-          alt={title}
-          className="w-full h-full object-contain rounded-2xl transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-          loading="lazy"
-          onLoad={(e) => {
-            const img = e.currentTarget;
-            if (!project.aspectRatio && img.naturalWidth > 0 && img.naturalHeight > 0) {
-              const dim = calculateMediaDimensions(img.naturalWidth, img.naturalHeight);
+        <ProjectMediaSlideshow
+          mediaItems={
+            project.mediaItems && project.mediaItems.length > 0
+              ? project.mediaItems
+              : [
+                  {
+                    id: 'cover',
+                    type: 'image',
+                    url: project.coverImage || '/images/projects/project-lumina-motion.jpg',
+                    sortOrder: 1,
+                  },
+                  ...(project.gallery || []).map((url, i) => ({
+                    id: `gal-${i}`,
+                    type: 'image' as const,
+                    url,
+                    sortOrder: i + 2,
+                  })),
+                  ...(project.videos || []).map((v, i) => ({
+                    id: v.id || `vid-${i}`,
+                    type: 'video' as const,
+                    url: v.url,
+                    sortOrder: i + 10,
+                  })),
+                ]
+          }
+          title={title}
+          intervalMs={6000}
+          onDimensionChange={(dim) => {
+            if (!project.aspectRatio && dim.width && dim.height) {
               setLiveDim(dim);
             }
           }}
         />
         {/* Subtle Dark Gradient Footnote Overlay */}
-        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#07090D] via-[#07090D]/85 to-transparent pointer-events-none" />
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#07090D] via-[#07090D]/85 to-transparent pointer-events-none z-10" />
       </div>
 
       {/* Top Badges (Category & Detected Aspect Ratio / Video / Gallery Indicator) */}
@@ -182,13 +203,16 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
 
         {/* Tools Tags */}
         <div className="flex flex-wrap gap-1.5 pt-1">
-          {project.tools.slice(0, 3).map((tool, i) => (
+          {(project.resolvedTools && project.resolvedTools.length > 0
+            ? project.resolvedTools.slice(0, 3)
+            : project.tools.slice(0, 3).map((t) => ({ id: t, name: t, nameAr: undefined, iconUrl: undefined }))
+          ).map((tool, i) => (
             <span
-              key={i}
+              key={tool.id || i}
               className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-[#151A23]/90 text-[10px] font-mono text-[#94A3B8]"
             >
-              <SoftwareIcon name={tool} className="w-3 h-3" />
-              <span>{tool}</span>
+              <SoftwareIcon name={tool.name} iconUrl={tool.iconUrl} className="w-3 h-3" />
+              <span>{language === 'ar' && tool.nameAr ? tool.nameAr : tool.name}</span>
             </span>
           ))}
         </div>

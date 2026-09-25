@@ -53,9 +53,7 @@
       "titleAr": "عيادة د. حازم محمود  — حملة توعية طبية لأمراض الجهاز الهضمي والكبد",
       "category": "Social Media",
       "categories": [
-        "Social Media",
-        "Branding",
-        "Graphic Design"
+        "Social Media"
       ],
       "description": "A professional and trustworthy social media campaign designed for Dr. Hazem’s Gastroenterology and Hepatology clinic. The design blends clean medical aesthetics, clear typography, and patient-focused visual communication to establish credibility, educate the audience, and enhance digital engagement across Facebook feeds.",
       "descriptionAr": "حملة سوشيال ميديا احترافية وموثوقة مصممة خصيصاً لعيادة الدكتور حازم لتخصص الجهاز الهضمي والكبد. يدمج التصميم بين الجماليات الطبية النظيفة، والخطوط الواضحة، والتواصل البصري المرتكز على المريض؛ لبناء الثقة، توعية الجمهور، وتعزيز التفاعل الرقمي عبر منصة فيسبوك.",
@@ -64,12 +62,12 @@
       "projectDate": "2026-Feb",
       "coverImage": "/uploads/1790259518074-F2_.png ",
       "gallery": [
-        "/uploads/1790259518074-F2_.png ",
-        "/uploads/1790262555578-F1.png"
+        "/uploads/1790262555578-F1.png",
+        "/uploads/1790356397051-F2.png"
       ],
       "images": [
-        "/uploads/1790259518074-F2_.png ",
-        "/uploads/1790262555578-F1.png"
+        "/uploads/1790262555578-F1.png",
+        "/uploads/1790356397051-F2.png"
       ],
       "videoUrl": "",
       "videos": [],
@@ -80,13 +78,11 @@
       "behanceUrl": "",
       "tools": [
         "Photoshop",
-        "Illustrator",
-        "Brand Identity"
+        "Illustrator"
       ],
       "softwareUsed": [
         "Photoshop",
-        "Illustrator",
-        "Brand Identity"
+        "Illustrator"
       ],
       "projectUrl": "",
       "featured": true,
@@ -96,10 +92,10 @@
         "Kinetic Posters",
         "Fashion"
       ],
-      "sortOrder": 2,
+      "sortOrder": 1,
       "status": "published",
       "createdAt": "2023-11-20T14:15:00Z",
-      "updatedAt": "2026-09-25T20:19:35.950Z",
+      "updatedAt": "2026-09-25T17:18:08.546Z",
       "width": 4501,
       "height": 5118,
       "aspectRatio": 0.8794,
@@ -107,44 +103,7 @@
       "ratioLabel": "0.88:1",
       "skillIds": [
         "s-21",
-        "s-22",
-        "s-1790364546943"
-      ],
-      "mediaItems": [
-        {
-          "id": "med-1",
-          "type": "image",
-          "url": "/uploads/1790259518074-F2_.png ",
-          "title": "Cover Visual",
-          "sortOrder": 1,
-          "aspectRatio": 0.8794,
-          "width": 4501,
-          "height": 5118
-        },
-        {
-          "id": "med-2",
-          "type": "image",
-          "url": "/uploads/1790262555578-F1.png",
-          "title": "Image 2",
-          "sortOrder": 2
-        }
-      ],
-      "resolvedTools": [
-        {
-          "id": "s-21",
-          "name": "Photoshop",
-          "iconUrl": "/icons/software/photoshop.svg"
-        },
-        {
-          "id": "s-22",
-          "name": "Illustrator",
-          "iconUrl": "/icons/software/illustrator.svg"
-        },
-        {
-          "id": "s-1790364546943",
-          "name": "Brand Identity",
-          "iconUrl": "/uploads/1790364544392-_____.png"
-        }
+        "s-22"
       ]
     },
     {
@@ -297,7 +256,6 @@
         {
           "id": "s-6",
           "name": "After Effects",
-          "iconUrl": "/icons/software/after-effects.svg",
           "sortOrder": 1
         },
         {
@@ -397,98 +355,32 @@
         {
           "id": "s-21",
           "name": "Photoshop",
-          "iconUrl": "/icons/software/photoshop.svg",
-          "sortOrder": 1,
-          "enabled": true
+          "sortOrder": 1
         },
         {
           "id": "s-22",
           "name": "Illustrator",
-          "iconUrl": "/icons/software/illustrator.svg",
-          "sortOrder": 2,
-          "enabled": true
+          "sortOrder": 2
         },
         {
           "id": "s-23",
           "name": "Premiere Pro",
-          "iconUrl": "/icons/software/premiere-pro.svg",
-          "sortOrder": 3,
-          "enabled": true
+          "sortOrder": 3
         },
         {
           "id": "s-24",
           "name": "After Effects",
-          "iconUrl": "/icons/software/after-effects.svg",
-          "sortOrder": 4,
-          "enabled": true
+          "sortOrder": 4
         },
         {
           "id": "s-25",
           "name": "InDesign",
-          "iconUrl": "/icons/software/indesign.svg",
-          "sortOrder": 5,
-          "enabled": true
+          "sortOrder": 5
         },
         {
           "id": "s-26",
           "name": "Lightroom",
-          "iconUrl": "/icons/software/lightroom.svg",
-          "sortOrder": 6,
-          "enabled": true
-        },
-        {
-          "id": "s-1790364546943",
-          "name": "Brand Identity",
-          "iconUrl": "/uploads/1790364544392-_____.png",
-          "sortOrder": 7,
-          "enabled": true,
-          "parentId": "group-5",
-          "category": "Software Proficiency"
-        },
-        {
-          "id": "s-32",
-          "name": "Figma",
-          "iconUrl": "/icons/software/figma.svg",
-          "sortOrder": 8,
-          "enabled": true,
-          "parentId": "group-5",
-          "category": "Software Proficiency"
-        },
-        {
-          "id": "s-33",
-          "name": "Canva",
-          "iconUrl": "/icons/software/canva.svg",
-          "sortOrder": 9,
-          "enabled": true,
-          "parentId": "group-5",
-          "category": "Software Proficiency"
-        },
-        {
-          "id": "s-34",
-          "name": "DaVinci Resolve",
-          "iconUrl": "/icons/software/davinci-resolve.svg",
-          "sortOrder": 10,
-          "enabled": true,
-          "parentId": "group-5",
-          "category": "Software Proficiency"
-        },
-        {
-          "id": "s-35",
-          "name": "Blender",
-          "iconUrl": "/icons/software/blender.svg",
-          "sortOrder": 11,
-          "enabled": true,
-          "parentId": "group-5",
-          "category": "Software Proficiency"
-        },
-        {
-          "id": "s-36",
-          "name": "Cinema 4D",
-          "iconUrl": "/icons/software/cinema4d.svg",
-          "sortOrder": 12,
-          "enabled": true,
-          "parentId": "group-5",
-          "category": "Software Proficiency"
+          "sortOrder": 6
         }
       ]
     },
@@ -600,14 +492,6 @@
     }
   ],
   "media": [
-    {
-      "name": "تنزيل.png",
-      "url": "/uploads/1790364544392-_____.png",
-      "type": "image",
-      "sizeBytes": 5008,
-      "id": "med-1790364544395",
-      "uploadedAt": "2026-09-25T19:29:04.395Z"
-    },
     {
       "name": "تنزيل.png",
       "url": "/uploads/1790362302091-_____.png",

@@ -1,12 +1,15 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { ProjectMediaItem } from '@/lib/types';
 import { calculateMediaDimensions, getRatioLabel } from '@/lib/media/dimensions';
+import { ProjectMediaSlideshow } from './ProjectMediaSlideshow';
 
 interface AdaptiveMediaFrameProps {
   coverImage: string;
   videoUrl?: string;
   title: string;
+  mediaItems?: ProjectMediaItem[];
   initialWidth?: number;
   initialHeight?: number;
   initialAspectRatio?: number;
@@ -20,6 +23,7 @@ export const AdaptiveMediaFrame: React.FC<AdaptiveMediaFrameProps> = ({
   coverImage,
   videoUrl,
   title,
+  mediaItems,
   initialWidth,
   initialHeight,
   initialAspectRatio,
@@ -28,7 +32,12 @@ export const AdaptiveMediaFrame: React.FC<AdaptiveMediaFrameProps> = ({
   showBadge = true,
   priority = false,
 }) => {
-  const [dimensions, setDimensions] = useState({
+  const [dimensions, setDimensions] = useState<{
+    width?: number;
+    height?: number;
+    aspectRatio?: number;
+    orientation?: 'portrait' | 'landscape' | 'square';
+  }>({
     width: initialWidth,
     height: initialHeight,
     aspectRatio: initialAspectRatio,
@@ -74,6 +83,8 @@ export const AdaptiveMediaFrame: React.FC<AdaptiveMediaFrameProps> = ({
     maxWidth = '720px';
   }
 
+  const hasMultipleMedia = mediaItems && mediaItems.length > 1;
+
   return (
     <div className={`relative mx-auto w-full flex flex-col items-center ${className}`}>
       {/* Outer Adaptive Frame */}
@@ -91,8 +102,21 @@ export const AdaptiveMediaFrame: React.FC<AdaptiveMediaFrameProps> = ({
           style={{ backgroundImage: `url(${coverImage})` }}
         />
 
-        {/* Video or Image with complete artwork preservation */}
-        {videoUrl ? (
+        {/* Multi-Media Slideshow if > 1 media item */}
+        {hasMultipleMedia ? (
+          <ProjectMediaSlideshow
+            mediaItems={mediaItems}
+            title={title}
+            intervalMs={6000}
+            className="relative z-10 w-full h-full max-h-[85vh] rounded-3xl"
+            onDimensionChange={(dim) => {
+              if (dim.width && dim.height) {
+                setDimensions(dim);
+              }
+            }}
+          />
+        ) : videoUrl ? (
+          /* Single Video with artwork preservation */
           <video
             src={videoUrl}
             controls
@@ -110,6 +134,7 @@ export const AdaptiveMediaFrame: React.FC<AdaptiveMediaFrameProps> = ({
             }}
           />
         ) : (
+          /* Single Image with artwork preservation */
           <img
             src={coverImage}
             alt={title}
@@ -132,6 +157,9 @@ export const AdaptiveMediaFrame: React.FC<AdaptiveMediaFrameProps> = ({
           <span>
             Original Frame: {dimensions.width} × {dimensions.height} ({getRatioLabel(dimensions.width, dimensions.height)})
           </span>
+          {hasMultipleMedia && (
+            <span className="text-[#F59E0B]">• {mediaItems.length} Rotating Slides</span>
+          )}
         </div>
       )}
     </div>

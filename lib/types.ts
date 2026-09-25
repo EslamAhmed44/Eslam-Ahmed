@@ -39,6 +39,19 @@ export interface ProjectVideo {
   type?: 'youtube' | 'vimeo' | 'mp4' | 'direct' | 'other';
 }
 
+export interface ProjectMediaItem {
+  id: string;
+  type: 'image' | 'video';
+  url: string;
+  title?: string;
+  titleAr?: string;
+  sortOrder: number;
+  aspectRatio?: number;
+  width?: number;
+  height?: number;
+  posterUrl?: string;
+}
+
 export interface Project {
   id: string;
   slug: string;
@@ -54,6 +67,7 @@ export interface Project {
   coverImage: string;
   gallery: string[];
   images?: string[]; // alias for gallery
+  mediaItems?: ProjectMediaItem[]; // Unified ordered multi-media list (images & videos)
   videoUrl?: string;
   videos?: ProjectVideo[]; // Multiple videos support
   youtubeUrl?: string;
@@ -64,6 +78,7 @@ export interface Project {
   tools: string[]; // Software Used
   softwareUsed?: string[]; // alias
   skillIds?: string[]; // References to central SkillItem ids
+  resolvedTools?: Array<{ id: string; name: string; nameAr?: string; iconUrl?: string }>;
   projectUrl?: string;
   featured: boolean;
   tags: string[];

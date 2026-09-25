@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { SkillGroup, SkillItem } from '@/lib/types';
 import {
   Plus,
@@ -14,10 +14,19 @@ import {
   Image as ImageIcon,
   Check,
   AlertCircle,
+  Search,
+  Filter,
+  Eye,
+  EyeOff,
+  ArrowUp,
+  ArrowDown,
 } from 'lucide-react';
 import { SoftwareIcon } from '@/components/ui/SoftwareIcon';
+import { getDefaultSoftwareIconUrl } from '@/lib/media/softwareIcons';
+import { useAdminLanguage } from '@/context/AdminLanguageContext';
 
 export default function AdminSkillsPage() {
+  const { t, language, direction } = useAdminLanguage();
   const [skillGroups, setSkillGroups] = useState<SkillGroup[]>([]);
   const [loading, setLoading] = useState(true);
   const [editingGroup, setEditingGroup] = useState<Partial<SkillGroup> | null>(null);
@@ -26,8 +35,13 @@ export default function AdminSkillsPage() {
   const [message, setMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
+  // Search & Filter state
+  const [searchQuery, setSearchQuery] = useState('');
+  const [categoryFilter, setCategoryFilter] = useState('ALL');
+
   // New Skill in modal state
   const [newSkillName, setNewSkillName] = useState('');
+  const [newSkillNameAr, setNewSkillNameAr] = useState('');
   const [newSkillIconUrl, setNewSkillIconUrl] = useState('');
   const [uploadingSkillIcon, setUploadingSkillIcon] = useState<string | null>(null);
 
@@ -56,6 +70,7 @@ export default function AdminSkillsPage() {
       skills: [],
     });
     setNewSkillName('');
+    setNewSkillNameAr('');
     setNewSkillIconUrl('');
     setIsModalOpen(true);
   };
@@ -66,6 +81,7 @@ export default function AdminSkillsPage() {
       skills: group.skills.map((s) => ({ ...s })),
     });
     setNewSkillName('');
+    setNewSkillNameAr('');
     setNewSkillIconUrl('');
     setIsModalOpen(true);
   };
@@ -129,11 +145,24 @@ export default function AdminSkillsPage() {
   };
 
   const addSkillToEditing = () => {
-    if (!newSkillName.trim() || !editingGroup) return;
+    const trimmed = newSkillName.trim();
+    if (!trimmed || !editingGroup) return;
+
+    // Duplicate check
+    const isDuplicate = (editingGroup.skills || []).some(
+      (s) => s.name.toLowerCase() === trimmed.toLowerCase()
+    );
+    if (isDuplicate) {
+      alert(t('skills.duplicateWarning'));
+      return;
+    }
+
+    const resolvedDefaultIcon = getDefaultSoftwareIconUrl(trimmed);
     const newSkill: SkillItem = {
       id: `s-${Date.now()}`,
-      name: newSkillName.trim(),
-      iconUrl: newSkillIconUrl.trim() || undefined,
+      name: trimmed,
+      nameAr: newSkillNameAr.trim() || undefined,
+      iconUrl: newSkillIconUrl.trim() || resolvedDefaultIcon || undefined,
       sortOrder: (editingGroup.skills?.length || 0) + 1,
       enabled: true,
       parentId: editingGroup.id,
@@ -144,6 +173,7 @@ export default function AdminSkillsPage() {
       skills: [...(editingGroup.skills || []), newSkill],
     });
     setNewSkillName('');
+    setNewSkillNameAr('');
     setNewSkillIconUrl('');
   };
 
@@ -155,12 +185,30 @@ export default function AdminSkillsPage() {
     });
   };
 
-  const updateSkillInEditing = (skillId: string, updates: Partial<SkillItem>) => {
+  const toggleSkillEnabled = (skillId: string) => {
     if (!editingGroup) return;
     const updatedSkills = (editingGroup.skills || []).map((s) =>
-      s.id === skillId ? { ...s, ...updates } : s
+      s.id === skillId ? { ...s, enabled: s.enabled === false ? true : false } : s
     );
     setEditingGroup({ ...editingGroup, skills: updatedSkills });
+  };
+
+  const moveSkillOrder = (index: number, direction: 'up' | 'down') => {
+    if (!editingGroup || !editingGroup.skills) return;
+    const current = [...editingGroup.skills];
+    const targetIdx = direction === 'up' ? index - 1 : index + 1;
+    if (targetIdx < 0 || targetIdx >= current.length) return;
+
+    const temp = current[index];
+    current[index] = current[targetIdx];
+    current[targetIdx] = temp;
+
+    // reassign sortOrder
+    current.forEach((s, idx) => {
+      s.sortOrder = idx + 1;
+    });
+
+    setEditingGroup({ ...editingGroup, skills: current });
   };
 
   const handleSave = async (e: React.FormEvent) => {
@@ -177,16 +225,16 @@ export default function AdminSkillsPage() {
         body: JSON.stringify(editingGroup),
       });
       if (res.ok) {
-        setMessage('Skill group and tool competencies saved successfully!');
+        setMessage(t('common.success'));
         setIsModalOpen(false);
         fetchSkills();
         setTimeout(() => setMessage(''), 4000);
       } else {
         const err = await res.json();
-        throw new Error(err.error || 'Save failed');
+        throw new Error(err.error || t('common.failed'));
       }
     } catch (err: any) {
-      setErrorMessage(err.message || 'Save failed');
+      setErrorMessage(err.message || t('common.failed'));
       setTimeout(() => setErrorMessage(''), 5000);
     } finally {
       setSaving(false);
@@ -194,32 +242,61 @@ export default function AdminSkillsPage() {
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Delete this skill group and all its skills?')) return;
+    if (!confirm(t('common.confirmDelete'))) return;
     try {
       const res = await fetch(`/api/admin/skill-groups?id=${id}`, { method: 'DELETE' });
       if (res.ok) {
         setSkillGroups(skillGroups.filter((g) => g.id !== id));
-        setMessage('Skill group deleted.');
+        setMessage(t('common.success'));
         setTimeout(() => setMessage(''), 3000);
       }
     } catch {
-      alert('Delete failed');
+      alert(t('common.failed'));
     }
   };
+
+  // Filtered skills display
+  const filteredGroups = useMemo(() => {
+    let result = [...skillGroups];
+    if (categoryFilter !== 'ALL') {
+      result = result.filter((g) => g.id === categoryFilter || g.title === categoryFilter);
+    }
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase().trim();
+      result = result
+        .map((g) => {
+          const matchTitle =
+            g.title.toLowerCase().includes(q) || (g.titleAr && g.titleAr.includes(q));
+          const matchingSkills = g.skills.filter(
+            (s) => s.name.toLowerCase().includes(q) || (s.nameAr && s.nameAr.includes(q))
+          );
+          if (matchTitle || matchingSkills.length > 0) {
+            return {
+              ...g,
+              skills: matchTitle ? g.skills : matchingSkills,
+            };
+          }
+          return null;
+        })
+        .filter(Boolean) as SkillGroup[];
+    }
+    return result;
+  }, [skillGroups, categoryFilter, searchQuery]);
 
   if (loading) {
     return <div className="text-sm font-mono text-[#94A3B8]">Loading Skills...</div>;
   }
 
   return (
-    <div className="space-y-8 max-w-5xl pb-16">
+    <div className="space-y-8 max-w-6xl pb-16">
+      {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-black text-[#F0F3F6] tracking-tight">
-            Skills & Software Matrix CMS
+          <h1 className="text-2xl sm:text-3xl font-black text-[#F0F3F6] tracking-tight">
+            {t('skills.title')}
           </h1>
-          <p className="text-sm text-[#94A3B8] mt-1">
-            Hierarchical management: Parent Category &rarr; Child Skills / Tools with custom uploaded icons or branded vector SVGs.
+          <p className="text-xs sm:text-sm text-[#94A3B8] mt-1">
+            {t('skills.subtitle')}
           </p>
         </div>
 
@@ -243,14 +320,44 @@ export default function AdminSkillsPage() {
             className="px-5 py-3 rounded-full bg-gradient-to-r from-[#F59E0B] to-[#FF7A18] text-[#07090D] font-bold text-xs flex items-center gap-2 hover:shadow-[0_0_20px_rgba(245,158,11,0.35)] transition-all cursor-pointer"
           >
             <Plus className="w-4 h-4" />
-            <span>Add Skill Group</span>
+            <span>{t('skills.addGroup')}</span>
           </button>
+        </div>
+      </div>
+
+      {/* Search & Filter Toolbar */}
+      <div className="p-4 rounded-2xl bg-[#10141C] border border-[#F0F3F6]/08 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="relative w-full sm:w-80">
+          <Search className="w-4 h-4 absolute start-3.5 top-1/2 -translate-y-1/2 text-[#94A3B8]" />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder={t('skills.searchPlaceholder')}
+            className="w-full ps-10 pe-4 py-2.5 rounded-xl bg-[#151A23] border border-[#F0F3F6]/10 text-xs text-[#F0F3F6] focus:outline-none focus:border-[#F59E0B]"
+          />
+        </div>
+
+        <div className="flex items-center gap-2 w-full sm:w-auto">
+          <Filter className="w-3.5 h-3.5 text-[#94A3B8]" />
+          <select
+            value={categoryFilter}
+            onChange={(e) => setCategoryFilter(e.target.value)}
+            className="w-full sm:w-auto px-3 py-2 rounded-xl bg-[#151A23] border border-[#F0F3F6]/10 text-xs text-[#F0F3F6] focus:outline-none focus:border-[#F59E0B]"
+          >
+            <option value="ALL">{t('common.all')} ({skillGroups.length})</option>
+            {skillGroups.map((g) => (
+              <option key={g.id} value={g.id}>
+                {language === 'ar' && g.titleAr ? g.titleAr : g.title}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
 
       {/* Grid of Skill Groups / Parent Categories */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {skillGroups.map((group) => (
+        {filteredGroups.map((group) => (
           <div
             key={group.id}
             className="p-6 sm:p-7 rounded-3xl bg-[#10141C] border border-[#F0F3F6]/08 hover:border-[#F59E0B]/30 transition-all flex flex-col justify-between shadow-lg"
@@ -260,10 +367,15 @@ export default function AdminSkillsPage() {
                 <div>
                   <div className="flex items-center gap-2">
                     <Layers className="w-4 h-4 text-[#F59E0B]" />
-                    <h3 className="text-lg font-bold text-[#F0F3F6]">{group.title}</h3>
+                    <h3 className="text-base sm:text-lg font-bold text-[#F0F3F6]">
+                      {language === 'ar' && group.titleAr ? group.titleAr : group.title}
+                    </h3>
                   </div>
-                  {group.titleAr && (
+                  {group.titleAr && language !== 'ar' && (
                     <p className="text-xs text-[#94A3B8] mt-0.5">{group.titleAr}</p>
+                  )}
+                  {group.title && language === 'ar' && (
+                    <p className="text-xs text-[#94A3B8] mt-0.5">{group.title}</p>
                   )}
                 </div>
 
@@ -271,14 +383,14 @@ export default function AdminSkillsPage() {
                   <button
                     onClick={() => openEdit(group)}
                     className="p-2 rounded-xl bg-[#151A23] text-[#F59E0B] hover:bg-[#F59E0B] hover:text-[#07090D] transition-colors"
-                    title="Edit group & skills"
+                    title={t('common.edit')}
                   >
                     <Edit3 className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => handleDelete(group.id)}
                     className="p-2 rounded-xl bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-colors"
-                    title="Delete group"
+                    title={t('common.delete')}
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
@@ -290,14 +402,21 @@ export default function AdminSkillsPage() {
                 {group.skills.map((skill) => (
                   <span
                     key={skill.id}
-                    className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#151A23] border border-[#F0F3F6]/10 text-xs font-medium text-[#F0F3F6] hover:border-[#F59E0B]/40 transition-colors"
+                    className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-medium transition-colors ${
+                      skill.enabled === false
+                        ? 'bg-[#151A23]/50 border-dashed border-[#F0F3F6]/10 text-[#94A3B8]/60 line-through'
+                        : 'bg-[#151A23] border-[#F0F3F6]/10 text-[#F0F3F6] hover:border-[#F59E0B]/40'
+                    }`}
                   >
                     <SoftwareIcon
                       name={skill.name}
                       iconUrl={skill.iconUrl}
-                      className="w-3.5 h-3.5"
+                      className="w-4 h-4"
                     />
-                    <span>{skill.name}</span>
+                    <span>{language === 'ar' && skill.nameAr ? skill.nameAr : skill.name}</span>
+                    {skill.enabled === false && (
+                      <span className="text-[9px] font-mono text-red-400">({t('skills.hiddenState')})</span>
+                    )}
                   </span>
                 ))}
               </div>
@@ -313,10 +432,10 @@ export default function AdminSkillsPage() {
             <div className="flex items-center justify-between pb-4 border-b border-[#F0F3F6]/10">
               <div>
                 <h2 className="text-xl font-bold text-[#F0F3F6]">
-                  {editingGroup.title ? `Edit Group: ${editingGroup.title}` : 'New Skill Group'}
+                  {editingGroup.title ? `${t('common.edit')}: ${editingGroup.title}` : t('skills.addGroup')}
                 </h2>
                 <p className="text-xs text-[#94A3B8] mt-0.5">
-                  Configure parent category and manage child skills & tool icons.
+                  {t('skills.subtitle')}
                 </p>
               </div>
               <button
@@ -330,9 +449,9 @@ export default function AdminSkillsPage() {
             <form onSubmit={handleSave} className="space-y-6">
               {/* Group Meta */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="sm:col-span-2">
+                <div>
                   <label className="block text-xs font-mono uppercase text-[#94A3B8] mb-1">
-                    Group Title (English) *
+                    {t('skills.groupTitleEn')}
                   </label>
                   <input
                     type="text"
@@ -345,212 +464,253 @@ export default function AdminSkillsPage() {
 
                 <div>
                   <label className="block text-xs font-mono uppercase text-[#94A3B8] mb-1">
-                    Sort Order
+                    {t('skills.groupTitleAr')}
+                  </label>
+                  <input
+                    type="text"
+                    dir="rtl"
+                    value={editingGroup.titleAr || ''}
+                    onChange={(e) => setEditingGroup({ ...editingGroup, titleAr: e.target.value })}
+                    className="w-full px-4 py-2.5 rounded-xl bg-[#151A23] border border-[#F0F3F6]/10 text-sm text-[#F0F3F6]"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-mono uppercase text-[#94A3B8] mb-1">
+                    {t('common.order')}
                   </label>
                   <input
                     type="number"
                     value={editingGroup.sortOrder ?? 1}
                     onChange={(e) =>
-                      setEditingGroup({
-                        ...editingGroup,
-                        sortOrder: parseInt(e.target.value) || 0,
-                      })
+                      setEditingGroup({ ...editingGroup, sortOrder: parseInt(e.target.value) || 1 })
                     }
                     className="w-full px-4 py-2.5 rounded-xl bg-[#151A23] border border-[#F0F3F6]/10 text-sm text-[#F0F3F6]"
                   />
                 </div>
               </div>
 
-              <div>
-                <label className="block text-xs font-mono uppercase text-[#94A3B8] mb-1">
-                  Group Title (Arabic)
-                </label>
-                <input
-                  type="text"
-                  dir="rtl"
-                  value={editingGroup.titleAr || ''}
-                  onChange={(e) => setEditingGroup({ ...editingGroup, titleAr: e.target.value })}
-                  className="w-full px-4 py-2.5 rounded-xl bg-[#151A23] border border-[#F0F3F6]/10 text-sm text-[#F0F3F6]"
-                />
-              </div>
-
-              {/* Skills Manager inside this Group */}
-              <div className="p-5 rounded-2xl bg-[#151A23] border border-[#F0F3F6]/10 space-y-4">
+              {/* Skills List in this Group */}
+              <div className="space-y-3 pt-3 border-t border-[#F0F3F6]/08">
                 <div className="flex items-center justify-between">
                   <h4 className="text-xs font-mono uppercase tracking-wider text-[#F59E0B] font-bold">
-                    Child Skills & Tool Software ({editingGroup.skills?.length || 0})
+                    {t('skills.categoryAssignment')} ({editingGroup.skills?.length || 0})
                   </h4>
-                  <span className="text-[11px] font-mono text-[#94A3B8]">
-                    Upload custom icons or use auto-detected vector badges
-                  </span>
                 </div>
 
-                {/* Add New Skill Bar */}
-                <div className="p-3.5 rounded-xl bg-[#10141C] border border-[#F0F3F6]/10 space-y-3">
-                  <div className="text-xs font-semibold text-[#F0F3F6] flex items-center gap-1.5">
-                    <Plus className="w-3.5 h-3.5 text-[#F59E0B]" />
-                    <span>Add New Skill to Group</span>
-                  </div>
-
-                  <div className="flex flex-col sm:flex-row items-center gap-2.5">
-                    <input
-                      type="text"
-                      placeholder="Skill / Tool name (e.g. Cinema 4D, Canva, Figma)..."
-                      value={newSkillName}
-                      onChange={(e) => setNewSkillName(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
-                          e.preventDefault();
-                          addSkillToEditing();
-                        }
-                      }}
-                      className="flex-1 w-full px-4 py-2.5 rounded-xl bg-[#151A23] border border-[#F0F3F6]/10 text-xs text-[#F0F3F6] focus:border-[#F59E0B]"
-                    />
-
-                    {/* Icon preview or upload for new skill */}
-                    <div className="flex items-center gap-2 w-full sm:w-auto">
-                      <div className="w-9 h-9 rounded-xl bg-[#151A23] border border-[#F0F3F6]/10 flex items-center justify-center flex-shrink-0">
-                        <SoftwareIcon
-                          name={newSkillName || 'Tool'}
-                          iconUrl={newSkillIconUrl || undefined}
-                          className="w-4 h-4"
-                        />
-                      </div>
-
-                      <label className="cursor-pointer px-3 py-2 rounded-xl bg-[#151A23] border border-[#F0F3F6]/10 hover:border-[#F59E0B]/50 text-xs text-[#94A3B8] hover:text-[#F0F3F6] flex items-center gap-1.5 transition-colors whitespace-nowrap">
-                        <Upload className="w-3 h-3 text-[#F59E0B]" />
-                        <span>{uploadingSkillIcon === 'new' ? '...' : 'Upload Icon'}</span>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={handleUploadIconForNewSkill}
-                          className="hidden"
-                          disabled={uploadingSkillIcon === 'new'}
-                        />
-                      </label>
-
-                      <button
-                        type="button"
-                        onClick={addSkillToEditing}
-                        className="px-5 py-2 rounded-xl bg-[#F59E0B] text-[#07090D] font-bold text-xs hover:bg-[#FF7A18] transition-colors whitespace-nowrap"
-                      >
-                        + Add Skill
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* List of Skills inside this group */}
-                <div className="space-y-2.5 max-h-72 overflow-y-auto pr-1">
-                  {editingGroup.skills && editingGroup.skills.length > 0 ? (
-                    editingGroup.skills.map((skill, sIdx) => (
-                      <div
-                        key={skill.id || sIdx}
-                        className="p-3 rounded-xl bg-[#10141C] border border-[#F0F3F6]/08 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs"
-                      >
-                        <div className="flex items-center gap-3 w-full sm:w-auto min-w-0">
-                          {/* Skill Icon */}
-                          <div className="w-8 h-8 rounded-lg bg-[#151A23] border border-[#F0F3F6]/10 flex items-center justify-center flex-shrink-0">
-                            <SoftwareIcon
-                              name={skill.name}
-                              iconUrl={skill.iconUrl}
-                              className="w-4 h-4"
-                            />
-                          </div>
-
-                          {/* Skill Name Input */}
-                          <input
-                            type="text"
-                            value={skill.name}
-                            onChange={(e) =>
-                              updateSkillInEditing(skill.id, { name: e.target.value })
-                            }
-                            className="px-3 py-1.5 rounded-lg bg-[#151A23] border border-[#F0F3F6]/10 text-xs text-[#F0F3F6] w-full sm:w-44 focus:border-[#F59E0B]"
+                {/* Individual Skill Items */}
+                <div className="space-y-2.5 max-h-72 overflow-y-auto pe-1">
+                  {(editingGroup.skills || []).map((skill, index) => (
+                    <div
+                      key={skill.id}
+                      className="p-3 rounded-2xl bg-[#151A23] border border-[#F0F3F6]/08 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                    >
+                      <div className="flex items-center gap-3">
+                        {/* Live Icon preview */}
+                        <div className="w-10 h-10 rounded-xl bg-[#10141C] border border-[#F0F3F6]/10 flex items-center justify-center p-1.5 flex-shrink-0">
+                          <SoftwareIcon
+                            name={skill.name}
+                            iconUrl={skill.iconUrl}
+                            className="w-6 h-6"
                           />
                         </div>
 
-                        {/* Controls (Icon upload / delete icon / sort / remove skill) */}
-                        <div className="flex items-center gap-2 self-end sm:self-center">
-                          {/* Upload / replace icon */}
-                          <label className="cursor-pointer px-2.5 py-1.5 rounded-lg bg-[#151A23] border border-[#F0F3F6]/10 hover:border-[#F59E0B]/50 text-[11px] text-[#94A3B8] hover:text-[#F0F3F6] flex items-center gap-1 transition-colors">
-                            <Upload className="w-3 h-3 text-[#F59E0B]" />
-                            <span>
-                              {uploadingSkillIcon === skill.id
-                                ? '...'
-                                : skill.iconUrl
-                                ? 'Change'
-                                : 'Upload'}
-                            </span>
-                            <input
-                              type="file"
-                              accept="image/*"
-                              onChange={(e) => handleUploadIconForSkill(skill.id, e)}
-                              className="hidden"
-                              disabled={uploadingSkillIcon === skill.id}
-                            />
-                          </label>
-
-                          {/* Remove custom icon if present */}
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm font-semibold text-[#F0F3F6]">{skill.name}</span>
+                            {skill.nameAr && (
+                              <span className="text-xs text-[#94A3B8]">({skill.nameAr})</span>
+                            )}
+                          </div>
                           {skill.iconUrl && (
-                            <button
-                              type="button"
-                              onClick={() => handleRemoveIconForSkill(skill.id)}
-                              className="p-1 rounded text-[#94A3B8] hover:text-red-400 text-[10px]"
-                              title="Reset to default icon"
-                            >
-                              Reset
-                            </button>
+                            <span className="text-[10px] font-mono text-emerald-400 block truncate max-w-xs">
+                              {skill.iconUrl}
+                            </span>
                           )}
-
-                          {/* Enabled checkbox */}
-                          <label className="flex items-center gap-1 text-[11px] font-mono text-[#94A3B8] cursor-pointer">
-                            <input
-                              type="checkbox"
-                              checked={skill.enabled !== false}
-                              onChange={(e) =>
-                                updateSkillInEditing(skill.id, { enabled: e.target.checked })
-                              }
-                              className="w-3.5 h-3.5 rounded text-[#F59E0B] focus:ring-0"
-                            />
-                            <span>Active</span>
-                          </label>
-
-                          {/* Remove Skill from group */}
-                          <button
-                            type="button"
-                            onClick={() => removeSkillFromEditing(skill.id)}
-                            className="p-1.5 rounded-lg text-[#94A3B8] hover:text-red-400 hover:bg-red-500/10 transition-colors ml-1"
-                            title="Remove skill"
-                          >
-                            <Trash2 className="w-3.5 h-3.5" />
-                          </button>
                         </div>
                       </div>
-                    ))
-                  ) : (
-                    <div className="p-4 rounded-xl bg-[#10141C] text-center text-xs font-mono text-[#94A3B8]/60">
-                      No skills added to this group yet. Use the input above to add skills.
+
+                      {/* Controls: Reorder, Visibility, Icon Upload, Delete */}
+                      <div className="flex items-center gap-2 self-end sm:self-center">
+                        {/* Move Up/Down */}
+                        <div className="flex items-center bg-[#10141C] rounded-lg p-1 border border-[#F0F3F6]/05">
+                          <button
+                            type="button"
+                            disabled={index === 0}
+                            onClick={() => moveSkillOrder(index, 'up')}
+                            className="p-1 text-[#94A3B8] hover:text-white disabled:opacity-20"
+                            title={t('projects.moveUp')}
+                          >
+                            <ArrowUp className="w-3 h-3" />
+                          </button>
+                          <button
+                            type="button"
+                            disabled={index === (editingGroup.skills?.length || 0) - 1}
+                            onClick={() => moveSkillOrder(index, 'down')}
+                            className="p-1 text-[#94A3B8] hover:text-white disabled:opacity-20"
+                            title={t('projects.moveDown')}
+                          >
+                            <ArrowDown className="w-3 h-3" />
+                          </button>
+                        </div>
+
+                        {/* Visibility Toggle */}
+                        <button
+                          type="button"
+                          onClick={() => toggleSkillEnabled(skill.id)}
+                          className={`p-1.5 rounded-lg border text-xs flex items-center gap-1 transition-colors ${
+                            skill.enabled === false
+                              ? 'bg-red-500/10 border-red-500/30 text-red-400'
+                              : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
+                          }`}
+                          title={skill.enabled === false ? t('skills.hiddenState') : t('skills.visible')}
+                        >
+                          {skill.enabled === false ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+                        </button>
+
+                        {/* Upload icon button */}
+                        <label className="p-1.5 rounded-lg bg-[#10141C] border border-[#F0F3F6]/10 text-[#94A3B8] hover:text-[#F59E0B] cursor-pointer">
+                          <Upload className="w-3.5 h-3.5" />
+                          <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={(e) => handleUploadIconForSkill(skill.id, e)}
+                          />
+                        </label>
+
+                        {skill.iconUrl && (
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveIconForSkill(skill.id)}
+                            className="p-1.5 rounded-lg bg-[#10141C] text-amber-400 hover:bg-amber-400/10"
+                            title="Reset icon to default vector"
+                          >
+                            <X className="w-3.5 h-3.5" />
+                          </button>
+                        )}
+
+                        <button
+                          type="button"
+                          onClick={() => removeSkillFromEditing(skill.id)}
+                          className="p-1.5 rounded-lg bg-red-500/10 text-red-400 hover:bg-red-500/20"
+                          title={t('common.delete')}
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
                     </div>
-                  )}
+                  ))}
+                </div>
+
+                {/* Add new skill inline card */}
+                <div className="p-4 rounded-2xl bg-[#10141C] border border-dashed border-[#F0F3F6]/15 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-mono uppercase text-[#F59E0B] font-bold">
+                      {t('skills.addSkill')}
+                    </span>
+                    {(newSkillIconUrl || (newSkillName && getDefaultSoftwareIconUrl(newSkillName))) && (
+                      <div className="flex items-center gap-2">
+                        <span className="text-[10px] font-mono text-emerald-400">
+                          {t('skills.iconPreview')}:
+                        </span>
+                        <SoftwareIcon
+                          name={newSkillName || 'Preview'}
+                          iconUrl={newSkillIconUrl || getDefaultSoftwareIconUrl(newSkillName)}
+                          className="w-5 h-5"
+                        />
+                        <span className="text-[10px] font-mono text-[#94A3B8]">
+                          {newSkillIconUrl ? 'Custom' : 'Auto-detected'}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <input
+                      type="text"
+                      placeholder={t('skills.skillName')}
+                      value={newSkillName}
+                      onChange={(e) => setNewSkillName(e.target.value)}
+                      className="px-3.5 py-2 rounded-xl bg-[#151A23] border border-[#F0F3F6]/10 text-xs text-[#F0F3F6] focus:outline-none focus:border-[#F59E0B]"
+                    />
+                    <input
+                      type="text"
+                      dir="rtl"
+                      placeholder="اسم البرنامج بالعربي (اختياري)"
+                      value={newSkillNameAr}
+                      onChange={(e) => setNewSkillNameAr(e.target.value)}
+                      className="px-3.5 py-2 rounded-xl bg-[#151A23] border border-[#F0F3F6]/10 text-xs text-[#F0F3F6] focus:outline-none focus:border-[#F59E0B]"
+                    />
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    <span className="text-[10px] font-mono text-[#94A3B8]">Quick add:</span>
+                    {['Photoshop', 'Illustrator', 'Premiere Pro', 'After Effects', 'InDesign', 'Blender', 'Cinema 4D', 'Figma'].map((tool) => (
+                      <button
+                        key={tool}
+                        type="button"
+                        onClick={() => {
+                          setNewSkillName(tool);
+                          setNewSkillIconUrl(getDefaultSoftwareIconUrl(tool) || '');
+                        }}
+                        className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-[#151A23] border border-[#F0F3F6]/10 text-[#94A3B8] hover:text-[#F59E0B] hover:border-[#F59E0B]/30 transition-colors"
+                      >
+                        + {tool}
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row items-center gap-3">
+                    <div className="flex-1 w-full flex items-center gap-2">
+                      <input
+                        type="text"
+                        placeholder="Icon URL or upload file →"
+                        value={newSkillIconUrl}
+                        onChange={(e) => setNewSkillIconUrl(e.target.value)}
+                        className="flex-1 px-3.5 py-2 rounded-xl bg-[#151A23] border border-[#F0F3F6]/10 text-xs text-[#F0F3F6] focus:outline-none focus:border-[#F59E0B]"
+                      />
+                      <label className="px-3 py-2 rounded-xl bg-[#151A23] border border-[#F0F3F6]/15 text-xs font-semibold text-[#F0F3F6] hover:border-[#F59E0B]/50 flex items-center gap-1.5 cursor-pointer flex-shrink-0">
+                        <Upload className="w-3.5 h-3.5 text-[#F59E0B]" />
+                        <span>{uploadingSkillIcon === 'new' ? t('common.uploading') : t('common.upload')}</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={handleUploadIconForNewSkill}
+                        />
+                      </label>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={addSkillToEditing}
+                      disabled={!newSkillName.trim()}
+                      className="w-full sm:w-auto px-5 py-2 rounded-xl bg-[#F59E0B] text-[#07090D] font-bold text-xs flex items-center justify-center gap-1.5 disabled:opacity-30 cursor-pointer"
+                    >
+                      <Plus className="w-3.5 h-3.5" />
+                      <span>{t('common.add')}</span>
+                    </button>
+                  </div>
                 </div>
               </div>
 
-              {/* Action Buttons */}
-              <div className="flex justify-end gap-3 pt-3 border-t border-[#F0F3F6]/10">
+              {/* Form Actions */}
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-[#F0F3F6]/10">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
                   className="px-5 py-2.5 rounded-full bg-[#151A23] text-xs font-semibold text-[#94A3B8] hover:text-white"
                 >
-                  Cancel
+                  {t('common.cancel')}
                 </button>
                 <button
                   type="submit"
                   disabled={saving}
-                  className="px-6 py-2.5 rounded-full bg-gradient-to-r from-[#F59E0B] to-[#FF7A18] text-[#07090D] font-bold text-xs flex items-center gap-2 hover:shadow-[0_0_20px_rgba(245,158,11,0.35)] transition-all cursor-pointer"
+                  className="px-6 py-2.5 rounded-full bg-gradient-to-r from-[#F59E0B] to-[#FF7A18] text-[#07090D] font-bold text-xs flex items-center gap-2 hover:shadow-[0_0_20px_rgba(245,158,11,0.35)] disabled:opacity-50"
                 >
-                  <Save className="w-3.5 h-3.5" />
-                  <span>{saving ? 'Saving...' : 'Save Skill Group'}</span>
+                  <Save className="w-4 h-4" />
+                  <span>{saving ? t('common.saving') : t('common.save')}</span>
                 </button>
               </div>
             </form>

@@ -14,8 +14,11 @@ import {
   Video,
 } from 'lucide-react';
 import { AdaptiveMediaFrame } from '@/components/projects/AdaptiveMediaFrame';
+import { ProjectMetadataGrid } from '@/components/projects/ProjectMetadataGrid';
 import { SoftwareIcon } from '@/components/ui/SoftwareIcon';
 import { Metadata } from 'next';
+
+export const revalidate = 0;
 
 export async function generateStaticParams() {
   const projects = await getProjects(true);
@@ -98,6 +101,7 @@ export default async function ProjectDetailPage({
         <AdaptiveMediaFrame
           coverImage={project.coverImage}
           videoUrl={project.videoUrl}
+          mediaItems={project.mediaItems}
           title={project.title}
           initialWidth={project.width}
           initialHeight={project.height}
@@ -136,51 +140,7 @@ export default async function ProjectDetailPage({
         )}
 
         {/* Project Meta Information Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 p-8 rounded-3xl bg-[#10141C] border border-[#F0F3F6]/10 mb-16">
-          <div>
-            <div className="flex items-center gap-2 text-xs font-mono text-[#F59E0B] uppercase mb-1">
-              <User className="w-3.5 h-3.5" />
-              <span>Client</span>
-            </div>
-            <div className="text-base font-semibold text-[#F0F3F6]">
-              {project.client || 'Creative Initiative'}
-            </div>
-          </div>
-
-          <div>
-            <div className="flex items-center gap-2 text-xs font-mono text-[#F59E0B] uppercase mb-1">
-              <Calendar className="w-3.5 h-3.5" />
-              <span>Year</span>
-            </div>
-            <div className="text-base font-semibold text-[#F0F3F6]">{project.projectDate}</div>
-          </div>
-
-          <div>
-            <div className="flex items-center gap-2 text-xs font-mono text-[#F59E0B] uppercase mb-1">
-              <Layers className="w-3.5 h-3.5" />
-              <span>Disciplines</span>
-            </div>
-            <div className="text-base font-semibold text-[#F0F3F6] truncate">
-              {project.categories && project.categories.length > 0
-                ? project.categories.join(' • ')
-                : project.category}
-            </div>
-          </div>
-
-          <div>
-            <div className="flex items-center gap-2 text-xs font-mono text-[#F59E0B] uppercase mb-1">
-              <Video className="w-3.5 h-3.5" />
-              <span>Type</span>
-            </div>
-            <div className="text-base font-semibold text-[#F0F3F6]">
-              {(project.videos && project.videos.length > 0) && (project.gallery && project.gallery.length > 0)
-                ? 'Mixed Media Campaign'
-                : (project.videos && project.videos.length > 0) || project.videoUrl
-                ? 'Motion & Video Reel'
-                : 'Key Visuals & Stills'}
-            </div>
-          </div>
-        </div>
+        <ProjectMetadataGrid project={project} />
 
         {/* Tools and External Presentation Links */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 mb-20 items-start">
@@ -190,13 +150,19 @@ export default async function ProjectDetailPage({
               Software Used & Skills
             </h3>
             <div className="flex flex-wrap gap-2.5">
-              {project.tools.map((tool, i) => (
+              {(project.resolvedTools && project.resolvedTools.length > 0
+                ? project.resolvedTools
+                : project.tools.map((t) => ({ id: t, name: t, nameAr: undefined, iconUrl: undefined }))
+              ).map((tool, i) => (
                 <span
-                  key={i}
+                  key={tool.id || i}
                   className="inline-flex items-center gap-2.5 px-4 py-2 rounded-xl bg-[#10141C] border border-[#F0F3F6]/10 text-sm font-medium text-[#F0F3F6] hover:border-[#F59E0B]/40 transition-colors shadow-sm"
                 >
-                  <SoftwareIcon name={tool} className="w-4 h-4" />
-                  <span>{tool}</span>
+                  <SoftwareIcon name={tool.name} iconUrl={tool.iconUrl} className="w-4 h-4" />
+                  <span>{tool.name}</span>
+                  {tool.nameAr && tool.nameAr !== tool.name && (
+                    <span className="text-xs text-[#94A3B8] font-light">({tool.nameAr})</span>
+                  )}
                 </span>
               ))}
             </div>

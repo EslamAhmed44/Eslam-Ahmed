@@ -10,6 +10,7 @@ import {
   PreferredContactMethod,
   Project,
   ProjectInquiry,
+  ProjectMediaItem,
   ProjectVideo,
   ServiceItem,
   SiteSettings,
@@ -18,6 +19,7 @@ import {
   Testimonial,
 } from '@/lib/types';
 import { createServerClient, isServerSupabaseConfigured } from '@/lib/supabase/server';
+import { getDefaultSoftwareIconUrl } from '@/lib/media/softwareIcons';
 
 export const DEFAULT_CATEGORIES = [
   'Motion Graphics',
@@ -79,21 +81,199 @@ export function normalizeProject(p: any): Project {
     : [];
   const client = p.client || p.clientName || '';
 
+  // Process & standardize mediaItems (Mixed Images and Videos in user-defined sequence)
+  let mediaItems: ProjectMediaItem[] = [];
+  if (Array.isArray(p.mediaItems) && p.mediaItems.length > 0) {
+    mediaItems = p.mediaItems.map((m: any, idx: number) => ({
+      id: m.id || `media-${idx + 1}`,
+      type: m.type === 'video' ? 'video' : 'image',
+      url: m.url || '',
+      title: m.title || '',
+      titleAr: m.titleAr,
+      sortOrder: m.sortOrder ?? idx + 1,
+      aspectRatio: m.aspectRatio,
+      width: m.width,
+      height: m.height,
+      posterUrl: m.posterUrl,
+    })).filter((m: ProjectMediaItem) => Boolean(m.url));
+  } else if (Array.isArray(p.media_items) && p.media_items.length > 0) {
+    mediaItems = p.media_items.map((m: any, idx: number) => ({
+      id: m.id || `media-${idx + 1}`,
+      type: m.type === 'video' ? 'video' : 'image',
+      url: m.url || '',
+      title: m.title || '',
+      titleAr: m.title_ar || m.titleAr,
+      sortOrder: m.sort_order ?? m.sortOrder ?? idx + 1,
+      aspectRatio: m.aspect_ratio || m.aspectRatio,
+      width: m.width,
+      height: m.height,
+      posterUrl: m.poster_url || m.posterUrl,
+    })).filter((m: ProjectMediaItem) => Boolean(m.url));
+  }
+
+  // If mediaItems is still empty, synthesize it from coverImage, gallery, and videos
+  if (mediaItems.length === 0) {
+    let order = 1;
+    const coverUrl = p.coverImage || p.cover_image || '';
+    if (coverUrl) {
+      mediaItems.push({
+        id: `med-${order}`,
+        type: 'image',
+        url: coverUrl,
+        title: 'Cover Visual',
+        sortOrder: order++,
+        aspectRatio: p.aspectRatio,
+        width: p.width,
+        height: p.height,
+      });
+    }
+    gallery.forEach((url: string) => {
+      if (url && url !== coverUrl && !mediaItems.some((m) => m.url === url)) {
+        mediaItems.push({
+          id: `med-${order}`,
+          type: 'image',
+          url,
+          title: `Image ${order}`,
+          sortOrder: order++,
+        });
+      }
+    });
+    videos.forEach((vid: ProjectVideo) => {
+      if (vid.url && !mediaItems.some((m) => m.url === vid.url)) {
+        mediaItems.push({
+          id: vid.id || `med-${order}`,
+          type: 'video',
+          url: vid.url,
+          title: vid.title || `Video Reel ${order}`,
+          titleAr: vid.titleAr,
+          sortOrder: order++,
+        });
+      }
+    });
+  }
+
+  // Sync coverImage with first image or fallback
+  const firstImage = mediaItems.find((m) => m.type === 'image');
+  const coverImage = p.coverImage || p.cover_image || (firstImage ? firstImage.url : (mediaItems[0]?.url || '/images/projects/project-lumina-motion.jpg'));
+
   return {
     ...p,
     category: categories[0] || 'Motion Graphics',
     categories,
+    coverImage,
     gallery,
     images: gallery,
+    mediaItems,
     videoUrl,
     videos,
     googleDriveUrl: googleDriveMaterialsUrl,
     googleDriveMaterialsUrl,
     tools,
     softwareUsed: tools,
+    skillIds: Array.isArray(p.skillIds)
+      ? p.skillIds
+      : Array.isArray(p.skill_ids)
+      ? p.skill_ids
+      : [],
+    resolvedTools: Array.isArray(p.resolvedTools) ? p.resolvedTools : undefined,
     client,
     clientName: client,
     status: p.status || 'published',
+  };
+}
+
+export function resolveProjectSkills(p: Project, skillGroups: SkillGroup[]): Project {
+  if (!p) return p;
+
+  const allSkills: any[] = [];
+  (skillGroups || []).forEach((g) => {
+    (g.skills || []).forEach((s) => {
+      if (s) allSkills.push(s);
+    });
+  });
+
+  const idMap = new Map<string, any>();
+  const nameMap = new Map<string, any>();
+
+  allSkills.forEach((s) => {
+    idMap.set(s.id, s);
+    const clean = s.name.toLowerCase().trim();
+    nameMap.set(clean, s);
+    const stripped = clean.replace(/^adobe\s+/, '').trim();
+    if (stripped !== clean) {
+      nameMap.set(stripped, s);
+    }
+  });
+
+  const rawSkillIds = Array.isArray(p.skillIds) ? p.skillIds : [];
+  const rawTools = Array.isArray(p.tools)
+    ? p.tools
+    : Array.isArray(p.softwareUsed)
+    ? p.softwareUsed
+    : [];
+
+  const resolvedList: Array<{ id: string; name: string; nameAr?: string; iconUrl?: string }> = [];
+  const matchedSkillIds = new Set<string>();
+  const seenKeys = new Set<string>();
+
+  // 1. Resolve from skillIds first (exact stable IDs)
+  rawSkillIds.forEach((id) => {
+    const matched = idMap.get(id);
+    if (matched) {
+      const key = matched.name.toLowerCase().trim();
+      if (!seenKeys.has(key)) {
+        seenKeys.add(key);
+        matchedSkillIds.add(matched.id);
+        resolvedList.push({
+          id: matched.id,
+          name: matched.name,
+          nameAr: matched.nameAr,
+          iconUrl: matched.iconUrl || getDefaultSoftwareIconUrl(matched.name) || '',
+        });
+      }
+    }
+  });
+
+  // 2. Resolve from tool names
+  rawTools.forEach((toolName) => {
+    if (!toolName || typeof toolName !== 'string') return;
+    const clean = toolName.toLowerCase().trim();
+    const stripped = clean.replace(/^adobe\s+/, '').trim();
+
+    if (seenKeys.has(clean) || seenKeys.has(stripped)) return;
+
+    const matched = nameMap.get(clean) || nameMap.get(stripped);
+    if (matched) {
+      const key = matched.name.toLowerCase().trim();
+      if (!seenKeys.has(key)) {
+        seenKeys.add(key);
+        matchedSkillIds.add(matched.id);
+        resolvedList.push({
+          id: matched.id,
+          name: matched.name,
+          nameAr: matched.nameAr,
+          iconUrl: matched.iconUrl || getDefaultSoftwareIconUrl(matched.name) || '',
+        });
+      }
+    } else {
+      seenKeys.add(clean);
+      const iconUrl = getDefaultSoftwareIconUrl(toolName) || '';
+      resolvedList.push({
+        id: `custom-${clean.replace(/[^a-z0-9]/g, '-')}`,
+        name: toolName.trim(),
+        iconUrl,
+      });
+    }
+  });
+
+  const toolNames = resolvedList.map((r) => r.name);
+
+  return {
+    ...p,
+    tools: toolNames,
+    softwareUsed: toolNames,
+    skillIds: Array.from(matchedSkillIds),
+    resolvedTools: resolvedList,
   };
 }
 
@@ -199,7 +379,11 @@ export async function getSiteData(includeDrafts: boolean = false): Promise<AppDa
             .map((s: any) => ({
               id: s.id,
               name: s.name,
+              nameAr: s.name_ar,
+              iconUrl: s.icon_url || s.iconUrl || getDefaultSoftwareIconUrl(s.name) || '',
               level: s.level,
+              category: s.category || g.title,
+              enabled: s.enabled !== false,
               sortOrder: s.sort_order,
             })),
         }));
@@ -336,6 +520,11 @@ export async function getSiteData(includeDrafts: boolean = false): Promise<AppDa
           inquiries: [],
         };
 
+        // Resolve skills and tools for projects against canonical skill groups
+        appData.projects = (appData.projects || []).map((p) =>
+          resolveProjectSkills(p, appData.skillGroups)
+        );
+
         if (!includeDrafts) {
           appData.projects = appData.projects.filter((p) => p.status === 'published');
           appData.experiences = appData.experiences.filter((e) => e.status === 'published');
@@ -343,6 +532,12 @@ export async function getSiteData(includeDrafts: boolean = false): Promise<AppDa
           appData.testimonials = appData.testimonials.filter((t) => t.status === 'published');
           appData.socialLinks = appData.socialLinks.filter((s) => s.isActive);
           appData.contactChannels = (appData.contactChannels || []).filter((c) => c.enabled);
+          appData.skillGroups = (appData.skillGroups || [])
+            .map((g) => ({
+              ...g,
+              skills: (g.skills || []).filter((s) => s.enabled !== false),
+            }))
+            .filter((g) => g.skills.length > 0);
         }
 
         return appData;
@@ -354,10 +549,24 @@ export async function getSiteData(includeDrafts: boolean = false): Promise<AppDa
 
   // Fallback to local store
   const data = readLocalStore();
+  const normalizedSkillGroups: SkillGroup[] = (data.skillGroups || []).map((g) => ({
+    ...g,
+    skills: (g.skills || []).map((s) => ({
+      ...s,
+      iconUrl: s.iconUrl || getDefaultSoftwareIconUrl(s.name) || '',
+      enabled: s.enabled !== false,
+    })),
+  }));
+
+  const normalizedProjects = (data.projects || []).map((p) =>
+    resolveProjectSkills(normalizeProject(p), normalizedSkillGroups)
+  );
+
   const normalizedData: AppData = {
     ...data,
     categories: data.categories || DEFAULT_CATEGORIES,
-    projects: (data.projects || []).map((p) => normalizeProject(p)),
+    projects: normalizedProjects,
+    skillGroups: normalizedSkillGroups,
     contactChannels: data.contactChannels || [],
     inquiries: data.inquiries || [],
   };
@@ -369,11 +578,17 @@ export async function getSiteData(includeDrafts: boolean = false): Promise<AppDa
   return {
     ...normalizedData,
     projects: normalizedData.projects.filter((p) => p.status === 'published'),
-    experiences: normalizedData.experiences.filter((e) => e.status === 'published'),
-    services: normalizedData.services.filter((s) => s.status === 'published'),
-    testimonials: normalizedData.testimonials.filter((t) => t.status === 'published'),
-    socialLinks: normalizedData.socialLinks.filter((s) => s.isActive),
+    experiences: (normalizedData.experiences || []).filter((e) => e.status === 'published'),
+    services: (normalizedData.services || []).filter((s) => s.status === 'published'),
+    testimonials: (normalizedData.testimonials || []).filter((t) => t.status === 'published'),
+    socialLinks: (normalizedData.socialLinks || []).filter((s) => s.isActive),
     contactChannels: (normalizedData.contactChannels || []).filter((c) => c.enabled),
+    skillGroups: normalizedData.skillGroups
+      .map((g) => ({
+        ...g,
+        skills: (g.skills || []).filter((s) => s.enabled !== false),
+      }))
+      .filter((g) => g.skills.length > 0),
   };
 }
 
@@ -438,9 +653,11 @@ export async function getProjectBySlug(slug: string): Promise<Project | null> {
 export async function saveProject(project: Partial<Project> & { id?: string }): Promise<Project> {
   const store = readLocalStore();
   const now = new Date().toISOString();
+  const skillGroups = store.skillGroups || [];
 
-  // Normalize incoming project
-  const incoming = normalizeProject(project);
+  // Normalize and resolve incoming project against canonical skill groups
+  const rawIncoming = normalizeProject(project);
+  const incoming = resolveProjectSkills(rawIncoming, skillGroups);
 
   // If new categories are in the project, ensure they are stored in store.categories
   if (incoming.categories && incoming.categories.length > 0) {
@@ -462,49 +679,58 @@ export async function saveProject(project: Partial<Project> & { id?: string }): 
   const existingIndex = store.projects.findIndex((p) => p.id === project.id);
 
   if (existingIndex >= 0) {
-    savedProject = normalizeProject({
-      ...store.projects[existingIndex],
-      ...incoming,
-      updatedAt: now,
-    });
+    savedProject = resolveProjectSkills(
+      normalizeProject({
+        ...store.projects[existingIndex],
+        ...incoming,
+        updatedAt: now,
+      }),
+      skillGroups
+    );
     store.projects[existingIndex] = savedProject;
   } else {
-    savedProject = normalizeProject({
-      id: project.id || `proj-${Date.now()}`,
-      slug: project.slug || `project-${Date.now()}`,
-      title: project.title || 'Untitled Project',
-      titleAr: project.titleAr || '',
-      category: incoming.category,
-      categories: incoming.categories,
-      description: project.description || '',
-      descriptionAr: project.descriptionAr || '',
-      client: incoming.client,
-      clientName: incoming.client,
-      projectDate: project.projectDate || new Date().getFullYear().toString(),
-      coverImage: project.coverImage || '/images/projects/project-lumina-motion.jpg',
-      gallery: incoming.gallery,
-      images: incoming.gallery,
-      videoUrl: incoming.videoUrl,
-      videos: incoming.videos,
-      youtubeUrl: project.youtubeUrl || '',
-      vimeoUrl: project.vimeoUrl || '',
-      googleDriveUrl: incoming.googleDriveMaterialsUrl,
-      googleDriveMaterialsUrl: incoming.googleDriveMaterialsUrl,
-      behanceUrl: project.behanceUrl || '',
-      tools: incoming.tools,
-      softwareUsed: incoming.tools,
-      projectUrl: project.projectUrl || '',
-      featured: Boolean(project.featured),
-      tags: project.tags || [],
-      sortOrder: project.sortOrder ?? store.projects.length + 1,
-      status: project.status || 'published',
-      width: project.width,
-      height: project.height,
-      aspectRatio: project.aspectRatio,
-      orientation: project.orientation,
-      createdAt: now,
-      updatedAt: now,
-    });
+    savedProject = resolveProjectSkills(
+      normalizeProject({
+        id: project.id || `proj-${Date.now()}`,
+        slug: project.slug || `project-${Date.now()}`,
+        title: project.title || 'Untitled Project',
+        titleAr: project.titleAr || '',
+        category: incoming.category,
+        categories: incoming.categories,
+        description: project.description || '',
+        descriptionAr: project.descriptionAr || '',
+        client: incoming.client,
+        clientName: incoming.client,
+        projectDate: project.projectDate || new Date().getFullYear().toString(),
+        coverImage: project.coverImage || '/images/projects/project-lumina-motion.jpg',
+        gallery: incoming.gallery,
+        images: incoming.gallery,
+        videoUrl: incoming.videoUrl,
+        videos: incoming.videos,
+        youtubeUrl: project.youtubeUrl || '',
+        vimeoUrl: project.vimeoUrl || '',
+        googleDriveUrl: incoming.googleDriveMaterialsUrl,
+        googleDriveMaterialsUrl: incoming.googleDriveMaterialsUrl,
+        behanceUrl: project.behanceUrl || '',
+        tools: incoming.tools,
+        softwareUsed: incoming.tools,
+        skillIds: incoming.skillIds,
+        resolvedTools: incoming.resolvedTools,
+        projectUrl: project.projectUrl || '',
+        featured: Boolean(project.featured),
+        tags: project.tags || [],
+        mediaItems: incoming.mediaItems,
+        sortOrder: project.sortOrder ?? store.projects.length + 1,
+        status: project.status || 'published',
+        width: project.width,
+        height: project.height,
+        aspectRatio: project.aspectRatio,
+        orientation: project.orientation,
+        createdAt: now,
+        updatedAt: now,
+      }),
+      skillGroups
+    );
     store.projects.push(savedProject);
   }
 
@@ -701,8 +927,19 @@ export async function saveSkillGroup(group: Partial<SkillGroup> & { id?: string 
   let saved: SkillGroup;
   const idx = store.skillGroups.findIndex((g) => g.id === group.id);
 
+  const normalizedSkills = (group.skills || []).map((s, sIdx) => ({
+    ...s,
+    iconUrl: s.iconUrl || getDefaultSoftwareIconUrl(s.name) || undefined,
+    enabled: s.enabled !== false,
+    sortOrder: s.sortOrder ?? sIdx + 1,
+  }));
+
   if (idx >= 0) {
-    saved = { ...store.skillGroups[idx], ...group } as SkillGroup;
+    saved = {
+      ...store.skillGroups[idx],
+      ...group,
+      skills: group.skills !== undefined ? normalizedSkills : store.skillGroups[idx].skills,
+    } as SkillGroup;
     store.skillGroups[idx] = saved;
   } else {
     saved = {
@@ -710,12 +947,55 @@ export async function saveSkillGroup(group: Partial<SkillGroup> & { id?: string 
       title: group.title || 'New Skill Group',
       titleAr: group.titleAr || 'مجموعة مهارات جديدة',
       sortOrder: group.sortOrder ?? store.skillGroups.length + 1,
-      skills: group.skills || [],
+      skills: normalizedSkills,
     };
     store.skillGroups.push(saved);
   }
 
   writeLocalStore(store);
+
+  const supabase = createServerClient();
+  if (supabase && isServerSupabaseConfigured()) {
+    try {
+      await supabase.from('skill_groups').upsert({
+        id: saved.id,
+        title: saved.title,
+        title_ar: saved.titleAr,
+        sort_order: saved.sortOrder,
+      });
+
+      if (Array.isArray(saved.skills)) {
+        const keepIds = saved.skills.map((s) => s.id);
+        if (keepIds.length > 0) {
+          await supabase
+            .from('skills')
+            .delete()
+            .eq('group_id', saved.id)
+            .not('id', 'in', `(${keepIds.map((id) => `'${id}'`).join(',')})`);
+        } else {
+          await supabase.from('skills').delete().eq('group_id', saved.id);
+        }
+
+        for (const s of saved.skills) {
+          const resolvedIcon = s.iconUrl || getDefaultSoftwareIconUrl(s.name) || null;
+          await supabase.from('skills').upsert({
+            id: s.id,
+            group_id: saved.id,
+            name: s.name,
+            name_ar: s.nameAr || null,
+            icon_url: resolvedIcon,
+            level: s.level || null,
+            category: s.category || saved.title,
+            enabled: s.enabled !== false,
+            sort_order: s.sortOrder || 1,
+          });
+        }
+      }
+    } catch (e) {
+      console.error('Supabase skill group upsert error:', e);
+    }
+  }
+
   return saved;
 }
 
@@ -723,6 +1003,17 @@ export async function deleteSkillGroup(id: string): Promise<boolean> {
   const store = readLocalStore();
   store.skillGroups = store.skillGroups.filter((g) => g.id !== id);
   writeLocalStore(store);
+
+  const supabase = createServerClient();
+  if (supabase && isServerSupabaseConfigured()) {
+    try {
+      await supabase.from('skills').delete().eq('group_id', id);
+      await supabase.from('skill_groups').delete().eq('id', id);
+    } catch (e) {
+      console.error('Supabase skill group delete error:', e);
+    }
+  }
+
   return true;
 }
 

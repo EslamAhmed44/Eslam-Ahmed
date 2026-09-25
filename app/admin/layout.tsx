@@ -19,16 +19,15 @@ import {
   Menu,
   X,
   Shield,
+  Globe,
 } from 'lucide-react';
+import { AdminLanguageProvider, useAdminLanguage } from '@/context/AdminLanguageContext';
 
-export default function AdminLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+function AdminShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [checkingAuth, setCheckingAuth] = useState(pathname !== '/admin/login');
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { language, direction, toggleLanguage, t } = useAdminLanguage();
 
   // Verify authentication whenever route changes (defense-in-depth)
   useEffect(() => {
@@ -63,29 +62,31 @@ export default function AdminLayout({
     return <>{children}</>;
   }
 
-  // If verifying authentication, show secure loading state (prevent flash of CMS content)
+  // If verifying authentication, show secure loading state
   if (checkingAuth) {
     return (
       <div className="min-h-screen bg-[#07090D] flex flex-col items-center justify-center p-6 text-[#94A3B8]">
         <div className="w-12 h-12 rounded-2xl bg-[#151A23] border border-[#F0F3F6]/10 flex items-center justify-center text-[#F59E0B] mb-4 shadow-xl">
           <Shield className="w-6 h-6 animate-pulse" />
         </div>
-        <div className="text-xs font-mono text-[#F0F3F6] tracking-wider uppercase">Verifying Admin Access...</div>
+        <div className="text-xs font-mono text-[#F0F3F6] tracking-wider uppercase">
+          Verifying Admin Access...
+        </div>
       </div>
     );
   }
 
   const navItems = [
-    { href: '/admin', label: 'Overview', icon: LayoutDashboard },
-    { href: '/admin/hero', label: 'Hero Content', icon: Sparkles },
-    { href: '/admin/about', label: 'About & Stats', icon: User },
-    { href: '/admin/projects', label: 'Projects Manager', icon: FolderKanban },
-    { href: '/admin/experience', label: 'Experience Timeline', icon: Briefcase },
-    { href: '/admin/skills', label: 'Skills & Stack', icon: Layers },
-    { href: '/admin/services', label: 'Services', icon: Wand2 },
-    { href: '/admin/testimonials', label: 'Client Feedback', icon: MessageSquareQuote },
-    { href: '/admin/media', label: 'Media Library', icon: ImageIcon },
-    { href: '/admin/settings', label: 'Site Settings & SEO', icon: Settings },
+    { href: '/admin', labelKey: 'nav.overview', icon: LayoutDashboard },
+    { href: '/admin/hero', labelKey: 'nav.hero', icon: Sparkles },
+    { href: '/admin/about', labelKey: 'nav.about', icon: User },
+    { href: '/admin/projects', labelKey: 'nav.projects', icon: FolderKanban },
+    { href: '/admin/experience', labelKey: 'nav.experience', icon: Briefcase },
+    { href: '/admin/skills', labelKey: 'nav.skills', icon: Layers },
+    { href: '/admin/services', labelKey: 'nav.services', icon: Wand2 },
+    { href: '/admin/testimonials', labelKey: 'nav.testimonials', icon: MessageSquareQuote },
+    { href: '/admin/media', labelKey: 'nav.media', icon: ImageIcon },
+    { href: '/admin/settings', labelKey: 'nav.settings', icon: Settings },
   ];
 
   const handleLogout = async () => {
@@ -101,7 +102,7 @@ export default function AdminLayout({
   return (
     <div className="min-h-screen bg-[#07090D] text-[#F0F3F6] flex">
       {/* Desktop Sidebar */}
-      <aside className="hidden lg:flex flex-col w-72 bg-[#10141C] border-e border-[#F0F3F6]/08 p-6 fixed inset-y-0 z-30 justify-between">
+      <aside className="hidden lg:flex flex-col w-72 bg-[#10141C] border-e border-[#F0F3F6]/08 p-6 fixed inset-y-0 start-0 z-30 justify-between">
         <div>
           {/* Brand Mark */}
           <div className="flex items-center gap-3 px-3 py-4 mb-8 border-b border-[#F0F3F6]/08">
@@ -109,7 +110,7 @@ export default function AdminLayout({
               IA.
             </span>
             <div>
-              <div className="text-sm font-bold text-[#F0F3F6]">CMS Dashboard</div>
+              <div className="text-sm font-bold text-[#F0F3F6]">{t('nav.cmsTitle')}</div>
               <div className="text-[11px] font-mono text-[#94A3B8]">Islam Ahmed</div>
             </div>
           </div>
@@ -130,7 +131,7 @@ export default function AdminLayout({
                   }`}
                 >
                   <Icon className="w-4 h-4 flex-shrink-0" />
-                  <span>{item.label}</span>
+                  <span>{t(item.labelKey)}</span>
                 </Link>
               );
             })}
@@ -139,6 +140,19 @@ export default function AdminLayout({
 
         {/* Bottom Actions */}
         <div className="pt-6 border-t border-[#F0F3F6]/08 flex flex-col gap-2">
+          {/* Language Switcher in sidebar */}
+          <button
+            onClick={toggleLanguage}
+            type="button"
+            className="flex items-center justify-between px-4 py-3 rounded-2xl bg-[#151A23] border border-[#F0F3F6]/10 text-xs font-semibold text-[#F0F3F6] hover:border-[#F59E0B]/50 transition-colors"
+          >
+            <span className="flex items-center gap-2">
+              <Globe className="w-4 h-4 text-[#F59E0B]" />
+              <span>{language === 'en' ? 'اللغة العربية (RTL)' : 'English (LTR)'}</span>
+            </span>
+            <span className="text-[10px] font-mono uppercase text-[#94A3B8]">{language}</span>
+          </button>
+
           <Link
             href="/"
             target="_blank"
@@ -146,7 +160,7 @@ export default function AdminLayout({
           >
             <span className="flex items-center gap-2">
               <Shield className="w-4 h-4 text-[#F59E0B]" />
-              <span>Live Website</span>
+              <span>{t('nav.liveSite')}</span>
             </span>
             <ExternalLink className="w-3.5 h-3.5 text-[#94A3B8]" />
           </Link>
@@ -156,7 +170,7 @@ export default function AdminLayout({
             className="flex items-center gap-3 px-4 py-3 rounded-2xl text-xs font-semibold text-red-400 hover:bg-red-500/10 transition-colors text-start"
           >
             <LogOut className="w-4 h-4" />
-            <span>Sign Out</span>
+            <span>{t('nav.signOut')}</span>
           </button>
         </div>
       </aside>
@@ -174,17 +188,27 @@ export default function AdminLayout({
               {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
             <span className="text-xs font-mono uppercase tracking-wider text-[#94A3B8]">
-              Content Management Engine
+              {t('nav.engine')}
             </span>
           </div>
 
           <div className="flex items-center gap-3">
+            {/* Quick Language Toggle */}
+            <button
+              onClick={toggleLanguage}
+              type="button"
+              className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#151A23] border border-[#F0F3F6]/10 text-xs font-semibold text-[#F0F3F6] hover:border-[#F59E0B]/50 hover:text-[#F59E0B] transition-colors"
+            >
+              <Globe className="w-3.5 h-3.5 text-[#F59E0B]" />
+              <span className="font-mono text-xs">{language === 'en' ? 'العربية' : 'English'}</span>
+            </button>
+
             <Link
               href="/"
               target="_blank"
               className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#151A23] border border-[#F0F3F6]/10 text-xs font-semibold text-[#F0F3F6] hover:border-[#F59E0B]/50 transition-colors"
             >
-              <span>View Live Site</span>
+              <span>{t('nav.liveSite')}</span>
               <ExternalLink className="w-3 h-3 text-[#F59E0B]" />
             </Link>
           </div>
@@ -215,15 +239,29 @@ export default function AdminLayout({
                   }`}
                 >
                   <item.icon className="w-4 h-4" />
-                  <span>{item.label}</span>
+                  <span>{t(item.labelKey)}</span>
                 </Link>
               ))}
+
+              <button
+                onClick={() => {
+                  toggleLanguage();
+                  setMobileOpen(false);
+                }}
+                className="mt-4 flex items-center justify-between px-4 py-3 rounded-2xl bg-[#151A23] text-sm font-semibold text-[#F0F3F6]"
+              >
+                <span className="flex items-center gap-2">
+                  <Globe className="w-4 h-4 text-[#F59E0B]" />
+                  <span>{language === 'en' ? 'العربية (RTL)' : 'English (LTR)'}</span>
+                </span>
+              </button>
+
               <button
                 onClick={handleLogout}
-                className="mt-6 flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold text-red-400"
+                className="mt-2 flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-semibold text-red-400"
               >
                 <LogOut className="w-4 h-4" />
-                <span>Sign Out</span>
+                <span>{t('nav.signOut')}</span>
               </button>
             </nav>
           </div>
@@ -233,5 +271,17 @@ export default function AdminLayout({
         <main className="flex-1 p-6 lg:p-10">{children}</main>
       </div>
     </div>
+  );
+}
+
+export default function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <AdminLanguageProvider>
+      <AdminShell>{children}</AdminShell>
+    </AdminLanguageProvider>
   );
 }

@@ -27,6 +27,20 @@ import {
   saveContactChannel,
   updateSettings,
 } from '@/lib/db/client';
+import { revalidatePath } from 'next/cache';
+
+function revalidateLiveSite(projectSlug?: string) {
+  try {
+    revalidatePath('/', 'page');
+    revalidatePath('/projects/[slug]', 'page');
+    revalidatePath('/admin', 'layout');
+    if (projectSlug) {
+      revalidatePath(`/projects/${projectSlug}`, 'page');
+    }
+  } catch (err) {
+    console.warn('[Cache] Live site revalidation warning:', err);
+  }
+}
 
 export async function POST(
   req: NextRequest,
@@ -80,51 +94,61 @@ export async function POST(
     switch (action) {
       case 'settings': {
         const updated = await updateSettings(body);
+        revalidateLiveSite();
         return NextResponse.json({ success: true, settings: updated });
       }
 
       case 'projects': {
         const saved = await saveProject(body);
+        revalidateLiveSite(saved.slug);
         return NextResponse.json({ success: true, project: saved });
       }
 
       case 'projects/reorder': {
         await reorderProjects(body.ids || []);
+        revalidateLiveSite();
         return NextResponse.json({ success: true });
       }
 
       case 'experience': {
         const saved = await saveExperience(body);
+        revalidateLiveSite();
         return NextResponse.json({ success: true, experience: saved });
       }
 
       case 'skill-groups': {
         const saved = await saveSkillGroup(body);
+        revalidateLiveSite();
         return NextResponse.json({ success: true, skillGroup: saved });
       }
 
       case 'services': {
         const saved = await saveService(body);
+        revalidateLiveSite();
         return NextResponse.json({ success: true, service: saved });
       }
 
       case 'testimonials': {
         const saved = await saveTestimonial(body);
+        revalidateLiveSite();
         return NextResponse.json({ success: true, testimonial: saved });
       }
 
       case 'social-links': {
         const saved = await saveSocialLink(body);
+        revalidateLiveSite();
         return NextResponse.json({ success: true, socialLink: saved });
       }
 
       case 'categories': {
         const updated = await saveCategory(body.category || body.name || '');
+        revalidateLiveSite();
         return NextResponse.json({ success: true, categories: updated });
       }
 
       case 'contact-channels': {
         const saved = await saveContactChannel(body);
+        revalidateLiveSite();
         return NextResponse.json({ success: true, contactChannel: saved });
       }
 
@@ -183,43 +207,46 @@ export async function DELETE(
     switch (action) {
       case 'projects':
         await deleteProject(id);
-        return NextResponse.json({ success: true });
+        break;
 
       case 'experience':
         await deleteExperience(id);
-        return NextResponse.json({ success: true });
+        break;
 
       case 'skill-groups':
         await deleteSkillGroup(id);
-        return NextResponse.json({ success: true });
+        break;
 
       case 'services':
         await deleteService(id);
-        return NextResponse.json({ success: true });
+        break;
 
       case 'testimonials':
         await deleteTestimonial(id);
-        return NextResponse.json({ success: true });
+        break;
 
       case 'social-links':
         await deleteSocialLink(id);
-        return NextResponse.json({ success: true });
+        break;
 
       case 'media':
         await deleteMediaFile(id);
-        return NextResponse.json({ success: true });
+        break;
 
       case 'categories':
         await deleteCategory(id);
-        return NextResponse.json({ success: true });
+        break;
 
       case 'contact-channels':
         await deleteContactChannel(id);
-        return NextResponse.json({ success: true });
+        break;
 
       default:
         return NextResponse.json({ error: `Unknown delete action ${action}` }, { status: 404 });
     }
+
+    revalidateLiveSite();
+    return NextResponse.json({ success: true });
   } catch (error: any) {
     console.error(`Admin DELETE error on /${action}:`, error);
     return NextResponse.json({ error: error?.message || 'Delete failed' }, { status: 500 });

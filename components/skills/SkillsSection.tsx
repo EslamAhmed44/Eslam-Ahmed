@@ -4,7 +4,8 @@ import React, { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { useLanguage } from '../navigation/LanguageContext';
 import { SkillGroup } from '@/lib/types';
-import { Layers, CheckCircle2 } from 'lucide-react';
+import { Layers } from 'lucide-react';
+import { SoftwareIcon } from '../ui/SoftwareIcon';
 
 interface SkillsSectionProps {
   skillGroups: SkillGroup[];
@@ -35,38 +36,49 @@ export const SkillsSection: React.FC<SkillsSectionProps> = ({ skillGroups }) => 
           {t('skills.heading')}
         </motion.h2>
 
-        {/* 6 Skill Groups Grid */}
+        {/* Skill Groups Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {skillGroups.map((group, idx) => (
-            <motion.div
-              key={group.id}
-              initial={{ opacity: 0, y: 25 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: idx * 0.1 }}
-              className="p-7 rounded-3xl bg-[#10141C] border border-[#F0F3F6]/08 hover:border-[#F59E0B]/40 hover:bg-[#151A23] transition-all duration-300 flex flex-col justify-between group"
-            >
-              <div>
-                <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-lg font-bold text-[#F0F3F6] group-hover:text-[#F59E0B] transition-colors">
-                    {language === 'ar' && group.titleAr ? group.titleAr : group.title}
-                  </h3>
-                  <span className="text-xs font-mono text-[#94A3B8]/60">0{idx + 1}</span>
-                </div>
+          {(skillGroups || []).map((group, idx) => {
+            const visibleSkills = (group.skills || []).filter((s) => s.enabled !== false);
+            if (visibleSkills.length === 0) return null;
 
-                <div className="flex flex-wrap gap-2">
-                  {group.skills.map((skill) => (
-                    <span
-                      key={skill.id}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#151A23] border border-[#F0F3F6]/08 text-xs font-medium text-[#F0F3F6] group-hover:border-[#F59E0B]/20 transition-all duration-200"
-                    >
-                      <CheckCircle2 className="w-3 h-3 text-[#F59E0B]" />
-                      <span>{skill.name}</span>
-                    </span>
-                  ))}
+            return (
+              <motion.div
+                key={group.id}
+                initial={{ opacity: 0, y: 25 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                className="p-7 rounded-3xl bg-[#10141C] border border-[#F0F3F6]/08 hover:border-[#F59E0B]/40 hover:bg-[#151A23] transition-all duration-300 flex flex-col justify-between group"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-6">
+                    <h3 className="text-lg font-bold text-[#F0F3F6] group-hover:text-[#F59E0B] transition-colors">
+                      {language === 'ar' && group.titleAr ? group.titleAr : group.title}
+                    </h3>
+                    <span className="text-xs font-mono text-[#94A3B8]/60">0{idx + 1}</span>
+                  </div>
+
+                  <div className="flex flex-wrap gap-2.5">
+                    {visibleSkills.map((skill) => (
+                      <span
+                        key={skill.id}
+                        className="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-[#151A23] border border-[#F0F3F6]/10 text-xs font-medium text-[#F0F3F6] group-hover:border-[#F59E0B]/30 hover:border-[#F59E0B] transition-all duration-200 shadow-sm"
+                      >
+                        <SoftwareIcon
+                          name={skill.name}
+                          iconUrl={skill.iconUrl}
+                          className="w-4 h-4"
+                        />
+                        <span>
+                          {language === 'ar' && skill.nameAr ? skill.nameAr : skill.name}
+                        </span>
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

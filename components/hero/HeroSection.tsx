@@ -196,16 +196,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               transition={{ duration: 0.9, delay: 0.3 }}
               className="relative w-72 h-72 sm:w-88 sm:h-88 md:w-96 md:h-96 flex items-center justify-center transform-gpu"
             >
-              {/* Outer Orbit Rings */}
-              <div className="absolute inset-0 rounded-full border border-dashed border-[#F59E0B]/25 animate-[spin_40s_linear_infinite]" />
-              <div className="absolute -inset-4 rounded-full border border-[#F0F3F6]/05 pointer-events-none" />
+              {/* Outer Precision Orbit Ring */}
+              <div className="absolute inset-0 rounded-full border border-dashed border-[#F59E0B]/25 animate-[spin_40s_linear_infinite] transform-gpu will-change-transform pointer-events-none" />
+              
+              {/* Secondary Fine Technical Counter-Ring */}
+              <div className="absolute -inset-3 rounded-full border border-dotted border-[#F0F3F6]/08 animate-[spin_65s_linear_infinite_reverse] transform-gpu will-change-transform pointer-events-none" />
+              <div className="absolute -inset-5 rounded-full border border-[#F0F3F6]/05 pointer-events-none" />
 
-              {/* Glowing Accent Ring with Gradient */}
-              <div className="absolute -inset-1 rounded-full bg-gradient-to-tr from-[#F59E0B]/40 via-transparent to-[#FF7A18]/30 blur-md pointer-events-none" />
+              {/* Refined Cinematic Studio Rim Glow */}
+              <div className="absolute -inset-1 rounded-full bg-gradient-to-tr from-[#F59E0B]/25 via-transparent to-[#FF7A18]/20 blur-md pointer-events-none transform-gpu will-change-transform" />
 
-              {/* Orbiting Satellite Dot */}
-              <div className="absolute inset-0 rounded-full animate-[spin_24s_linear_infinite] pointer-events-none">
-                <span className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-[#F59E0B] shadow-[0_0_12px_#F59E0B]" />
+              {/* Orbiting Satellite Node with Constant Premium Motion */}
+              <div className="absolute inset-0 rounded-full animate-[spin_28s_linear_infinite] transform-gpu will-change-transform pointer-events-none">
+                <span className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-[#F59E0B] shadow-[0_0_10px_rgba(245,158,11,0.65)] ring-2 ring-[#07090D]" />
               </div>
 
               {/* Circular Framed Photo Container (Identity & Natural Texture Fully Preserved) */}

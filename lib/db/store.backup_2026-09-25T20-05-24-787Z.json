@@ -99,7 +99,7 @@
       "sortOrder": 2,
       "status": "published",
       "createdAt": "2023-11-20T14:15:00Z",
-      "updatedAt": "2026-09-25T20:19:35.950Z",
+      "updatedAt": "2026-09-25T19:29:41.063Z",
       "width": 4501,
       "height": 5118,
       "aspectRatio": 0.8794,
@@ -107,8 +107,7 @@
       "ratioLabel": "0.88:1",
       "skillIds": [
         "s-21",
-        "s-22",
-        "s-1790364546943"
+        "s-22"
       ],
       "mediaItems": [
         {
@@ -127,23 +126,6 @@
           "url": "/uploads/1790262555578-F1.png",
           "title": "Image 2",
           "sortOrder": 2
-        }
-      ],
-      "resolvedTools": [
-        {
-          "id": "s-21",
-          "name": "Photoshop",
-          "iconUrl": "/icons/software/photoshop.svg"
-        },
-        {
-          "id": "s-22",
-          "name": "Illustrator",
-          "iconUrl": "/icons/software/illustrator.svg"
-        },
-        {
-          "id": "s-1790364546943",
-          "name": "Brand Identity",
-          "iconUrl": "/uploads/1790364544392-_____.png"
         }
       ]
     },
@@ -441,51 +423,6 @@
           "name": "Brand Identity",
           "iconUrl": "/uploads/1790364544392-_____.png",
           "sortOrder": 7,
-          "enabled": true,
-          "parentId": "group-5",
-          "category": "Software Proficiency"
-        },
-        {
-          "id": "s-32",
-          "name": "Figma",
-          "iconUrl": "/icons/software/figma.svg",
-          "sortOrder": 8,
-          "enabled": true,
-          "parentId": "group-5",
-          "category": "Software Proficiency"
-        },
-        {
-          "id": "s-33",
-          "name": "Canva",
-          "iconUrl": "/icons/software/canva.svg",
-          "sortOrder": 9,
-          "enabled": true,
-          "parentId": "group-5",
-          "category": "Software Proficiency"
-        },
-        {
-          "id": "s-34",
-          "name": "DaVinci Resolve",
-          "iconUrl": "/icons/software/davinci-resolve.svg",
-          "sortOrder": 10,
-          "enabled": true,
-          "parentId": "group-5",
-          "category": "Software Proficiency"
-        },
-        {
-          "id": "s-35",
-          "name": "Blender",
-          "iconUrl": "/icons/software/blender.svg",
-          "sortOrder": 11,
-          "enabled": true,
-          "parentId": "group-5",
-          "category": "Software Proficiency"
-        },
-        {
-          "id": "s-36",
-          "name": "Cinema 4D",
-          "iconUrl": "/icons/software/cinema4d.svg",
-          "sortOrder": 12,
           "enabled": true,
           "parentId": "group-5",
           "category": "Software Proficiency"
