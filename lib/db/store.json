@@ -152,11 +152,10 @@
       "slug": "project-1790361143478",
       "title": "Uptown Labs - Brand Identity & Social Media Redesign",
       "titleAr": "معامل أب تاون - تطوير الهوية البصرية وتصميمات السوشيال ميديا",
-      "category": "Branding",
+      "category": "Graphic Design",
       "categories": [
-        "Branding",
         "Graphic Design",
-        "Social Media",
+        "Branding",
         "Campaign Design"
       ],
       "description": "A comprehensive brand identity refreshment and digital presence upgrade for Uptown Labs, living up to their core promise: \"The Canadian Standard for Your Health in Egypt.\" The primary goal was to translate this high level of international medical precision and reliability into a modern, trustworthy visual language.\n\nScope of Work:\n\nLogo Redesign & Refinement: Upgraded and modernized the existing logo to reflect elite medical standards, ensuring high scalability across digital platforms, reports, and promotional materials.\n\nVisual Identity & Color Palette: Developed a professional, clinical color scheme that reinforces advanced diagnostics and uncompromising quality.\n\nFacebook Cover & Social Media Rebranding: Designed high-impact Facebook cover art and campaign visual templates that proudly communicate the lab's slogan and build instant patient trust.\n\nTypography & Layouts: Selected clean, precise typography to ensure information is delivered with absolute clarity.\n\nResult:\nA cohesive, elevated brand identity that visually reinforces Uptown Labs' position as a premier healthcare provider bringing international standards to Egypt",
@@ -181,31 +180,66 @@
       "googleDriveMaterialsUrl": "",
       "behanceUrl": "",
       "tools": [
-        "Adobe Photoshop",
-        "Adobe Illustrator",
-        "Brand Identity"
+        "Brand Identity",
+        "Photoshop",
+        "Illustrator"
       ],
       "softwareUsed": [
-        "Adobe Photoshop",
-        "Adobe Illustrator",
-        "Brand Identity"
+        "Brand Identity",
+        "Photoshop",
+        "Illustrator"
       ],
       "projectUrl": "",
       "featured": true,
-      "tags": [
-        "Campaign",
-        "Design"
-      ],
-      "sortOrder": 2,
+      "tags": [],
+      "sortOrder": 1,
       "status": "published",
       "width": 8534,
       "height": 8534,
       "aspectRatio": 1,
       "orientation": "square",
       "createdAt": "2026-09-25T18:40:41.019Z",
-      "updatedAt": "2026-09-25T18:53:27.553Z",
+      "updatedAt": "2026-09-25T20:41:56.438Z",
       "skillIds": [
-        "s-5"
+        "s-5",
+        "s-21",
+        "s-22"
+      ],
+      "mediaItems": [
+        {
+          "id": "med-1",
+          "type": "image",
+          "url": "/uploads/1790361602345-New_logo_2x.png",
+          "title": "Cover Visual",
+          "sortOrder": 1,
+          "aspectRatio": 1,
+          "width": 8534,
+          "height": 8534
+        },
+        {
+          "id": "med-2",
+          "type": "image",
+          "url": "/uploads/1790361631974-UP_V1.1_copy.jpg",
+          "title": "Image 2",
+          "sortOrder": 2
+        }
+      ],
+      "resolvedTools": [
+        {
+          "id": "s-5",
+          "name": "Brand Identity",
+          "iconUrl": "/uploads/1790362302091-_____.png"
+        },
+        {
+          "id": "s-21",
+          "name": "Photoshop",
+          "iconUrl": "/icons/software/photoshop.svg"
+        },
+        {
+          "id": "s-22",
+          "name": "Illustrator",
+          "iconUrl": "/icons/software/illustrator.svg"
+        }
       ]
     }
   ],
@@ -263,28 +297,35 @@
         {
           "id": "s-1",
           "name": "Composition",
-          "sortOrder": 1
+          "sortOrder": 1,
+          "enabled": true
         },
         {
           "id": "s-2",
           "name": "Color Theory",
-          "sortOrder": 2
+          "sortOrder": 2,
+          "iconUrl": "/uploads/1790369899478-color-guide.png",
+          "enabled": true
         },
         {
           "id": "s-3",
           "name": "Typography",
-          "sortOrder": 3
+          "sortOrder": 3,
+          "enabled": true
         },
         {
           "id": "s-4",
           "name": "Layout",
-          "sortOrder": 4
+          "sortOrder": 4,
+          "iconUrl": "/uploads/1790370687090-text-tool.png",
+          "enabled": true
         },
         {
           "id": "s-5",
           "name": "Brand Identity",
           "sortOrder": 5,
-          "iconUrl": "/uploads/1790362302091-_____.png"
+          "iconUrl": "/uploads/1790362302091-_____.png",
+          "enabled": true
         }
       ]
     },
@@ -298,27 +339,34 @@
           "id": "s-6",
           "name": "After Effects",
           "iconUrl": "/icons/software/after-effects.svg",
-          "sortOrder": 1
+          "sortOrder": 1,
+          "enabled": true
         },
         {
           "id": "s-7",
           "name": "Motion Design",
-          "sortOrder": 2
+          "sortOrder": 2,
+          "iconUrl": "/uploads/1790369934354-motion-graphic.png",
+          "enabled": true
         },
         {
           "id": "s-8",
           "name": "Kinetic Typography",
-          "sortOrder": 3
+          "sortOrder": 3,
+          "enabled": true
         },
         {
           "id": "s-9",
           "name": "Logo Animation",
-          "sortOrder": 4
+          "sortOrder": 4,
+          "enabled": true,
+          "iconUrl": "/uploads/1790370574768-logo-design.png"
         },
         {
           "id": "s-10",
           "name": "Transitions",
-          "sortOrder": 5
+          "sortOrder": 5,
+          "enabled": true
         }
       ]
     },
@@ -331,27 +379,37 @@
         {
           "id": "s-11",
           "name": "Photo Retouching",
-          "sortOrder": 1
+          "sortOrder": 1,
+          "iconUrl": "/uploads/1790370303257-photo.png",
+          "enabled": true
         },
         {
           "id": "s-12",
           "name": "Color Correction",
-          "sortOrder": 2
+          "sortOrder": 2,
+          "iconUrl": "/uploads/1790370326399-color-palette.png",
+          "enabled": true
         },
         {
           "id": "s-13",
           "name": "Visual Composition",
-          "sortOrder": 3
+          "sortOrder": 3,
+          "iconUrl": "/uploads/1790370349006-visual-aesthetics.png",
+          "enabled": true
         },
         {
           "id": "s-14",
           "name": "Lighting",
-          "sortOrder": 4
+          "sortOrder": 4,
+          "iconUrl": "/uploads/1790370379084-spotlight.png",
+          "enabled": true
         },
         {
           "id": "s-15",
           "name": "Visual Processing",
-          "sortOrder": 5
+          "sortOrder": 5,
+          "iconUrl": "/icons/software/premiere-pro.svg",
+          "enabled": true
         }
       ]
     },
@@ -364,27 +422,36 @@
         {
           "id": "s-16",
           "name": "Prompt Design",
-          "sortOrder": 1
+          "sortOrder": 1,
+          "iconUrl": "/icons/software/premiere-pro.svg",
+          "enabled": true
         },
         {
           "id": "s-17",
           "name": "Generative Visuals",
-          "sortOrder": 2
+          "sortOrder": 2,
+          "enabled": true
         },
         {
           "id": "s-18",
           "name": "Image Enhancement",
-          "sortOrder": 3
+          "sortOrder": 3,
+          "iconUrl": "/uploads/1790370439768-filter.png",
+          "enabled": true
         },
         {
           "id": "s-19",
           "name": "AI-assisted Workflow",
-          "sortOrder": 4
+          "sortOrder": 4,
+          "iconUrl": "/icons/software/illustrator.svg",
+          "enabled": true
         },
         {
           "id": "s-20",
           "name": "Creative Automation",
-          "sortOrder": 5
+          "sortOrder": 5,
+          "iconUrl": "/icons/software/audition.svg",
+          "enabled": true
         }
       ]
     },
@@ -501,27 +568,37 @@
         {
           "id": "s-27",
           "name": "Creative Problem Solving",
-          "sortOrder": 1
+          "sortOrder": 1,
+          "iconUrl": "/icons/software/premiere-pro.svg",
+          "enabled": true
         },
         {
           "id": "s-28",
           "name": "Communication",
-          "sortOrder": 2
+          "sortOrder": 2,
+          "iconUrl": "/uploads/1790370245181-conversation.png",
+          "enabled": true
         },
         {
           "id": "s-29",
           "name": "Attention to Detail",
-          "sortOrder": 3
+          "sortOrder": 3,
+          "iconUrl": "/icons/software/illustrator.svg",
+          "enabled": true
         },
         {
           "id": "s-30",
           "name": "Time Management",
-          "sortOrder": 4
+          "sortOrder": 4,
+          "iconUrl": "/uploads/1790370161435-competency.png",
+          "enabled": true
         },
         {
           "id": "s-31",
           "name": "Adaptability",
-          "sortOrder": 5
+          "sortOrder": 5,
+          "enabled": true,
+          "iconUrl": "/uploads/1790370211969-adaptation.png"
         }
       ]
     }
@@ -600,6 +677,126 @@
     }
   ],
   "media": [
+    {
+      "name": "text-tool.png",
+      "url": "/uploads/1790370687090-text-tool.png",
+      "type": "image",
+      "sizeBytes": 9287,
+      "id": "med-1790370687093",
+      "uploadedAt": "2026-09-25T21:11:27.093Z"
+    },
+    {
+      "name": "logo-design.png",
+      "url": "/uploads/1790370574768-logo-design.png",
+      "type": "image",
+      "sizeBytes": 31393,
+      "id": "med-1790370574769",
+      "uploadedAt": "2026-09-25T21:09:34.770Z"
+    },
+    {
+      "name": "filter.png",
+      "url": "/uploads/1790370439768-filter.png",
+      "type": "image",
+      "sizeBytes": 22825,
+      "id": "med-1790370439770",
+      "uploadedAt": "2026-09-25T21:07:19.770Z"
+    },
+    {
+      "name": "spotlight.png",
+      "url": "/uploads/1790370379084-spotlight.png",
+      "type": "image",
+      "sizeBytes": 34078,
+      "id": "med-1790370379086",
+      "uploadedAt": "2026-09-25T21:06:19.086Z"
+    },
+    {
+      "name": "visual-aesthetics.png",
+      "url": "/uploads/1790370349006-visual-aesthetics.png",
+      "type": "image",
+      "sizeBytes": 30555,
+      "id": "med-1790370349008",
+      "uploadedAt": "2026-09-25T21:05:49.008Z"
+    },
+    {
+      "name": "color-palette.png",
+      "url": "/uploads/1790370326399-color-palette.png",
+      "type": "image",
+      "sizeBytes": 26207,
+      "id": "med-1790370326401",
+      "uploadedAt": "2026-09-25T21:05:26.401Z"
+    },
+    {
+      "name": "photo.png",
+      "url": "/uploads/1790370303257-photo.png",
+      "type": "image",
+      "sizeBytes": 18929,
+      "id": "med-1790370303258",
+      "uploadedAt": "2026-09-25T21:05:03.258Z"
+    },
+    {
+      "name": "conversation.png",
+      "url": "/uploads/1790370245181-conversation.png",
+      "type": "image",
+      "sizeBytes": 48240,
+      "id": "med-1790370245184",
+      "uploadedAt": "2026-09-25T21:04:05.184Z"
+    },
+    {
+      "name": "adaptation.png",
+      "url": "/uploads/1790370211969-adaptation.png",
+      "type": "image",
+      "sizeBytes": 39028,
+      "id": "med-1790370211970",
+      "uploadedAt": "2026-09-25T21:03:31.970Z"
+    },
+    {
+      "name": "competency.png",
+      "url": "/uploads/1790370161435-competency.png",
+      "type": "image",
+      "sizeBytes": 47300,
+      "id": "med-1790370161441",
+      "uploadedAt": "2026-09-25T21:02:41.441Z"
+    },
+    {
+      "name": "rapid.png",
+      "url": "/uploads/1790370022408-rapid.png",
+      "type": "image",
+      "sizeBytes": 22938,
+      "id": "med-1790370022410",
+      "uploadedAt": "2026-09-25T21:00:22.410Z"
+    },
+    {
+      "name": "communication.png",
+      "url": "/uploads/1790370006733-communication.png",
+      "type": "image",
+      "sizeBytes": 41781,
+      "id": "med-1790370006736",
+      "uploadedAt": "2026-09-25T21:00:06.736Z"
+    },
+    {
+      "name": "motion-graphic.png",
+      "url": "/uploads/1790369934354-motion-graphic.png",
+      "type": "image",
+      "sizeBytes": 26411,
+      "id": "med-1790369934355",
+      "uploadedAt": "2026-09-25T20:58:54.355Z"
+    },
+    {
+      "name": "color-guide.png",
+      "url": "/uploads/1790369899478-color-guide.png",
+      "type": "image",
+      "sizeBytes": 30383,
+      "id": "med-1790369899480",
+      "uploadedAt": "2026-09-25T20:58:19.480Z"
+    },
+    {
+      "name": "drawing.png",
+      "url": "/uploads/1790369875514-drawing.png",
+      "type": "image",
+      "sizeBytes": 5751,
+      "id": "med-1790369875520",
+      "uploadedAt": "2026-09-25T20:57:55.520Z"
+    },
     {
       "name": "تنزيل.png",
       "url": "/uploads/1790364544392-_____.png",
