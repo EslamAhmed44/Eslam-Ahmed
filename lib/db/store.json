@@ -62,14 +62,14 @@
       "client": "Dr. Hazem Mahmoud Clinic",
       "clientName": "Dr. Hazem Mahmoud Clinic",
       "projectDate": "2026-Feb",
-      "coverImage": "/uploads/1790371562906-F1.png",
+      "coverImage": "/uploads/1790372687533-F1.png",
       "gallery": [
-        "/uploads/1790371562906-F1.png",
-        "http://localhost:3000/uploads/1790259518074-F2_.png"
+        "/uploads/1790372687533-F1.png",
+        "/uploads/1790372687694-F2.png"
       ],
       "images": [
-        "/uploads/1790371562906-F1.png",
-        "http://localhost:3000/uploads/1790259518074-F2_.png"
+        "/uploads/1790372687533-F1.png",
+        "/uploads/1790372687694-F2.png"
       ],
       "videoUrl": "",
       "videos": [],
@@ -99,7 +99,7 @@
       "sortOrder": 2,
       "status": "published",
       "createdAt": "2023-11-20T14:15:00Z",
-      "updatedAt": "2026-09-25T21:36:43.482Z",
+      "updatedAt": "2026-09-25T21:44:56.642Z",
       "width": 4500,
       "height": 4963,
       "aspectRatio": 0.9067,
@@ -112,9 +112,9 @@
       ],
       "mediaItems": [
         {
-          "id": "med-1790371562921-0",
+          "id": "med-1790372687545-0",
           "type": "image",
-          "url": "/uploads/1790371562906-F1.png",
+          "url": "/uploads/1790372687533-F1.png",
           "title": "F1",
           "sortOrder": 1,
           "aspectRatio": 0.9067,
@@ -122,11 +122,14 @@
           "height": 4963
         },
         {
-          "id": "med-1790371378129",
+          "id": "med-1790372687709-1",
           "type": "image",
-          "url": "http://localhost:3000/uploads/1790259518074-F2_.png",
-          "title": "Artwork Image",
-          "sortOrder": 2
+          "url": "/uploads/1790372687694-F2.png",
+          "title": "F2",
+          "sortOrder": 2,
+          "aspectRatio": 0.8794,
+          "width": 4501,
+          "height": 5118
         }
       ],
       "resolvedTools": [
@@ -677,6 +680,22 @@
     }
   ],
   "media": [
+    {
+      "name": "F2.png",
+      "url": "/uploads/1790372687694-F2.png",
+      "type": "image",
+      "sizeBytes": 10413786,
+      "id": "med-1790372687702",
+      "uploadedAt": "2026-09-25T21:44:47.702Z"
+    },
+    {
+      "name": "F1.png",
+      "url": "/uploads/1790372687533-F1.png",
+      "type": "image",
+      "sizeBytes": 11733425,
+      "id": "med-1790372687539",
+      "uploadedAt": "2026-09-25T21:44:47.539Z"
+    },
     {
       "name": "F1.png",
       "url": "/uploads/1790371562906-F1.png",
