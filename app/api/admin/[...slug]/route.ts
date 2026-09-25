@@ -14,6 +14,7 @@ import {
   deleteSocialLink,
   deleteTestimonial,
   deleteCategory,
+  deleteContactChannel,
   getSiteData,
   reorderProjects,
   saveExperience,
@@ -23,6 +24,7 @@ import {
   saveSocialLink,
   saveTestimonial,
   saveCategory,
+  saveContactChannel,
   updateSettings,
 } from '@/lib/db/client';
 
@@ -121,6 +123,11 @@ export async function POST(
         return NextResponse.json({ success: true, categories: updated });
       }
 
+      case 'contact-channels': {
+        const saved = await saveContactChannel(body);
+        return NextResponse.json({ success: true, contactChannel: saved });
+      }
+
       default:
         return NextResponse.json({ error: `Unknown action ${action}` }, { status: 404 });
     }
@@ -204,6 +211,10 @@ export async function DELETE(
 
       case 'categories':
         await deleteCategory(id);
+        return NextResponse.json({ success: true });
+
+      case 'contact-channels':
+        await deleteContactChannel(id);
         return NextResponse.json({ success: true });
 
       default:

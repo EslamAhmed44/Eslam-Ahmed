@@ -23,6 +23,7 @@ const translations: Record<Language, Record<string, string>> = {
     'nav.testimonials': 'Testimonials',
     'nav.contact': 'Get In Touch',
     'nav.downloadCv': 'Download CV',
+    'nav.privacyTerms': 'Privacy & Terms',
 
     // Hero
     'hero.greeting': "Hello, I'm",
@@ -140,6 +141,7 @@ const translations: Record<Language, Record<string, string>> = {
     'nav.testimonials': 'آراء العملاء',
     'nav.contact': 'تواصل معي',
     'nav.downloadCv': 'تحميل السيرة الذاتية',
+    'nav.privacyTerms': 'الخصوصية والشروط',
 
     // Hero
     'hero.greeting': 'مرحبًا، أنا',

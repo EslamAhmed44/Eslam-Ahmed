@@ -56,13 +56,17 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // Always ensure local copy in public/uploads for fallback reliability
-    const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
-    if (!fs.existsSync(uploadsDir)) {
-      fs.mkdirSync(uploadsDir, { recursive: true });
+    // Ensure local copy in public/uploads for fallback reliability when filesystem is writable
+    try {
+      const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
+      if (!fs.existsSync(uploadsDir)) {
+        fs.mkdirSync(uploadsDir, { recursive: true });
+      }
+      const localFilePath = path.join(uploadsDir, uniqueFilename);
+      fs.writeFileSync(localFilePath, buffer);
+    } catch (fsErr: any) {
+      console.warn('[Upload] Local filesystem write bypassed (read-only environment):', fsErr?.message);
     }
-    const localFilePath = path.join(uploadsDir, uniqueFilename);
-    fs.writeFileSync(localFilePath, buffer);
 
     // Save to media repository
     const mediaEntry = await saveMediaFile({

@@ -31,7 +31,6 @@
     "whatsappUrl": "https://wa.me/201092463750",
     "linkedinUrl": "https://www.linkedin.com/in/eslam-ahmed-a7bb0a308/",
     "cvUrl": "/cv/Islam_Ahmed_CV.pdf",
-    "privacyTermsUrl": "/legal/Privacy_and_Terms.pdf",
     "customCursorEnabled": true,
     "defaultLanguage": "en",
     "seoKeywords": "Islam Ahmed, Motion Graphics, Graphic Design, After Effects, Kinetic Typography, 3D Motion, Brand Identity, Visual Designer, Cairo, Egypt",
@@ -646,32 +645,6 @@
       "googleDriveUrl": "",
       "status": "read",
       "createdAt": "2026-09-24T21:39:55.359Z"
-    }
-  ],
-  "contactChannels": [
-    {
-      "id": "channel-whatsapp",
-      "platform": "whatsapp",
-      "title": "WhatsApp",
-      "titleAr": "واتساب",
-      "subtitle": "Chat with me",
-      "subtitleAr": "ابدأ محادثة مباشرة",
-      "icon": "whatsapp",
-      "url": "https://wa.me/201092463750",
-      "enabled": true,
-      "sortOrder": 1
-    },
-    {
-      "id": "channel-linkedin",
-      "platform": "linkedin",
-      "title": "LinkedIn Network",
-      "titleAr": "شبكة لينكد إن",
-      "subtitle": "Islam Ahmed",
-      "subtitleAr": "إسلام أحمد",
-      "icon": "linkedin",
-      "url": "https://www.linkedin.com/in/eslam-ahmed-a7bb0a308/",
-      "enabled": true,
-      "sortOrder": 2
     }
   ]
 }

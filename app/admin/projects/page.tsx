@@ -34,10 +34,12 @@ import {
   calculateMediaDimensions,
   getRatioLabel,
 } from '@/lib/media/dimensions';
+import { SoftwareIcon } from '@/components/ui/SoftwareIcon';
 
 export default function AdminProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [allSkills, setAllSkills] = useState<string[]>([]);
+  const [centralSkills, setCentralSkills] = useState<Array<{ id: string; name: string; iconUrl?: string }>>([]);
   const [allCategories, setAllCategories] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [editingProject, setEditingProject] = useState<Partial<Project> | null>(null);
@@ -68,13 +70,17 @@ export default function AdminProjectsPage() {
       }
 
       // Extract skills dynamically from central skill groups (~25+ skills)
-      const extractedSkills = Array.from(
-        new Set<string>(
-          (data.data?.skillGroups || []).flatMap((g: any) =>
-            (g.skills || []).map((s: any) => s.name?.trim()).filter(Boolean)
-          )
-        )
-      );
+      const centralList: Array<{ id: string; name: string; iconUrl?: string }> = [];
+      (data.data?.skillGroups || []).forEach((g: any) => {
+        (g.skills || []).forEach((s: any) => {
+          if (s.name) {
+            centralList.push({ id: s.id, name: s.name.trim(), iconUrl: s.iconUrl });
+          }
+        });
+      });
+      setCentralSkills(centralList);
+
+      const extractedSkills = Array.from(new Set<string>(centralList.map((s) => s.name)));
 
       const defaultTools = [
         'Adobe Photoshop',
@@ -550,20 +556,27 @@ export default function AdminProjectsPage() {
   // --------------------------------------------------------------------------
   // SOFTWARE / SKILLS MULTI-SELECT
   // --------------------------------------------------------------------------
-  const toggleSkill = (skill: string) => {
+  const toggleSkill = (skill: string, skillId?: string) => {
     if (!editingProject) return;
     const current = editingProject.tools || [];
+    const currentIds = editingProject.skillIds || [];
     const exists = current.some((s) => s.toLowerCase() === skill.toLowerCase());
     let next: string[];
+    let nextIds: string[];
+
     if (exists) {
       next = current.filter((s) => s.toLowerCase() !== skill.toLowerCase());
+      nextIds = skillId ? currentIds.filter((id) => id !== skillId) : currentIds;
     } else {
       next = [...current, skill];
+      nextIds = skillId && !currentIds.includes(skillId) ? [...currentIds, skillId] : currentIds;
     }
+
     setEditingProject({
       ...editingProject,
       tools: next,
       softwareUsed: next,
+      skillIds: nextIds,
     });
   };
 
@@ -1027,11 +1040,12 @@ export default function AdminProjectsPage() {
                         key={idx}
                         className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#10141C] border border-[#F0F3F6]/15 text-xs font-medium text-[#F0F3F6]"
                       >
+                        <SoftwareIcon name={tool} className="w-3.5 h-3.5" />
                         <span>{tool}</span>
                         <button
                           type="button"
                           onClick={() => toggleSkill(tool)}
-                          className="hover:text-red-400 transition-colors p-0.5"
+                          className="hover:text-red-400 transition-colors p-0.5 ml-0.5"
                           title="Remove software"
                         >
                           <X className="w-3.5 h-3.5" />
@@ -1060,26 +1074,34 @@ export default function AdminProjectsPage() {
                     />
                   </div>
 
-                  <div className="flex flex-wrap gap-2 max-h-48 overflow-y-auto p-1">
+                  <div className="flex flex-wrap gap-2 max-h-56 overflow-y-auto p-1">
                     {allSkills
                       .filter((s) => s.toLowerCase().includes(skillSearch.toLowerCase()))
                       .map((skill) => {
                         const isSelected = editingProject.tools?.some(
                           (t) => t.toLowerCase() === skill.toLowerCase()
                         );
+                        const matched = centralSkills.find(
+                          (cs) => cs.name.toLowerCase() === skill.toLowerCase()
+                        );
                         return (
                           <button
                             key={skill}
                             type="button"
-                            onClick={() => toggleSkill(skill)}
+                            onClick={() => toggleSkill(skill, matched?.id)}
                             className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all flex items-center gap-1.5 ${
                               isSelected
                                 ? 'bg-[#F59E0B] text-[#07090D] font-bold shadow-md'
-                                : 'bg-[#10141C] text-[#94A3B8] border border-[#F0F3F6]/10 hover:text-white'
+                                : 'bg-[#10141C] text-[#94A3B8] border border-[#F0F3F6]/10 hover:border-[#F59E0B]/30 hover:text-white'
                             }`}
                           >
-                            {isSelected && <Check className="w-3 h-3" />}
+                            <SoftwareIcon
+                              name={skill}
+                              iconUrl={matched?.iconUrl}
+                              className="w-3.5 h-3.5"
+                            />
                             <span>{skill}</span>
+                            {isSelected && <Check className="w-3 h-3 ml-0.5" />}
                           </button>
                         );
                       })}

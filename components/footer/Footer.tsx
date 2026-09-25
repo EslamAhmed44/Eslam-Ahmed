@@ -12,7 +12,6 @@ import {
   VimeoIcon,
   YouTubeIcon,
   InstagramIcon,
-  AdminBirdMessageIcon,
 } from '../ui/Icons';
 
 interface FooterProps {
@@ -120,7 +119,7 @@ export const Footer: React.FC<FooterProps> = ({
 
             <div className="h-4 w-px bg-[#F0F3F6]/10 hidden sm:block" />
 
-            {/* Back to top & Creative Admin Message Icon */}
+            {/* Back to top */}
             <div className="flex items-center gap-3">
               <button
                 onClick={scrollToTop}
@@ -130,19 +129,6 @@ export const Footer: React.FC<FooterProps> = ({
                 <ArrowUp className="w-3 h-3 text-[#F59E0B]" />
                 <span>{t('footer.backToTop')}</span>
               </button>
-
-              {/* Elegant divider */}
-              <span className="h-3.5 w-px bg-[#F0F3F6]/15 select-none" aria-hidden="true" />
-
-              {/* Creative Admin Message Icon */}
-              <Link
-                href="/admin/messages"
-                className="group relative w-8 h-8 rounded-full flex items-center justify-center bg-[#151A23] border border-[#F0F3F6]/10 text-[#94A3B8] hover:text-[#F59E0B] hover:border-[#F59E0B]/40 hover:bg-[#1A202C] hover:scale-105 hover:-translate-y-0.5 active:scale-95 transition-all duration-300 ease-out shadow-sm hover:shadow-[0_0_12px_rgba(245,158,11,0.25)] focus:outline-none focus:ring-1 focus:ring-[#F59E0B]/50"
-                title="Admin Messages"
-                aria-label="Admin Messages"
-              >
-                <AdminBirdMessageIcon className="w-4 h-4 transition-transform duration-300 group-hover:-rotate-3 group-hover:scale-105" />
-              </Link>
             </div>
           </div>
         </div>

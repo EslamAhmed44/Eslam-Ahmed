@@ -24,6 +24,7 @@ export interface SiteSettings {
   whatsappUrl: string;
   linkedinUrl: string;
   cvUrl: string;
+  privacyTermsUrl?: string;
   customCursorEnabled: boolean;
   defaultLanguage: 'en' | 'ar';
   seoKeywords: string;
@@ -62,6 +63,7 @@ export interface Project {
   behanceUrl?: string;
   tools: string[]; // Software Used
   softwareUsed?: string[]; // alias
+  skillIds?: string[]; // References to central SkillItem ids
   projectUrl?: string;
   featured: boolean;
   tags: string[];
@@ -93,8 +95,15 @@ export interface Experience {
 export interface SkillItem {
   id: string;
   name: string;
+  nameAr?: string;
+  iconUrl?: string;
+  iconName?: string;
+  category?: string;
+  parentId?: string;
+  description?: string;
   level?: number;
   sortOrder: number;
+  enabled?: boolean;
 }
 
 export interface SkillGroup {
@@ -179,6 +188,19 @@ export interface ProjectInquiry {
   createdAt: string;
 }
 
+export interface ContactChannel {
+  id: string;
+  platform: string; // 'whatsapp' | 'linkedin' | 'telegram' | 'discord' | 'custom' etc.
+  title: string;
+  titleAr?: string;
+  subtitle?: string;
+  subtitleAr?: string;
+  icon?: string;
+  url: string;
+  enabled: boolean;
+  sortOrder: number;
+}
+
 export interface AppData {
   settings: SiteSettings;
   projects: Project[];
@@ -187,6 +209,7 @@ export interface AppData {
   services: ServiceItem[];
   testimonials: Testimonial[];
   socialLinks: SocialLink[];
+  contactChannels?: ContactChannel[];
   media: MediaFile[];
   categories?: string[];
   inquiries?: ProjectInquiry[];

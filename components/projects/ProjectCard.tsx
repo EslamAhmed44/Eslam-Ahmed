@@ -7,6 +7,7 @@ import { useLanguage } from '../navigation/LanguageContext';
 import { ArrowUpRight, Play } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { calculateMediaDimensions, getRatioLabel } from '@/lib/media/dimensions';
+import { SoftwareIcon } from '../ui/SoftwareIcon';
 
 interface ProjectCardProps {
   project: Project;
@@ -184,9 +185,10 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           {project.tools.slice(0, 3).map((tool, i) => (
             <span
               key={i}
-              className="px-2 py-0.5 rounded-md bg-[#151A23]/90 text-[10px] font-mono text-[#94A3B8]"
+              className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-[#151A23]/90 text-[10px] font-mono text-[#94A3B8]"
             >
-              {tool}
+              <SoftwareIcon name={tool} className="w-3 h-3" />
+              <span>{tool}</span>
             </span>
           ))}
         </div>

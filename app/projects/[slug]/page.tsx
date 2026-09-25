@@ -14,6 +14,7 @@ import {
   Video,
 } from 'lucide-react';
 import { AdaptiveMediaFrame } from '@/components/projects/AdaptiveMediaFrame';
+import { SoftwareIcon } from '@/components/ui/SoftwareIcon';
 import { Metadata } from 'next';
 
 export async function generateStaticParams() {
@@ -188,13 +189,14 @@ export default async function ProjectDetailPage({
             <h3 className="text-sm font-mono text-[#94A3B8] uppercase tracking-wider mb-4">
               Software Used & Skills
             </h3>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2.5">
               {project.tools.map((tool, i) => (
                 <span
                   key={i}
-                  className="px-4 py-2 rounded-xl bg-[#10141C] border border-[#F0F3F6]/10 text-sm font-medium text-[#F0F3F6]"
+                  className="inline-flex items-center gap-2.5 px-4 py-2 rounded-xl bg-[#10141C] border border-[#F0F3F6]/10 text-sm font-medium text-[#F0F3F6] hover:border-[#F59E0B]/40 transition-colors shadow-sm"
                 >
-                  {tool}
+                  <SoftwareIcon name={tool} className="w-4 h-4" />
+                  <span>{tool}</span>
                 </span>
               ))}
             </div>

@@ -75,13 +75,6 @@ export default function AdminLayout({
     );
   }
 
-  // If on dedicated Message Admin Portal, render plain without CMS sidebar (only after auth verification)
-  if (pathname.startsWith('/admin/messages')) {
-    return <>{children}</>;
-  }
-
-
-
   const navItems = [
     { href: '/admin', label: 'Overview', icon: LayoutDashboard },
     { href: '/admin/hero', label: 'Hero Content', icon: Sparkles },

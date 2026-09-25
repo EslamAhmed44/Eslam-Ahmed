@@ -3,6 +3,7 @@ import path from 'path';
 import crypto from 'crypto';
 import {
   AppData,
+  ContactChannel,
   Experience,
   InquiryStatus,
   MediaFile,
@@ -223,6 +224,7 @@ export async function getSiteData(includeDrafts: boolean = false): Promise<AppDa
             whatsappUrl: settingsData.whatsapp_url,
             linkedinUrl: settingsData.linkedin_url,
             cvUrl: settingsData.cv_url,
+            privacyTermsUrl: settingsData.privacy_terms_url || '',
             customCursorEnabled: settingsData.custom_cursor_enabled ?? true,
             defaultLanguage: settingsData.default_language || 'en',
             seoKeywords: settingsData.seo_keywords || '',
@@ -329,6 +331,7 @@ export async function getSiteData(includeDrafts: boolean = false): Promise<AppDa
             sizeBytes: m.size_bytes || 0,
             uploadedAt: m.uploaded_at,
           })),
+          contactChannels: readLocalStore().contactChannels || [],
           categories: DEFAULT_CATEGORIES,
           inquiries: [],
         };
@@ -339,6 +342,7 @@ export async function getSiteData(includeDrafts: boolean = false): Promise<AppDa
           appData.services = appData.services.filter((s) => s.status === 'published');
           appData.testimonials = appData.testimonials.filter((t) => t.status === 'published');
           appData.socialLinks = appData.socialLinks.filter((s) => s.isActive);
+          appData.contactChannels = (appData.contactChannels || []).filter((c) => c.enabled);
         }
 
         return appData;
@@ -354,6 +358,7 @@ export async function getSiteData(includeDrafts: boolean = false): Promise<AppDa
     ...data,
     categories: data.categories || DEFAULT_CATEGORIES,
     projects: (data.projects || []).map((p) => normalizeProject(p)),
+    contactChannels: data.contactChannels || [],
     inquiries: data.inquiries || [],
   };
 
@@ -368,6 +373,7 @@ export async function getSiteData(includeDrafts: boolean = false): Promise<AppDa
     services: normalizedData.services.filter((s) => s.status === 'published'),
     testimonials: normalizedData.testimonials.filter((t) => t.status === 'published'),
     socialLinks: normalizedData.socialLinks.filter((s) => s.isActive),
+    contactChannels: (normalizedData.contactChannels || []).filter((c) => c.enabled),
   };
 }
 
@@ -401,6 +407,7 @@ export async function updateSettings(settings: Partial<SiteSettings>): Promise<S
         whatsapp_url: store.settings.whatsappUrl,
         linkedin_url: store.settings.linkedinUrl,
         cv_url: store.settings.cvUrl,
+        privacy_terms_url: store.settings.privacyTermsUrl,
         custom_cursor_enabled: store.settings.customCursorEnabled,
         default_language: store.settings.defaultLanguage,
         seo_keywords: store.settings.seoKeywords,
@@ -715,6 +722,52 @@ export async function saveSkillGroup(group: Partial<SkillGroup> & { id?: string 
 export async function deleteSkillGroup(id: string): Promise<boolean> {
   const store = readLocalStore();
   store.skillGroups = store.skillGroups.filter((g) => g.id !== id);
+  writeLocalStore(store);
+  return true;
+}
+
+// ----------------------------------------------------
+// CONTACT CHANNELS CRUD
+// ----------------------------------------------------
+export async function getContactChannels(includeDisabled = false): Promise<ContactChannel[]> {
+  const store = readLocalStore();
+  const channels = store.contactChannels || [];
+  if (includeDisabled) return channels;
+  return channels.filter((c) => c.enabled);
+}
+
+export async function saveContactChannel(channel: Partial<ContactChannel> & { id?: string }): Promise<ContactChannel> {
+  const store = readLocalStore();
+  store.contactChannels = store.contactChannels || [];
+  let saved: ContactChannel;
+  const idx = store.contactChannels.findIndex((c) => c.id === channel.id);
+
+  if (idx >= 0) {
+    saved = { ...store.contactChannels[idx], ...channel } as ContactChannel;
+    store.contactChannels[idx] = saved;
+  } else {
+    saved = {
+      id: channel.id || `channel-${Date.now()}`,
+      platform: channel.platform || 'custom',
+      title: channel.title || 'New Channel',
+      titleAr: channel.titleAr || '',
+      subtitle: channel.subtitle || '',
+      subtitleAr: channel.subtitleAr || '',
+      icon: channel.icon || 'link',
+      url: channel.url || '',
+      enabled: channel.enabled ?? true,
+      sortOrder: channel.sortOrder ?? store.contactChannels.length + 1,
+    };
+    store.contactChannels.push(saved);
+  }
+
+  writeLocalStore(store);
+  return saved;
+}
+
+export async function deleteContactChannel(id: string): Promise<boolean> {
+  const store = readLocalStore();
+  store.contactChannels = (store.contactChannels || []).filter((c) => c.id !== id);
   writeLocalStore(store);
   return true;
 }

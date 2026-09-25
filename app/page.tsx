@@ -15,12 +15,12 @@ export const revalidate = 0; // Dynamic on-demand revalidation for immediate liv
 
 export default async function HomePage() {
   const data = await getSiteData(false);
-  const { settings, projects, experiences, skillGroups, services, testimonials, socialLinks } = data;
+  const { settings, projects, experiences, skillGroups, services, testimonials, socialLinks, contactChannels } = data;
 
   return (
     <div className="relative min-h-screen bg-[#07090D] overflow-hidden">
       {/* Floating Glass Navigation Bar */}
-      <Navbar cvUrl={settings.cvUrl} />
+      <Navbar cvUrl={settings.cvUrl} privacyTermsUrl={settings.privacyTermsUrl} />
 
       <main id="main-content">
         {/* Hero Section */}
@@ -65,6 +65,7 @@ export default async function HomePage() {
           email={settings.contactEmail}
           whatsappUrl={settings.whatsappUrl}
           linkedinUrl={settings.linkedinUrl}
+          contactChannels={contactChannels}
         />
       </main>
 
