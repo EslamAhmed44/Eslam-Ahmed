@@ -103,6 +103,10 @@ export default async function ProjectDetailPage({
           videoUrl={project.videoUrl}
           mediaItems={project.mediaItems}
           title={project.title}
+          isMotionGraphics={
+            /motion\s*graphics/i.test(project.category || '') ||
+            Boolean(project.categories?.some((c) => /motion\s*graphics/i.test(c)))
+          }
           initialWidth={project.width}
           initialHeight={project.height}
           initialAspectRatio={project.aspectRatio}

@@ -26,6 +26,8 @@ import {
   saveCategory,
   saveContactChannel,
   updateSettings,
+  getPrivacyTerms,
+  savePrivacyTerms,
 } from '@/lib/db/client';
 import { revalidatePath } from 'next/cache';
 
@@ -33,6 +35,7 @@ function revalidateLiveSite(projectSlug?: string) {
   try {
     revalidatePath('/', 'page');
     revalidatePath('/projects/[slug]', 'page');
+    revalidatePath('/privacy-terms', 'page');
     revalidatePath('/admin', 'layout');
     if (projectSlug) {
       revalidatePath(`/projects/${projectSlug}`, 'page');
@@ -152,6 +155,12 @@ export async function POST(
         return NextResponse.json({ success: true, contactChannel: saved });
       }
 
+      case 'privacy-terms': {
+        const saved = await savePrivacyTerms(body);
+        revalidateLiveSite();
+        return NextResponse.json({ success: true, privacyTerms: saved });
+      }
+
       default:
         return NextResponse.json({ error: `Unknown action ${action}` }, { status: 404 });
     }
@@ -175,6 +184,15 @@ export async function GET(
     }
     const data = await getSiteData(true);
     return NextResponse.json({ success: true, data });
+  }
+
+  if (action === 'privacy-terms') {
+    const isAdmin = await checkAdminSession();
+    if (!isAdmin) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+    const privacyTerms = await getPrivacyTerms();
+    return NextResponse.json({ success: true, privacyTerms });
   }
 
   if (action === 'check-session') {

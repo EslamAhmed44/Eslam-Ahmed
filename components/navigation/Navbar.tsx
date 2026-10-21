@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useLanguage } from './LanguageContext';
-import { FileText, Globe, Menu, ShieldCheck, X } from 'lucide-react';
+import { Eye, FileText, Globe, Menu, ShieldCheck, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface NavbarProps {
@@ -92,31 +92,24 @@ export const Navbar: React.FC<NavbarProps> = ({
               <span>{language === 'en' ? 'AR' : 'EN'}</span>
             </button>
 
-            {/* Privacy & Terms Document */}
-            {privacyTermsUrl && (
-              <a
-                href={privacyTermsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#151A23] border border-[#F0F3F6]/10 text-xs font-semibold text-[#94A3B8] hover:text-[#F0F3F6] hover:border-[#F59E0B]/40 hover:bg-[#1A202C] transition-all duration-200"
-                title={t('nav.privacyTerms')}
-              >
-                <ShieldCheck className="w-3.5 h-3.5 text-[#F59E0B]" />
-                <span>{t('nav.privacyTerms')}</span>
-              </a>
-            )}
+            {/* Privacy & Terms Dedicated Viewer */}
+            <Link
+              href="/privacy-terms"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#151A23] border border-[#F0F3F6]/10 text-xs font-semibold text-[#94A3B8] hover:text-[#F0F3F6] hover:border-[#F59E0B]/40 hover:bg-[#1A202C] transition-all duration-200"
+              title={t('nav.privacyTerms')}
+            >
+              <ShieldCheck className="w-3.5 h-3.5 text-[#F59E0B]" />
+              <span>{t('nav.privacyTerms')}</span>
+            </Link>
 
-            {/* Download CV (Compact & visually balanced with FileText icon) */}
-            <a
-              href={cvUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              download
+            {/* View CV (Compact & visually balanced with Eye icon) */}
+            <Link
+              href="/cv"
               className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold text-[#07090D] bg-gradient-to-r from-[#F59E0B] to-[#FF7A18] hover:shadow-[0_0_18px_rgba(245,158,11,0.35)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
             >
-              <FileText className="w-3.5 h-3.5" />
-              <span>{t('nav.downloadCv')}</span>
-            </a>
+              <Eye className="w-3.5 h-3.5" />
+              <span>{t('nav.viewCv')}</span>
+            </Link>
           </div>
 
           {/* Mobile Hamburger Button */}
@@ -160,29 +153,22 @@ export const Navbar: React.FC<NavbarProps> = ({
                 </a>
               ))}
               <div className="pt-3 border-t border-[#F0F3F6]/10 flex flex-col gap-2">
-                {privacyTermsUrl && (
-                  <a
-                    href={privacyTermsUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-center gap-2 w-full py-2.5 rounded-2xl text-xs font-semibold text-[#94A3B8] hover:text-[#F0F3F6] bg-[#151A23] border border-[#F0F3F6]/10"
-                  >
-                    <ShieldCheck className="w-3.5 h-3.5 text-[#F59E0B]" />
-                    <span>{t('nav.privacyTerms')}</span>
-                  </a>
-                )}
-                <a
-                  href={cvUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  download
+                <Link
+                  href="/privacy-terms"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center justify-center gap-2 w-full py-2.5 rounded-2xl text-xs font-semibold text-[#94A3B8] hover:text-[#F0F3F6] bg-[#151A23] border border-[#F0F3F6]/10"
+                >
+                  <ShieldCheck className="w-3.5 h-3.5 text-[#F59E0B]" />
+                  <span>{t('nav.privacyTerms')}</span>
+                </Link>
+                <Link
+                  href="/cv"
                   onClick={() => setMobileMenuOpen(false)}
                   className="flex items-center justify-center gap-2 w-full py-2.5 rounded-2xl text-xs font-bold text-[#07090D] bg-gradient-to-r from-[#F59E0B] to-[#FF7A18]"
                 >
-                  <FileText className="w-3.5 h-3.5" />
-                  <span>{t('nav.downloadCv')}</span>
-                </a>
+                  <Eye className="w-3.5 h-3.5" />
+                  <span>{t('nav.viewCv')}</span>
+                </Link>
               </div>
             </div>
           </motion.div>

@@ -113,6 +113,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
                 project={project}
                 layoutVariant={getLayoutVariant(idx)}
                 index={idx}
+                priority={idx < 2}
               />
             ))}
           </div>

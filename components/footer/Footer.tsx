@@ -76,6 +76,9 @@ export const Footer: React.FC<FooterProps> = ({
             <a href="#contact" className="hover:text-[#F0F3F6] transition-colors">
               {t('nav.contact')}
             </a>
+            <Link href="/privacy-terms" className="hover:text-[#F59E0B] transition-colors">
+              {t('nav.privacyTerms')}
+            </Link>
           </div>
 
           {/* Social Icons + Subtle Admin Trigger + Back to top */}
@@ -136,6 +139,15 @@ export const Footer: React.FC<FooterProps> = ({
         {/* Bottom copyright line */}
         <div className="pt-8 border-t border-[#F0F3F6]/05 flex flex-col sm:flex-row items-center justify-between text-xs text-[#94A3B8]/50 gap-4">
           <p>© {new Date().getFullYear()} IA. {t('footer.rights')}</p>
+          <div className="flex items-center gap-3">
+            <Link href="/privacy-terms" className="hover:text-[#F59E0B] transition-colors">
+              {t('nav.privacyTerms')}
+            </Link>
+            <span>•</span>
+            <Link href="/cv" className="hover:text-[#F59E0B] transition-colors">
+              {t('nav.viewCv')}
+            </Link>
+          </div>
           <p className="font-mono">Engineered for Cinematic Motion & High-End Agency Standards</p>
         </div>
       </div>

@@ -17,9 +17,11 @@ import {
   SkillGroup,
   SocialLink,
   Testimonial,
+  PrivacyTermsData,
 } from '@/lib/types';
 import { createServerClient, isServerSupabaseConfigured } from '@/lib/supabase/server';
 import { getDefaultSoftwareIconUrl } from '@/lib/media/softwareIcons';
+import { getDefaultPrivacyTerms } from '@/lib/legal/defaultTerms';
 
 export const DEFAULT_CATEGORIES = [
   'Motion Graphics',
@@ -518,6 +520,7 @@ export async function getSiteData(includeDrafts: boolean = false): Promise<AppDa
           contactChannels: readLocalStore().contactChannels || [],
           categories: DEFAULT_CATEGORIES,
           inquiries: [],
+          privacyTerms: readLocalStore().privacyTerms || getDefaultPrivacyTerms(),
         };
 
         // Resolve skills and tools for projects against canonical skill groups
@@ -569,6 +572,7 @@ export async function getSiteData(includeDrafts: boolean = false): Promise<AppDa
     skillGroups: normalizedSkillGroups,
     contactChannels: data.contactChannels || [],
     inquiries: data.inquiries || [],
+    privacyTerms: data.privacyTerms || getDefaultPrivacyTerms(),
   };
 
   if (includeDrafts) {
@@ -636,6 +640,60 @@ export async function updateSettings(settings: Partial<SiteSettings>): Promise<S
 
   return store.settings;
 }
+
+export { getDefaultPrivacyTerms };
+
+
+export async function getPrivacyTerms(): Promise<PrivacyTermsData> {
+  const store = readLocalStore();
+  if (store.privacyTerms) {
+    return store.privacyTerms;
+  }
+  const defaultTerms = getDefaultPrivacyTerms();
+  if (store.settings?.privacyTermsUrl) {
+    defaultTerms.pdfUrl = store.settings.privacyTermsUrl;
+  }
+  store.privacyTerms = defaultTerms;
+  writeLocalStore(store);
+  return defaultTerms;
+}
+
+export async function savePrivacyTerms(data: Partial<PrivacyTermsData>): Promise<PrivacyTermsData> {
+  const store = readLocalStore();
+  const current = store.privacyTerms || getDefaultPrivacyTerms();
+
+  // Safety validation: Prevent blanking out essential legal protections
+  const updated: PrivacyTermsData = {
+    ...current,
+    ...data,
+    title: (data.title && data.title.trim()) || current.title,
+    titleAr: (data.titleAr && data.titleAr.trim()) || current.titleAr,
+    privacyPolicyContent:
+      (data.privacyPolicyContent && data.privacyPolicyContent.trim()) || current.privacyPolicyContent,
+    privacyPolicyContentAr:
+      (data.privacyPolicyContentAr && data.privacyPolicyContentAr.trim()) || current.privacyPolicyContentAr,
+    termsContent: (data.termsContent && data.termsContent.trim()) || current.termsContent,
+    termsContentAr: (data.termsContentAr && data.termsContentAr.trim()) || current.termsContentAr,
+    // Keep working PDF if replacement upload was not provided
+    pdfUrl: data.pdfUrl !== undefined ? data.pdfUrl : current.pdfUrl,
+    pdfFileName: data.pdfFileName !== undefined ? data.pdfFileName : current.pdfFileName,
+    pdfFileSize: data.pdfFileSize !== undefined ? data.pdfFileSize : current.pdfFileSize,
+    pdfUpdatedAt: data.pdfUpdatedAt !== undefined ? data.pdfUpdatedAt : current.pdfUpdatedAt,
+    updatedAt: new Date().toISOString(),
+    published: data.published ?? current.published ?? true,
+  };
+
+  store.privacyTerms = updated;
+
+  // Keep settings.privacyTermsUrl in sync
+  if (updated.pdfUrl) {
+    store.settings.privacyTermsUrl = updated.pdfUrl;
+  }
+
+  writeLocalStore(store);
+  return updated;
+}
+
 
 // ----------------------------------------------------
 // PROJECTS CRUD

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { ContactChannel, SiteSettings, SocialLink } from '@/lib/types';
 import {
   Save,
@@ -329,75 +330,28 @@ export default function AdminSettingsPage() {
               </div>
             </div>
 
-            {/* 2. Privacy & Terms */}
-            <div className="p-6 rounded-2xl bg-[#151A23] border border-[#F0F3F6]/10 space-y-4">
+            {/* 2. Privacy & Terms Dedicated CMS Section */}
+            <div className="p-6 rounded-2xl bg-[#151A23] border border-[#F0F3F6]/10 space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-mono uppercase tracking-wider text-[#F59E0B] font-bold flex items-center gap-1.5">
                   <ShieldCheck className="w-3.5 h-3.5" />
                   <span>Privacy & Terms</span>
                 </span>
-                {settings.privacyTermsUrl ? (
-                  <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-[10px] font-mono text-emerald-400 font-semibold">
-                    Configured
-                  </span>
-                ) : (
-                  <span className="px-2.5 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-[10px] font-mono text-amber-400">
-                    Not Set
-                  </span>
-                )}
+                <span className="px-2.5 py-0.5 rounded-full bg-[#10141C] border border-[#F59E0B]/30 text-[10px] font-mono text-[#F59E0B] font-semibold">
+                  Dedicated Section
+                </span>
               </div>
-
-              <div>
-                <label className="block text-xs font-mono text-[#94A3B8] mb-1.5">
-                  Privacy & Terms PDF URL
-                </label>
-                <input
-                  type="text"
-                  value={settings.privacyTermsUrl || ''}
-                  onChange={(e) => setSettings({ ...settings, privacyTermsUrl: e.target.value })}
-                  placeholder="/legal/Privacy_and_Terms.pdf or https://..."
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#10141C] border border-[#F0F3F6]/10 text-xs text-[#F0F3F6] focus:border-[#F59E0B]"
-                />
-              </div>
-
-              <div className="flex flex-wrap items-center gap-2 pt-1">
-                {/* Upload / Replace */}
-                <label className="cursor-pointer px-4 py-2 rounded-xl bg-[#10141C] border border-[#F59E0B]/40 text-[#F59E0B] hover:bg-[#F59E0B] hover:text-[#07090D] flex items-center gap-1.5 text-xs font-bold transition-colors">
-                  <Upload className="w-3.5 h-3.5" />
-                  <span>{uploadingLegal ? 'Uploading...' : settings.privacyTermsUrl ? 'Replace Legal PDF' : 'Upload Legal PDF'}</span>
-                  <input
-                    type="file"
-                    accept=".pdf,application/pdf"
-                    onChange={(e) => handleDocumentUpload(e, 'legal')}
-                    className="hidden"
-                    disabled={uploadingLegal}
-                  />
-                </label>
-
-                {/* View Current */}
-                {settings.privacyTermsUrl && (
-                  <a
-                    href={settings.privacyTermsUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-3 py-2 rounded-xl bg-[#10141C] border border-[#F0F3F6]/10 text-xs text-[#F0F3F6] hover:text-[#F59E0B] flex items-center gap-1.5 transition-colors"
-                  >
-                    <Eye className="w-3.5 h-3.5" />
-                    <span>View Current</span>
-                  </a>
-                )}
-
-                {/* Remove */}
-                {settings.privacyTermsUrl && (
-                  <button
-                    type="button"
-                    onClick={() => handleRemoveDocument('legal')}
-                    className="px-3 py-2 rounded-xl bg-red-500/10 text-red-400 hover:bg-red-500/20 text-xs font-medium transition-colors"
-                    title="Remove Legal Document"
-                  >
-                    Remove
-                  </button>
-                )}
+              <p className="text-xs text-[#94A3B8]">
+                Privacy Policy, Terms & Conditions web content, and the official signed PDF document are managed independently in their own dedicated CMS manager.
+              </p>
+              <div className="pt-2">
+                <Link
+                  href="/admin/privacy-terms"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-[#F59E0B] to-[#FF7A18] text-[#07090D] text-xs font-bold hover:shadow-[0_0_15px_rgba(245,158,11,0.3)] transition-all"
+                >
+                  <span>Open Privacy & Terms Manager</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </Link>
               </div>
             </div>
           </div>

@@ -30,8 +30,8 @@
     "whatsappNumber": "+201092463750",
     "whatsappUrl": "https://wa.me/201092463750",
     "linkedinUrl": "https://www.linkedin.com/in/eslam-ahmed-a7bb0a308/",
-    "cvUrl": "/cv/Islam_Ahmed_CV.pdf",
-    "privacyTermsUrl": "/legal/Privacy_and_Terms.pdf",
+    "cvUrl": "",
+    "privacyTermsUrl": "/uploads/1790988851884-___-_____-____.pdf",
     "customCursorEnabled": true,
     "defaultLanguage": "en",
     "seoKeywords": "Islam Ahmed, Motion Graphics, Graphic Design, After Effects, Kinetic Typography, 3D Motion, Brand Identity, Visual Designer, Cairo, Egypt",
@@ -244,6 +244,107 @@
           "iconUrl": "/icons/software/illustrator.svg"
         }
       ]
+    },
+    {
+      "id": "proj-1790988888388",
+      "slug": "project-1790988888388",
+      "title": "Flight Takeoff & Landing Animation",
+      "titleAr": "ديناميكية الطيران: من المدرج إلى الأفق",
+      "category": "Motion Graphics",
+      "categories": [
+        "Motion Graphics"
+      ],
+      "description": "This is a personal experimental project focusing on bringing static elements to life and transforming them into a complete moving scene. In this work, I processed and composited an image to create a smooth-moving aircraft from takeoff and landing. The focus was on timing, angles of movement, and adding visual effects to enhance the realism and dynamism of the scene.",
+      "descriptionAr": "مشروع تجريبي شخصي يركز على إحياء العناصر الثابتة وتحويلها إلى مشهد حركي متكامل. قمت في هذا العمل بمعالجة صورة وتجهيزها للتحريك (Rigging & Compositing)، لتظهر طائرة تتحرك بنعومة من مرحلة الاستعداد والإقلاع وحتى الهبوط بسلاسة. تم التركيز على ضبط التوقيت (Timing)، زوايا الحركة، وإضافة تأثيرات بصرية تعزز من واقعية وديناميكية المشهد",
+      "client": "Personal pilot project",
+      "clientName": "Personal pilot project",
+      "projectDate": "2026-OCT",
+      "coverImage": "/uploads/1790989064535-Flight_Takeoff___Landing_Animation.png",
+      "gallery": [
+        "/uploads/1790989064535-Flight_Takeoff___Landing_Animation.png"
+      ],
+      "images": [
+        "/uploads/1790989064535-Flight_Takeoff___Landing_Animation.png"
+      ],
+      "videoUrl": "/uploads/1790989072843-Flight_Takeoff___Landing_Animation.mp4",
+      "videos": [
+        {
+          "id": "med-1790989072850-0",
+          "url": "/uploads/1790989072843-Flight_Takeoff___Landing_Animation.mp4",
+          "title": "Flight Takeoff & Landing Animation",
+          "type": "direct"
+        }
+      ],
+      "youtubeUrl": "",
+      "vimeoUrl": "",
+      "googleDriveUrl": "",
+      "googleDriveMaterialsUrl": "",
+      "behanceUrl": "",
+      "tools": [
+        "Illustrator",
+        "After Effects",
+        "Visual Processing"
+      ],
+      "softwareUsed": [
+        "Illustrator",
+        "After Effects",
+        "Visual Processing"
+      ],
+      "skillIds": [
+        "s-22",
+        "s-6",
+        "s-15"
+      ],
+      "resolvedTools": [
+        {
+          "id": "s-22",
+          "name": "Illustrator",
+          "iconUrl": "/icons/software/illustrator.svg"
+        },
+        {
+          "id": "s-6",
+          "name": "After Effects",
+          "iconUrl": "/icons/software/after-effects.svg"
+        },
+        {
+          "id": "s-15",
+          "name": "Visual Processing",
+          "iconUrl": "/icons/software/premiere-pro.svg"
+        }
+      ],
+      "projectUrl": "",
+      "featured": true,
+      "tags": [
+        "Design",
+        "Campaign"
+      ],
+      "mediaItems": [
+        {
+          "id": "med-1790988888388-1",
+          "type": "image",
+          "url": "/uploads/1790989064535-Flight_Takeoff___Landing_Animation.png",
+          "title": "Cover Visual",
+          "sortOrder": 1,
+          "aspectRatio": 1.7888,
+          "width": 1406,
+          "height": 786
+        },
+        {
+          "id": "med-1790989072850-0",
+          "type": "video",
+          "url": "/uploads/1790989072843-Flight_Takeoff___Landing_Animation.mp4",
+          "title": "Flight Takeoff & Landing Animation",
+          "sortOrder": 2
+        }
+      ],
+      "sortOrder": 3,
+      "status": "published",
+      "width": 842,
+      "height": 474,
+      "aspectRatio": 1.7764,
+      "orientation": "landscape",
+      "createdAt": "2026-10-03T00:58:31.669Z",
+      "updatedAt": "2026-10-03T01:01:18.986Z"
     }
   ],
   "experiences": [
@@ -681,6 +782,54 @@
   ],
   "media": [
     {
+      "name": "Flight Takeoff & Landing Animation.mp4",
+      "url": "/uploads/1790989272661-Flight_Takeoff___Landing_Animation.mp4",
+      "type": "video",
+      "sizeBytes": 725420,
+      "id": "med-1790989272663",
+      "uploadedAt": "2026-10-03T01:01:12.663Z"
+    },
+    {
+      "name": "Flight Takeoff & Landing Animation.mp4",
+      "url": "/uploads/1790989259353-Flight_Takeoff___Landing_Animation.mp4",
+      "type": "video",
+      "sizeBytes": 725420,
+      "id": "med-1790989259355",
+      "uploadedAt": "2026-10-03T01:00:59.355Z"
+    },
+    {
+      "name": "Flight Takeoff & Landing Animation.mp4",
+      "url": "/uploads/1790989207128-Flight_Takeoff___Landing_Animation.mp4",
+      "type": "video",
+      "sizeBytes": 725420,
+      "id": "med-1790989207131",
+      "uploadedAt": "2026-10-03T01:00:07.131Z"
+    },
+    {
+      "name": "Flight Takeoff & Landing Animation.mp4",
+      "url": "/uploads/1790989072843-Flight_Takeoff___Landing_Animation.mp4",
+      "type": "video",
+      "sizeBytes": 725420,
+      "id": "med-1790989072845",
+      "uploadedAt": "2026-10-03T00:57:52.845Z"
+    },
+    {
+      "name": "Flight Takeoff & Landing Animation.png",
+      "url": "/uploads/1790989064535-Flight_Takeoff___Landing_Animation.png",
+      "type": "image",
+      "sizeBytes": 43899,
+      "id": "med-1790989064536",
+      "uploadedAt": "2026-10-03T00:57:44.536Z"
+    },
+    {
+      "name": "Flight Takeoff & Landing Animation.mp4",
+      "url": "/uploads/1790989052299-Flight_Takeoff___Landing_Animation.mp4",
+      "type": "video",
+      "sizeBytes": 725420,
+      "id": "med-1790989052302",
+      "uploadedAt": "2026-10-03T00:57:32.302Z"
+    },
+    {
       "name": "F2.png",
       "url": "/uploads/1790372687694-F2.png",
       "type": "image",
@@ -879,14 +1028,6 @@
       "sizeBytes": 91129,
       "id": "med-1790170123083",
       "uploadedAt": "2026-09-23T13:28:43.083Z"
-    },
-    {
-      "id": "med-6",
-      "name": "Islam_Ahmed_CV.pdf",
-      "url": "/cv/Islam_Ahmed_CV.pdf",
-      "type": "pdf",
-      "sizeBytes": 15000,
-      "uploadedAt": "2024-01-06T10:00:00Z"
     }
   ],
   "inquiries": [
@@ -989,5 +1130,22 @@
       "enabled": true,
       "sortOrder": 2
     }
-  ]
+  ],
+  "privacyTerms": {
+    "title": "Privacy & Terms",
+    "titleAr": "الخصوصية والشروط",
+    "subtitle": "Official Digital Design & Motion Graphics Services Agreement, Commercial Terms, and Privacy Policy",
+    "subtitleAr": "عقد تقديم خدمات التصميم الرقمي والموشن جرافيك — الشروط والأحكام وسياسة الخصوصية",
+    "privacyPolicyContent": "# Privacy Policy & Digital Communications\n\n### 1. Scope of Digital Services & Approved Communication Channels\nBoth parties agree that the requested services encompass the preparation, conceptualization, and visual execution of digital assets based on project briefs attached to this agreement or established via approved communication channels.\n\nOfficial communication platforms mutually approved for messaging, file exchange, instructions, and feedback (such as WhatsApp, LinkedIn, Email, or designated digital platforms) constitute legally binding and evidentiary records documenting project milestones, workflows, and stipulations, forming an integral part of this contract.\n\n### 2. Client Data Confidentiality & Privacy Safeguards\nAll business information, project briefs, draft materials, and proprietary corporate assets shared by the Client remain strictly confidential. The Service Provider shall not disclose non-public commercial data or sensitive intellectual assets to third parties without prior written consent.\n\n### 3. Portfolio Showcase & Identity Protection\nUpon project completion and final acceptance by the Client, the Service Provider is entitled to showcase the finalized creative works in their personal Portfolio and social media channels for marketing purposes. This showcase right is strictly conditioned upon safeguarding client data privacy, proprietary typography, and brand identity without harming commercial interests.",
+    "privacyPolicyContentAr": "# سياسة الخصوصية وسرية البيانات الرقمية\n\n### ١. نطاق الخدمات الرقمية ووسائل التواصل المعتمدة\nيتفق الطرفان على أن الخدمة المطلوبة تشمل إعداد وتصميم المواد البصرية الرقمية المتفق عليها بناءً على تفاصيل المشروع المرفقة بهذا العقد أو المتفق عليها عبر وسائل التواصل الرسمية المعتمدة بين الطرفين.\n\nتُعتبر منصات وتطبيقات التواصل الاجتماعي والمراسلة المعتمدة رسمياً بين الطرفين لتبادل الملفات، والتعليمات والملاحظات (مثل: تطبيق واتساب WhatsApp، منصة لينكد إن LinkedIn، البريد الإلكتروني، أو أي منصات رقمية أخرى يتم الاتفاق عليها) وسائل قانونية معتبرة ومُلزمة في إثبات تفاصيل ومراحل سير العمل والاتفاقات الجارية بين الطرفين، وتُعد مخرجاتها جزءاً لا يتجزأ من هذا العقد.\n\n### ٢. سرية بيانات العميل وحماية الهوية التجارية\nتلتزم جهة تقديم الخدمة بالحفاظ الكامل على سرية المعلومات والمستندات والبيانات الحساسة الخاصة بالعميل. لا يتم الإفصاح عن أي أسرار تجارية أو بيانات غير معلنة لأطراف ثالثة دون إذن مسبق.\n\n### ٣. عرض الأعمال في معرض الأعمال (Portfolio) وحماية الخصوصية\nفي حال إتمام المشروع واستلام العميل لعمله نهائياً، يحق لمقدم الخدمة استخدام الأعمال المنجزة وعرضها في معرض أعماله الشخصي (Portfolio) أو عبر منصات التواصل الاجتماعي للأغراض التسويقية، شريطة الحفاظ على خصوصية بيانات العميل وهويته والتايبوجرافيا الخاصة بالبراند بما لا يضر بمصلحة العميل التجارية.",
+    "termsContent": "# Terms & Conditions (Commercial Agreement)\n\n### Preamble & Contractual Capacity\nUnder this agreement, the First Party (Islam Ahmed — Graphic & Motion Graphic Designer) possesses specialized expertise, technical mastery, and creative capabilities in digital visual design (including: Graphic Design, Motion Graphics, Visual Brand Identity, Social Media Content, and Digital Art). Whereas the Second Party (The Client) desires to engage the creative services of the First Party to fulfill project requirements, both parties, possessing full legal and contractual capacity, hereby mutually agree to the following terms and commercial conditions:\n\n### Clause 1: Financial Mechanism, Milestone Payments & Final Settlement\n- **Initial Deposit (Advance Payment):** The Client commits to paying a non-refundable upfront deposit of 20% of the total project agreement value as a condition precedent to commencing work. The Service Provider shall not initiate execution until this deposit is received and confirmed.\n- **Milestone Installments:** The remaining balance (80%) is divided across agreed execution phases, with 20% disbursed upon the completion of each major step or phase of the project through to final delivery.\n- **Final Payment & Deliverable Handover:** High-resolution rendered media, final master files, and open project source files shall not be delivered to the Client except after complete 100% settlement of the final installment and all outstanding financial balances.\n- **Transaction Currency:** Financial transactions are conducted in local currency (Egyptian Pound - EGP) or its equivalent in US Dollars (USD) according to the official exchange rate agreed upon at the time of contracting.\n\n### Clause 2: Execution Timeline & Contractual Grace Period\n- The project delivery timeline is subject to various technical and creative parameters, including workload volume, animation complexity, required tasks, and the Service Provider’s production availability.\n- The Service Provider commits to providing an estimated timeline based on these parameters. Both parties acknowledge a contractual grace period of up to two (2) business days beyond the estimated delivery date, which shall not be considered a breach of contract.\n- The Service Provider reserves the right to extend the timeline commensurate with the scale of substantial additional modifications requested by the Client during the production phase.\n\n### Clause 3: Revision & Modification Policy\n- The Client is entitled to request revisions during the active phases of creation and before the delivery of the final version of the project.\n- Once the Service Provider delivers the agreed final version, the project is officially deemed closed. The Client is not entitled to request complimentary modifications after this handover.\n- Any subsequent modifications that the Client desires to implement on the finalized version are subject to additional service fees, determined by the scope of revisions and agreed upon in advance between both parties.\n\n### Clause 4: Force Majeure & Emergency Circumstances (Timeline Pause)\n- Neither party shall be deemed in breach of contract in the occurrence of extraordinary, unavoidable force majeure events beyond control (such as sudden traffic accidents, emergency health events, or bereavement of first-degree relatives).\n- Should the Service Provider encounter such circumstances, the project timeline is paused for the actual duration of the disruption, and the delivery date is automatically extended by an equivalent period.\n- The Service Provider undertakes to notify the Client of emergency conditions as promptly as practicable and submit available supporting records to substantiate the suspension period.\n\n### Clause 5: Communication Breakdown, Delays & Cancellation by Client\n- **Communication Breakdown (Within One Week):** If the Client stops responding or providing feedback for one full week, the Service Provider reserves the right to suspend work, retain completed milestones, and hold all disbursed payments.\n- **Resumption After Extended Delay (2 to 3 Weeks):** If the Client returns after an absence ranging from 2 to 3 weeks to resume the project, the Service Provider reserves the right to impose a late fee of 50% of the total project value as a condition to resume work.\n- **Suspension or Refusal of Milestone Payments:** If the Client refrains from paying due installments, the Service Provider is entitled to halt work completely and withhold all deliverables and project assets until full settlement.\n- **Cancellation or Refusal of Final Completion:** If the Client cancels the agreement or refuses payment after elapsed periods, the Service Provider retains all project stages and advance payments; the Client possesses no right to claim refunds or project files.\n\n### Clause 6: Service Provider Voluntary Interruption or Cancellation & Full Refund\n- Should the Service Provider (voluntarily and in the absence of force majeure) completely discontinue work or issue a final apology canceling completion after commencement, the Service Provider undertakes to refund all amounts paid by the Client in full (advance deposit and milestone payments).\n- In this circumstance (full refund to Client), the project is permanently terminated, the Service Provider is under no obligation to release incomplete designs, files, or drafts, and all financial liabilities are deemed fully discharged without further claims.\n\n### Clause 7: Intellectual Property & Ownership Transfer\n- All intellectual and moral property rights for all designs and stages (whether completed or in progress) remain exclusively owned by the Service Provider and do not transfer to the Client until full 100% financial settlement of the project value.\n\n### Clause 8: Applicable Law & Amicable Dispute Resolution\n- This agreement is subject to the general principles governing electronic contracts. In the event of any dispute, it shall first be resolved amicably through good-faith negotiation between the parties.\n- If amicable resolution proves unachievable, recourse shall be made to competent judicial authorities in the Service Provider’s place of residence or through certified electronic commercial arbitration mechanisms.\n\n### Clause 9: Contract Copies & Legally Binding Electronic Acceptance\n- This contract was drafted electronically. Mutual agreement to its terms via approved official communications (such as WhatsApp, LinkedIn, or Email) or the Client’s payment of the advance deposit constitutes a legally binding electronic signature for both parties.",
+    "termsContentAr": "# الشروط والأحكام (الاتفاقية التجارية)\n\n### تمهيد وديباجة العقد والأهلية التعاقدية\nثبت بموجب هذا الاتفاق أن الطرف الأول (إسلام أحمد — مصمم الجرافيك والموشن جرافيك) يمتلك الخبرة والمهارة الاحترافية في مجال التصميم الرقمي (ويشمل: التصميم الجرافيكي، الموشن جرافيك، تصميم الهويات البصرية، محتوى السوشيال ميديا، والديجيتال آرت)، وحيث رغب الطرف الثاني (العميل) في الاستعانة بخدمات الطرف الأول لتلبية احتياجاته الإبداعية، فقد اتفق الطرفان وهما بأهلية معتبرة شرعاً وقانوناً على الشروط والأحكام الآتية:\n\n### البند الأول: الآلية المالية وطريقة الدفع والدفعات المرحلية\n- **الدفعة المقدمة (العربون):** يلتزم العميل بسداد دفعة مقدمة قدرها 20% من إجمالي قيمة الاتفاق كشرط لبدء العمل على المشروع. لا يبدأ مقدم الخدمة في التنفيذ إلا بعد تأكيد استلام هذه الدفعة.\n- **دفعات المراحل (الدفعات المرحلية):** يُقسم باقي المبلغ (80%) على مراحل التنفيذ المتفق عليها، حيث تُسدد دفعة بنسبة 20% مع إنجاز كل خطوة رئيسية أو مرحلة من المشروع وصولاً للتسليم النهائي.\n- **الدفعة النهائية وتسليم العمل:** لا يتم تسليم الملفات النهائية المفتوحة أو عالية الدقة أو المواد المنتجة للعميل إلا بعد سداد كامل الدفعة الأخيرة وباقي المستحقات المالية المتبقية بنسبة 100%.\n- **العملة:** تتم التعاملات المالية بالعملة المحلية (الجنيه المصري) أو ما يعادلها بالدولار الأمريكي وفقاً لسعر الصرف الرسمي المتفق عليه وقت التعاقد.\n\n### البند الثاني: الجدول الزمني للتنفيذ وفترة السماح\n- يخضع الجدول الزمني لتسليم المشروع لعدة محددات فنية وإبداعية تشمل: حجم العمل، مدى تعقيده، والمهام (التاسكات) المطلوبة، والمواعيد المتاحة لدى مقدم الخدمة.\n- يلتزم مقدم الخدمة بتقديم جدول زمني تقريبي للعميل بناءً على المعايير المذكورة. ويُقر الطرفان بوجود فترة سماح زمنية تقدر بيومين كحد أقصى زيادة عن الموعد التقريبي المحدد للتسليم، ولا يُعتبر ذلك تأخيراً مخالفاً لشروط العقد.\n- يحق لمقدم الخدمة تمديد الجدول الزمني بما يتناسب مع حجم التعديلات الجوهرية الإضافية التي يطلبها العميل أثناء فترة الإنشاء.\n\n### البند الثالث: سياسة التعديلات والمراجعات\n- يحق للعميل طلب التعديلات خلال مراحل الإنشاء المختلفة وقبل تسليم النسخة النهائية للمشروع.\n- بمجرد تسليم مقدم الخدمة للنسخة النهائية المتفق عليها، يعتبر المشروع قد دخل في حالة الإغلاق، ولا يحق للعميل طلب أي تعديلات مجانية بعد هذا التسليم.\n- أي تعديلات يرغب العميل في إجرائها لاحقاً على النسخة النهائية التي تم إنشاؤها والاتفاق عليها، تخضع لرسوم مالية إضافية جديدة، وتُحدد بحسب حجم التعديل وبالاتفاق المسبق بين مقدم الخدمة والعميل.\n\n### البند الرابع: الظروف القهرية والقوة القاهرة (فترة توقف الجدول الزمني)\n- لا يُعتبر أي من الطرفين مخالفاً للعقد في حال حدوث ظروف قهرية طارئة وخارجة عن الإرادة (مثل: حوادث السير المفاجئة، الحالات الصحية الطارئة، أو حالات الوفاة للأقارب من الدرجة الأولى).\n- في حال تعرض مقدم الخدمة لهذه الظروف، يتوقف احتساب الجدول الزمني للمشروع طوال فترة التعطل الفعلية، ويتم تمديد موعد التسليم تلقائياً بما يعادل فترة التوقف.\n- يلتزم مقدم الخدمة بإخطار العميل بالظروف الطارئة في أسرع وقت ممكن، وتقديم ما يثبت ذلك من مستندات أو تقارير أو إثباتات متاحة ليتم اعتماد فترة التوقف.\n\n### البند الخامس: انقطاع التواصل والتأخير والإلغاء من قِبل العميل\n- **انقطاع التواصل (خلال أسبوع):** في حال توقف العميل عن الرد أو تقديم الملاحظات لمدة أسبوع كامل، يحق لمقدم الخدمة تعليق العمل والاحتفاظ بما تم إنجازه مع الاحتفاظ بالمبالغ المسددة.\n- **العودة بعد التأخير (بين أسبوعين إلى 3 أسابيع):** إذا عاد العميل بعد فترة انقطاع تتراوح بين أسبوعين إلى 3 أسابيع لاستكمال المشروع، يحق لمقدم الخدمة فرض غرامة تأخير قدرها 50% من إجمالي قيمة المشروع كشرط لاستئناف العمل.\n- **توقف أو رفض الدفعات المالية:** إذا امتنع العميل عن سداد الدفعات المستحقة، يحق لمقدم الخدمة وقف العمل تماماً وحجب كافة الملفات والمخرجات حتى تسدد كافة المستحقات بالكامل.\n- **الإلغاء أو رفض الاستكمال النهائي:** في حال قيام العميل بإلغاء التعاقد أو رفض دفع المستحقات بعد انتهاء المدة المتفق عليها، يحق لمقدم الخدمة الاحتفاظ بكافة المراحل وما تم إنجازه والمبالغ المسددة مسبقاً، ولا يحق للعميل المطالبة بأي مبالغ أو ملفات.\n\n### البند السادس: انقطاع أو اعتذار مقدم الخدمة والرد المالي الكامل\n- في حال قيام مقدم الخدمة (من تلقاء نفسه ودون وجود ظروف قهرية) بالانقطاع التام عن العمل أو الاعتذار النهائي عن إتمام المشروع بعد بدايته، يلتزم مقدم الخدمة برد كافة المبالغ المالية المدفوعة من قِبل العميل بالكامل (العربون والدفعات المرحلية).\n- في هذه الحالة (رد المبالغ للعميل)، يتوقف المشروع نهائياً، ولا يُلزم مقدم الخدمة بتسليم أي تصاميم أو ملفات أو مراحل غير مكتملة للعميل، وتعتبر الذمم المالية مصفاة بين الطرفين دون أدنى مسؤولية إضافية.\n\n### البند السابع: حقوق الملكية الفكرية\n- تظل كافة حقوق الملكية الفكرية والأدبية لجميع التصاميم والمراحل (سواء المنجزة أو قيد التنفيذ) مملوكة حصرياً لمقدم الخدمة، ولا تنتقل إلى العميل إلا بعد سداد كامل القيمة المالية للمشروع بنسبة 100%.\n\n### البند الثامن: القانون الواجب التطبيق وحل النزاعات\n- يخضع هذا العقد للمبادئ العامة للعقود الإلكترونية، وفي حال نشوء أي نزاع - لا قدر الله - يتم حله بالطرق الودية بين الطرفين أولاً، وإذا تعذر ذلك، فيكون اللجوء للجهات القضائية المختصة وفقاً لمكان إقامة مقدم الخدمة أو عبر آليات التحكيم الإلكتروني المعتمدة.\n\n### البند التاسع: نسخ العقد والقبول الإلكتروني الملزم\n- حُرر هذا العقد إلكترونياً، ويُعد قبول الطرفين لشروطه عبر المراسلات الرسمية عبر تطبيقات التواصل الاجتماعي المعتمدة (مثل واتساب ولينكد إن) أو البريد الإلكتروني، أو قيام العميل بسداد الدفعة المقدمة بمثابة توقيع إلكتروني ملزم قانوناً لكليهما.",
+    "pdfUrl": "/uploads/1790988851884-___-_____-____.pdf",
+    "pdfFileName": "Privacy_and_Terms_Agreement.pdf",
+    "pdfFileSize": 121010,
+    "pdfUpdatedAt": "2026-10-03T00:54:11.885Z",
+    "updatedAt": "2026-10-03T08:59:33.914Z",
+    "updatedBy": "Admin",
+    "published": true
+  }
 }

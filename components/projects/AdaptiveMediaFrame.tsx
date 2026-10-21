@@ -10,6 +10,7 @@ interface AdaptiveMediaFrameProps {
   videoUrl?: string;
   title: string;
   mediaItems?: ProjectMediaItem[];
+  isMotionGraphics?: boolean;
   initialWidth?: number;
   initialHeight?: number;
   initialAspectRatio?: number;
@@ -24,6 +25,7 @@ export const AdaptiveMediaFrame: React.FC<AdaptiveMediaFrameProps> = ({
   videoUrl,
   title,
   mediaItems,
+  isMotionGraphics = false,
   initialWidth,
   initialHeight,
   initialAspectRatio,
@@ -108,6 +110,7 @@ export const AdaptiveMediaFrame: React.FC<AdaptiveMediaFrameProps> = ({
             mediaItems={mediaItems}
             title={title}
             intervalMs={6000}
+            isMotionGraphics={isMotionGraphics}
             className="relative z-10 w-full h-full max-h-[85vh] rounded-3xl"
             onDimensionChange={(dim) => {
               if (dim.width && dim.height) {

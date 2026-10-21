@@ -13,12 +13,14 @@ import {
   FolderKanban,
   MessageSquareQuote,
   Image as ImageIcon,
+  Mail,
   Settings,
   ExternalLink,
   LogOut,
   Menu,
   X,
   Shield,
+  ShieldCheck,
   Globe,
 } from 'lucide-react';
 import { AdminLanguageProvider, useAdminLanguage } from '@/context/AdminLanguageContext';
@@ -86,6 +88,8 @@ function AdminShell({ children }: { children: React.ReactNode }) {
     { href: '/admin/services', labelKey: 'nav.services', icon: Wand2 },
     { href: '/admin/testimonials', labelKey: 'nav.testimonials', icon: MessageSquareQuote },
     { href: '/admin/media', labelKey: 'nav.media', icon: ImageIcon },
+    { href: '/admin/messages', labelKey: 'nav.messages', icon: Mail },
+    { href: '/admin/privacy-terms', labelKey: 'nav.privacyTerms', icon: ShieldCheck },
     { href: '/admin/settings', labelKey: 'nav.settings', icon: Settings },
   ];
 

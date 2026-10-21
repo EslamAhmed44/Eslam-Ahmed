@@ -216,8 +216,27 @@ export interface ContactChannel {
   sortOrder: number;
 }
 
+export interface PrivacyTermsData {
+  title: string;
+  titleAr?: string;
+  subtitle?: string;
+  subtitleAr?: string;
+  privacyPolicyContent: string;
+  privacyPolicyContentAr?: string;
+  termsContent: string;
+  termsContentAr?: string;
+  pdfUrl?: string;
+  pdfFileName?: string;
+  pdfFileSize?: number;
+  pdfUpdatedAt?: string;
+  updatedAt: string;
+  updatedBy?: string;
+  published: boolean;
+}
+
 export interface AppData {
   settings: SiteSettings;
+  privacyTerms?: PrivacyTermsData;
   projects: Project[];
   experiences: Experience[];
   skillGroups: SkillGroup[];
@@ -229,3 +248,4 @@ export interface AppData {
   categories?: string[];
   inquiries?: ProjectInquiry[];
 }
+

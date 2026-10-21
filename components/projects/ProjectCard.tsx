@@ -1,25 +1,129 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import Link from 'next/link';
-import { Project } from '@/lib/types';
+import { Project, ProjectMediaItem } from '@/lib/types';
 import { useLanguage } from '../navigation/LanguageContext';
 import { ArrowUpRight, Play } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { calculateMediaDimensions, getRatioLabel } from '@/lib/media/dimensions';
 import { SoftwareIcon } from '../ui/SoftwareIcon';
 import { ProjectMediaSlideshow } from './ProjectMediaSlideshow';
+import {
+  MediaContrastInfo,
+  getInitialMediaContrast,
+  analyzeMediaContrast,
+} from '@/lib/media/contrast';
+
+/**
+ * Detects whether a project belongs to Motion Graphics (including hybrid categories like
+ * "Motion Graphics + Branding", "Motion Graphics + Social Media", etc.)
+ */
+export function isMotionGraphicsProject(project: {
+  category?: string;
+  categories?: string[];
+}): boolean {
+  const motionRegex = /motion\s*graphics/i;
+  if (project.category && motionRegex.test(project.category)) {
+    return true;
+  }
+  if (Array.isArray(project.categories)) {
+    return project.categories.some((cat) => typeof cat === 'string' && motionRegex.test(cat));
+  }
+  return false;
+}
+
+function cleanMediaUrl(url?: string): string {
+  if (!url) return '';
+  return url.trim().toLowerCase().split('?')[0].split('#')[0];
+}
+
+/**
+ * Builds the media sequence strictly preserving:
+ * 1. Cover image strictly first (index 0).
+ * 2. Next media follows actual project media order (mediaItems).
+ * 3. Deduplication prevents the cover image from reappearing prematurely between other slides.
+ */
+export function getProjectPreviewMediaItems(project: Project): ProjectMediaItem[] {
+  const coverUrl = (project.coverImage || '').trim();
+  const normalizedCover = cleanMediaUrl(coverUrl);
+
+  const rawItems: ProjectMediaItem[] =
+    Array.isArray(project.mediaItems) && project.mediaItems.length > 0
+      ? [...project.mediaItems].sort((a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0))
+      : [
+          ...(project.gallery || []).map((url, i) => ({
+            id: `gal-${i}`,
+            type: 'image' as const,
+            url,
+            sortOrder: i + 1,
+          })),
+          ...(project.videos || []).map((v, i) => ({
+            id: v.id || `vid-${i}`,
+            type: 'video' as const,
+            url: v.url,
+            sortOrder: i + 10,
+          })),
+        ];
+
+  const result: ProjectMediaItem[] = [];
+  const seenUrls = new Set<string>();
+
+  // 1. Cover image strictly first
+  if (coverUrl) {
+    const existingCoverItem = rawItems.find(
+      (m) => cleanMediaUrl(m.url) === normalizedCover
+    );
+    result.push({
+      id: existingCoverItem?.id || 'cover-item',
+      type: 'image',
+      url: coverUrl,
+      title: existingCoverItem?.title || project.title,
+      titleAr: existingCoverItem?.titleAr || project.titleAr,
+      aspectRatio: existingCoverItem?.aspectRatio || project.aspectRatio,
+      width: existingCoverItem?.width || project.width,
+      height: existingCoverItem?.height || project.height,
+      sortOrder: 0,
+    });
+    seenUrls.add(normalizedCover);
+  }
+
+  // 2. Add remaining media items in project's defined order, skipping cover duplicates
+  for (const item of rawItems) {
+    if (!item || !item.url) continue;
+    const norm = cleanMediaUrl(item.url);
+    if (!seenUrls.has(norm)) {
+      seenUrls.add(norm);
+      result.push(item);
+    }
+  }
+
+  // Fallback if empty
+  if (result.length === 0) {
+    result.push({
+      id: 'default-cover',
+      type: 'image',
+      url: '/images/projects/project-lumina-motion.jpg',
+      title: project.title,
+      sortOrder: 0,
+    });
+  }
+
+  return result;
+}
 
 interface ProjectCardProps {
   project: Project;
   layoutVariant: 'large' | 'wide' | 'tall' | 'standard';
   index: number;
+  priority?: boolean;
 }
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({
   project,
   layoutVariant,
   index,
+  priority = false,
 }) => {
   const { language } = useLanguage();
   const [liveDim, setLiveDim] = useState<{
@@ -33,6 +137,31 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
     aspectRatio: project.aspectRatio,
     orientation: project.orientation,
   });
+
+  const isMotion = isMotionGraphicsProject(project);
+
+  const previewMediaItems = useMemo(() => {
+    return getProjectPreviewMediaItems(project);
+  }, [project]);
+
+  // Smart Dynamic Text Contrast State initialized synchronously with zero flickering
+  const [contrastInfo, setContrastInfo] = useState<MediaContrastInfo>(() => {
+    const initialUrl = previewMediaItems[0]?.url || project.coverImage;
+    return getInitialMediaContrast(initialUrl);
+  });
+
+  // Handle active slide media change and update contrast state
+  const handleActiveMediaChange = useCallback(
+    (item: ProjectMediaItem) => {
+      const targetUrl = item.url || project.coverImage;
+      const initial = getInitialMediaContrast(targetUrl);
+      setContrastInfo(initial);
+      analyzeMediaContrast(targetUrl, (detected) => {
+        setContrastInfo(detected);
+      });
+    },
+    [project.coverImage]
+  );
 
   const title = language === 'ar' && project.titleAr ? project.titleAr : project.title;
   const description =
@@ -90,50 +219,39 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         <span className="sr-only">{title}</span>
       </Link>
 
-      {/* Atmospheric Ambient Glow (extracted from the media colors) */}
+      {/* Atmospheric Ambient Glow (optimized low-res thumbnail prevents massive uncompressed download) */}
       <div
         className="absolute inset-0 bg-cover bg-center filter blur-3xl opacity-25 scale-125 transition-transform duration-700 ease-out group-hover:scale-130 pointer-events-none"
-        style={{ backgroundImage: `url(${project.coverImage || '/images/projects/project-lumina-motion.jpg'})` }}
+        style={{
+          backgroundImage: `url(${
+            project.coverImage
+              ? `/_next/image?url=${encodeURIComponent(project.coverImage)}&w=64&q=75`
+              : '/images/projects/project-lumina-motion.jpg'
+          })`,
+        }}
       />
 
-      {/* Uncropped Original Artwork Frame with Automatic 6s Live Slideshow */}
+      {/* Uncropped Original Artwork Frame with Media-Aware Live Slideshow */}
       <div className="absolute inset-0 p-3 sm:p-5 pb-28 sm:pb-32 flex items-center justify-center overflow-hidden">
         <ProjectMediaSlideshow
-          mediaItems={
-            project.mediaItems && project.mediaItems.length > 0
-              ? project.mediaItems
-              : [
-                  {
-                    id: 'cover',
-                    type: 'image',
-                    url: project.coverImage || '/images/projects/project-lumina-motion.jpg',
-                    sortOrder: 1,
-                  },
-                  ...(project.gallery || []).map((url, i) => ({
-                    id: `gal-${i}`,
-                    type: 'image' as const,
-                    url,
-                    sortOrder: i + 2,
-                  })),
-                  ...(project.videos || []).map((v, i) => ({
-                    id: v.id || `vid-${i}`,
-                    type: 'video' as const,
-                    url: v.url,
-                    sortOrder: i + 10,
-                  })),
-                ]
-          }
+          mediaItems={previewMediaItems}
           title={title}
           intervalMs={6000}
+          isMotionGraphics={isMotion}
+          priority={priority}
+          onActiveMediaChange={handleActiveMediaChange}
           onDimensionChange={(dim) => {
             if (!project.aspectRatio && dim.width && dim.height) {
               setLiveDim(dim);
             }
           }}
         />
-        {/* Subtle Dark Gradient Footnote Overlay */}
-        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#07090D] via-[#07090D]/85 to-transparent pointer-events-none z-10" />
       </div>
+
+      {/* Dynamic Adaptive Scrim / Readability Layer */}
+      <div
+        className={`absolute inset-x-0 bottom-0 h-52 pointer-events-none z-[5] transition-all duration-700 ease-out ${contrastInfo.scrimClass}`}
+      />
 
       {/* Top Badges (Category & Detected Aspect Ratio / Video / Gallery Indicator) */}
       <div className="absolute top-5 inset-x-5 z-10 flex items-center justify-between pointer-events-none">
@@ -179,25 +297,35 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
         </div>
       </div>
 
-      {/* Content Footnote */}
-      <div className="relative z-10 p-6 sm:p-7 flex flex-col gap-2.5 pointer-events-none">
-        <div className="flex items-center gap-2 text-xs font-mono text-[#F59E0B]">
+      {/* Content Footnote with Dynamic Contrast */}
+      <div className="relative z-10 p-6 sm:p-7 flex flex-col gap-2.5 pointer-events-none transition-colors duration-500">
+        <div
+          className={`flex items-center gap-2 text-xs font-mono transition-colors duration-500 ${contrastInfo.subtitleClass}`}
+        >
           <span>{project.client || 'Creative Project'}</span>
           <span>•</span>
           <span>{project.projectDate}</span>
         </div>
 
         <div className="flex items-end justify-between gap-4">
-          <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight text-[#F0F3F6] group-hover:text-[#F59E0B] transition-colors leading-snug">
+          <h3
+            className={`text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight transition-colors duration-500 leading-snug ${contrastInfo.titleClass}`}
+            style={{ filter: contrastInfo.textShadowStyle }}
+          >
             {title}
           </h3>
 
-          <div className="w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center bg-[#151A23]/80 backdrop-blur-md border border-[#F0F3F6]/15 text-[#F0F3F6] group-hover:bg-[#F59E0B] group-hover:text-[#07090D] group-hover:scale-110 transition-all duration-300">
+          <div
+            className={`w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center backdrop-blur-md transition-all duration-300 ${contrastInfo.arrowBtnClass} group-hover:scale-110`}
+          >
             <ArrowUpRight className="w-4 h-4" />
           </div>
         </div>
 
-        <p className="text-xs sm:text-sm text-[#94A3B8] line-clamp-2 max-w-xl font-light">
+        <p
+          className={`text-xs sm:text-sm line-clamp-2 max-w-xl font-light transition-colors duration-500 ${contrastInfo.descriptionClass}`}
+          style={{ filter: contrastInfo.textShadowStyle }}
+        >
           {description}
         </p>
 
@@ -209,7 +337,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
           ).map((tool, i) => (
             <span
               key={tool.id || i}
-              className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-[#151A23]/90 text-[10px] font-mono text-[#94A3B8]"
+              className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-mono transition-colors duration-500 ${contrastInfo.tagClass}`}
             >
               <SoftwareIcon name={tool.name} iconUrl={tool.iconUrl} className="w-3 h-3" />
               <span>{language === 'ar' && tool.nameAr ? tool.nameAr : tool.name}</span>
