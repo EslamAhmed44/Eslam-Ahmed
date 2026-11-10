@@ -71,8 +71,12 @@ export default async function RootLayout({
       lang={defaultLang}
       dir={defaultLang === 'ar' ? 'rtl' : 'ltr'}
       className={`${manrope.variable} ${arabic.variable} antialiased`}
+      suppressHydrationWarning
     >
-      <body className="font-sans bg-[#07090D] text-[#F0F3F6] min-h-screen selection:bg-[#F59E0B] selection:text-[#07090D]">
+      <body
+        className="font-sans bg-[#07090D] text-[#F0F3F6] min-h-screen selection:bg-[#F59E0B] selection:text-[#07090D]"
+        suppressHydrationWarning
+      >
         <LanguageProvider defaultLang={defaultLang}>
           {children}
         </LanguageProvider>
