@@ -59,7 +59,7 @@ export default async function ProjectDetailPage({
   }
 
   return (
-    <main className="min-h-screen bg-[#07090D] text-[#F0F3F6] pt-12 pb-32">
+    <main className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-300 pt-12 pb-32">
       {/* Background Ambience */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[500px] bg-gradient-to-b from-[#F59E0B]/08 to-transparent blur-3xl pointer-events-none" />
 
@@ -68,7 +68,7 @@ export default async function ProjectDetailPage({
         <div className="mb-10">
           <Link
             href="/#projects"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#10141C] border border-[#F0F3F6]/10 text-sm font-medium text-[#94A3B8] hover:text-[#F0F3F6] hover:border-[#F59E0B]/50 transition-colors"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[var(--bg-surface)] border border-[var(--border-subtle)] text-sm font-mono font-medium text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-[#F59E0B]/50 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back to Projects</span>
@@ -82,17 +82,17 @@ export default async function ProjectDetailPage({
               (cat, i) => (
                 <span
                   key={i}
-                  className="px-4 py-1.5 rounded-full bg-[#151A23] border border-[#F59E0B]/30 text-xs font-mono font-semibold text-[#F59E0B] uppercase tracking-wider"
+                  className="px-4 py-1.5 rounded-full bg-[var(--bg-surface)] border border-[#F59E0B]/30 text-xs font-mono font-semibold text-[#F59E0B] uppercase tracking-wider"
                 >
                   {cat}
                 </span>
               )
             )}
           </div>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-[#F0F3F6] mb-6">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight text-[var(--text-primary)] mb-6">
             {project.title}
           </h1>
-          <p className="text-lg sm:text-xl text-[#94A3B8] font-light max-w-4xl leading-relaxed">
+          <p className="text-lg sm:text-xl text-[var(--text-secondary)] font-light max-w-4xl leading-relaxed">
             {project.description}
           </p>
         </div>

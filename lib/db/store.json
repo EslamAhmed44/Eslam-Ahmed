@@ -28,7 +28,7 @@
     },
     "contactEmail": "smsma4140@gmail.com",
     "whatsappNumber": "+201092463750",
-    "whatsappUrl": "https://wa.me/201092463750",
+    "whatsappUrl": "https://api.whatsapp.com/send/?phone=201092463750&text&type=phone_number&app_absent=",
     "linkedinUrl": "https://www.linkedin.com/in/eslam-ahmed-a7bb0a308/",
     "cvUrl": "",
     "privacyTermsUrl": "/uploads/1790988851884-___-_____-____.pdf",
@@ -774,7 +774,7 @@
     {
       "id": "soc-1",
       "platform": "WhatsApp",
-      "url": "https://wa.me/201092463750",
+      "url": "https://api.whatsapp.com/send/?phone=201092463750&text&type=phone_number&app_absent=",
       "icon": "MessageSquare",
       "sortOrder": 1,
       "isActive": true
@@ -1114,7 +1114,7 @@
       "subtitle": "Chat with me",
       "subtitleAr": "ابدأ محادثة مباشرة",
       "icon": "whatsapp",
-      "url": "https://wa.me/201092463750",
+      "url": "https://api.whatsapp.com/send/?phone=201092463750&text&type=phone_number&app_absent=",
       "enabled": true,
       "sortOrder": 1
     },

@@ -1,29 +1,41 @@
 import React from 'react';
 import { getSiteData } from '@/lib/db/client';
+import { IntroOverlay } from '@/components/intro/IntroOverlay';
 import { Navbar } from '@/components/navigation/Navbar';
 import { HeroSection } from '@/components/hero/HeroSection';
+import { ProjectsSection } from '@/components/projects/ProjectsSection';
 import { AboutSection } from '@/components/about/AboutSection';
 import { ExperienceSection } from '@/components/experience/ExperienceSection';
-import { SkillsSection } from '@/components/skills/SkillsSection';
-import { ProjectsSection } from '@/components/projects/ProjectsSection';
 import { ServicesSection } from '@/components/services/ServicesSection';
-import { TestimonialsSection } from '@/components/testimonials/TestimonialsSection';
+import { WorkflowSection } from '@/components/workflow/WorkflowSection';
 import { ContactSection } from '@/components/contact/ContactSection';
 import { Footer } from '@/components/footer/Footer';
 
-export const revalidate = 0; // Dynamic on-demand revalidation for immediate live content reflection
+export const revalidate = 0; // Dynamic live data reflection
 
 export default async function HomePage() {
   const data = await getSiteData(false);
-  const { settings, projects, experiences, skillGroups, services, testimonials, socialLinks, contactChannels } = data;
+  const {
+    settings,
+    projects,
+    experiences,
+    skillGroups,
+    services,
+    testimonials,
+    socialLinks,
+    contactChannels,
+  } = data;
 
   return (
-    <div className="relative min-h-screen bg-[#07090D] overflow-hidden">
-      {/* Floating Glass Navigation Bar */}
+    <div className="relative min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-300 overflow-hidden">
+      {/* 1. Intro Experience — Press Start (First visit only with skip control) */}
+      <IntroOverlay />
+
+      {/* Floating Glass Navigation Bar with Theme & Audio Controls */}
       <Navbar cvUrl={settings.cvUrl} privacyTermsUrl={settings.privacyTermsUrl} />
 
       <main id="main-content">
-        {/* Hero Section */}
+        {/* 2. Hero Section: Islam Ahmed — Graphic & Motion Graphic Designer */}
         <HeroSection
           designerName={settings.designerName}
           designerNameAr={settings.designerNameAr}
@@ -36,7 +48,10 @@ export default async function HomePage() {
           profileImage={settings.ogImageUrl || '/images/islam-ahmed.jpg'}
         />
 
-        {/* About & Statistics */}
+        {/* 3. Selected Work: Mixed Editorial Gallery with Interactive Internal Modal */}
+        <ProjectsSection projects={projects} />
+
+        {/* 4. About Me: Brand Story, "Gravity in Motion" Philosophy & Skills */}
         <AboutSection
           shortBio={settings.shortBio}
           shortBioAr={settings.shortBioAr}
@@ -45,22 +60,16 @@ export default async function HomePage() {
           stats={settings.stats}
         />
 
-        {/* Career Experience Timeline */}
+        {/* 4b. Career & Development Timeline (Starting from 2025) */}
         <ExperienceSection experiences={experiences} />
 
-        {/* Skills & Software Matrix */}
-        <SkillsSection skillGroups={skillGroups} />
-
-        {/* Asymmetric Editorial Projects Showcase */}
-        <ProjectsSection projects={projects} />
-
-        {/* Services & Specialized Creative Solutions */}
+        {/* 5. Services: Creative Numbered List with Expandable Tools & CTA */}
         <ServicesSection services={services} />
 
-        {/* Client Endorsements & Testimonials */}
-        <TestimonialsSection testimonials={testimonials} />
+        {/* 6. Workflow: 01 Brief ➔ 02 Research ➔ 03 Concept ➔ 04 Design ➔ 05 Delivery */}
+        <WorkflowSection />
 
-        {/* Get In Touch & Direct Collaboration */}
+        {/* 7. Contact: Direct WhatsApp, Prepared Email, and Verified Socials (NO fake form) */}
         <ContactSection
           email={settings.contactEmail}
           whatsappUrl={settings.whatsappUrl}
@@ -69,7 +78,7 @@ export default async function HomePage() {
         />
       </main>
 
-      {/* Footer */}
+      {/* 8. Footer: Monumental Editorial Statement & Verified Links */}
       <Footer
         socialLinks={socialLinks}
         contactEmail={settings.contactEmail}

@@ -1,21 +1,8 @@
 import type { Metadata } from 'next';
-import { Manrope, IBM_Plex_Sans_Arabic } from 'next/font/google';
 import './globals.css';
 import { LanguageProvider } from '@/components/navigation/LanguageContext';
+import { ThemeProvider } from '@/context/ThemeContext';
 import { getSiteData } from '@/lib/db/client';
-
-const manrope = Manrope({
-  subsets: ['latin'],
-  variable: '--font-manrope',
-  display: 'swap',
-});
-
-const arabic = IBM_Plex_Sans_Arabic({
-  subsets: ['arabic'],
-  weight: ['300', '400', '500', '600', '700'],
-  variable: '--font-arabic',
-  display: 'swap',
-});
 
 export async function generateMetadata(): Promise<Metadata> {
   const data = await getSiteData(false);
@@ -70,16 +57,26 @@ export default async function RootLayout({
     <html
       lang={defaultLang}
       dir={defaultLang === 'ar' ? 'rtl' : 'ltr'}
-      className={`${manrope.variable} ${arabic.variable} antialiased`}
+      className="antialiased"
       suppressHydrationWarning
     >
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body
-        className="font-sans bg-[#07090D] text-[#F0F3F6] min-h-screen selection:bg-[#F59E0B] selection:text-[#07090D]"
+        className="font-sans min-h-screen selection:bg-[#F59E0B] selection:text-[#07090D]"
         suppressHydrationWarning
       >
-        <LanguageProvider defaultLang={defaultLang}>
-          {children}
-        </LanguageProvider>
+        <ThemeProvider>
+          <LanguageProvider defaultLang={defaultLang}>
+            {children}
+          </LanguageProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

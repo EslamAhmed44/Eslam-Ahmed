@@ -18,13 +18,24 @@ const translations: Record<Language, Record<string, string>> = {
     'nav.about': 'About',
     'nav.experience': 'Experience',
     'nav.skills': 'Skills',
-    'nav.projects': 'Projects',
+    'nav.projects': 'Selected Work',
     'nav.services': 'Services',
+    'nav.workflow': 'Workflow',
     'nav.testimonials': 'Testimonials',
-    'nav.contact': 'Get In Touch',
+    'nav.contact': 'Contact',
     'nav.viewCv': 'View CV',
     'nav.downloadCv': 'Download CV',
     'nav.privacyTerms': 'Privacy & Terms',
+
+    // Intro Experience
+    'intro.badge': 'SYSTEM READY // EST. 2025',
+    'intro.name': 'ISLAM AHMED',
+    'intro.tagline': 'Creative Visual Solutions',
+    'intro.roles': 'Graphic & Motion Graphic Designer',
+    'intro.pressStart': 'PRESS START',
+    'intro.skip': 'Skip Intro',
+    'intro.initializing': 'INITIALIZING EXPERIENCE...',
+    'intro.soundHint': 'Audio enabled • Click to enter',
 
     // CV Viewer
     'cv.title': 'Curriculum Vitae',
@@ -57,62 +68,109 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Hero
     'hero.greeting': "Hello, I'm",
-    'hero.cta.primary': 'Tawasul Ma’i',
-    'hero.cta.secondary': 'View Projects',
+    'hero.designerName': 'Islam Ahmed',
+    'hero.role': 'Graphic & Motion Graphic Designer',
+    'hero.brandStatement': 'Creative Visual Solutions',
+    'hero.cta.primary': 'View My Work',
+    'hero.cta.secondary': 'Contact Me',
     'hero.scrollDown': 'Scroll to explore',
+    'hero.location': 'Cairo, Egypt',
+    'hero.experienceBadge': 'Active Since 2025',
 
     // About
-    'about.eyebrow': 'About The Craft',
-    'about.heading': 'Design with intention. Motion with purpose.',
+    'about.eyebrow': 'About Me',
+    'about.heading': 'Intentional Design. Purposeful Motion.',
     'about.stat.experience': 'Years Experience',
     'about.stat.projects': 'Completed Projects',
     'about.stat.clients': 'Global Clients',
     'about.stat.tools': 'Creative Tools',
 
+    // Philosophy
+    'philosophy.eyebrow': 'Design Philosophy',
+    'philosophy.title': 'Gravity in Motion',
+    'philosophy.quote': 'Weight, Mass, Inertia, and Deceleration. In visual communication as in physics, every element must carry intention, purpose, and visual gravity.',
+
     // Experience
     'experience.eyebrow': 'Career Timeline',
-    'experience.heading': 'Commercial & Creative Journey',
+    'experience.heading': 'Development & Evolution',
     'experience.present': 'Present',
 
     // Skills
     'skills.eyebrow': 'Capabilities & Stack',
-    'skills.heading': 'Creative Competencies & Toolset',
+    'skills.heading': 'Core Competencies & Toolset',
 
     // Projects
-    'projects.eyebrow': 'Selected Works',
-    'projects.heading': 'Motion & Editorial Showcase',
-    'projects.filter.all': 'All',
+    'projects.eyebrow': 'Selected Work',
+    'projects.heading': 'Visual & Motion Gallery',
+    'projects.filter.all': 'All Projects',
     'projects.filter.motion': 'Motion Graphics',
     'projects.filter.design': 'Graphic Design',
     'projects.filter.branding': 'Branding',
     'projects.filter.social': 'Social Media',
     'projects.filter.poster': 'Poster Design',
     'projects.filter.campaign': 'Campaign Design',
-    'projects.viewDetails': 'View Case Study',
+    'projects.viewDetails': 'Explore Project',
     'projects.viewLive': 'Watch / Preview',
     'projects.empty': 'Projects coming soon.',
 
+    // Project Modal
+    'projects.modal.close': 'Close',
+    'projects.modal.prev': 'Previous Project',
+    'projects.modal.next': 'Next Project',
+    'projects.modal.client': 'Client',
+    'projects.modal.year': 'Year',
+    'projects.modal.tools': 'Tools & Software',
+    'projects.modal.watchVideo': 'Watch Reel / Video',
+    'projects.modal.gallery': 'Supporting Visuals',
+    'projects.modal.driveLink': 'Open Materials (Drive)',
+
     // Services
-    'services.eyebrow': 'Specialized Services',
-    'services.heading': 'Tailored Creative Solutions',
+    'services.eyebrow': 'Services',
+    'services.heading': 'Creative Visual Solutions',
     'services.motionGroup': 'Motion Graphics & Video Editing',
     'services.designGroup': 'Graphic Design & Brand Identity',
+    'services.contactCta': 'Contact Me',
 
-    // Testimonials / Client Feedback
-    'testimonials.eyebrow': 'Authentic Feedback',
-    'testimonials.heading': 'Real Client Feedback & Reviews',
-    'testimonials.subheading': 'Unfiltered screenshots of conversations, chat praise, and reviews from trusted clients.',
+    // Workflow
+    'workflow.eyebrow': 'Workflow',
+    'workflow.heading': 'From Concept to Screen',
+    'workflow.step1.title': '01 — Brief',
+    'workflow.step1.desc': 'Discovery into project goals, brand voice, target audience, and key deliverables.',
+    'workflow.step2.title': '02 — Research',
+    'workflow.step2.desc': 'Visual benchmarking, moodboarding, typographic curation, and aesthetic mapping.',
+    'workflow.step3.title': '03 — Concept',
+    'workflow.step3.desc': 'Storyboards, kinetic sequences, color palettes, and structured layout blueprints.',
+    'workflow.step4.title': '04 — Design',
+    'workflow.step4.desc': 'High-precision crafting in Photoshop, Illustrator, Premiere, and After Effects with intentional physics.',
+    'workflow.step5.title': '05 — Delivery',
+    'workflow.step5.desc': 'Final rendering, multi-format export for web and social, and organized production packages.',
+
+    // Testimonials
+    'testimonials.eyebrow': 'Client Feedback',
+    'testimonials.heading': 'Real Client Endorsements',
+    'testimonials.subheading': 'Unfiltered feedback and reviews from trusted clients.',
     'testimonials.clickToExpand': 'Click to enlarge',
     'testimonials.close': 'Close (Esc)',
     'testimonials.previous': 'Previous',
     'testimonials.next': 'Next',
-    'testimonials.empty': 'Client feedback screenshots will appear here soon.',
+    'testimonials.empty': 'Client feedback will appear here soon.',
 
-    // Contact / Start a Project
-    'contact.eyebrow': 'Collaboration',
-    'contact.heading': 'Start a Project',
-    'contact.subheading': "Have a project in mind? Tell me a little about it and let's create something great.",
+    // Contact
+    'contact.eyebrow': 'Get In Touch',
+    'contact.heading': "Let's Build Something Memorable",
+    'contact.subheading': 'Direct channels only — reach out directly via WhatsApp or Email.',
+    'contact.whatsappCta': 'Chat on WhatsApp',
+    'contact.emailCta': 'Send Email (Direct)',
+    'contact.location': 'Cairo, Egypt',
     'contact.directChannels': 'Direct Channels',
+
+    // Footer
+    'footer.brandTitle': 'Islam Ahmed',
+    'footer.brandSubtitle': 'Graphic & Motion Graphic Designer',
+    'footer.tagline': 'Creative Visual Solutions — Designed with intention, animated with gravity.',
+    'footer.rights': 'All rights reserved.',
+    'footer.backToTop': 'Back to top',
+    'footer.adminLink': 'Admin Portal',
     'contact.form.name': 'Your Name',
     'contact.form.namePlaceholder': 'Enter your full name',
     'contact.form.contactMethod': 'Preferred Contact Method',
@@ -140,11 +198,6 @@ const translations: Record<Language, Record<string, string>> = {
     'contact.form.backToPortfolio': 'Back to Portfolio',
     'contact.form.errorDefault': 'Something went wrong while sending your inquiry. Please try again.',
 
-    // Footer
-    'footer.rights': 'All Rights Reserved.',
-    'footer.backToTop': 'Back to top',
-    'footer.adminLink': 'Admin Portal',
-
     // Detail page
     'detail.back': 'Back to Projects',
     'detail.client': 'Client',
@@ -164,15 +217,26 @@ const translations: Record<Language, Record<string, string>> = {
     // Navigation
     'nav.home': 'الرئيسية',
     'nav.about': 'نبذة عني',
-    'nav.experience': 'الخبرات',
+    'nav.experience': 'المسار المهني',
     'nav.skills': 'المهارات',
-    'nav.projects': 'الأعمال',
+    'nav.projects': 'أعمال مختارة',
     'nav.services': 'الخدمات',
+    'nav.workflow': 'مسار العمل',
     'nav.testimonials': 'آراء العملاء',
     'nav.contact': 'تواصل معي',
-    'nav.viewCv': 'عرض السيرة الذاتية',
+    'nav.viewCv': 'السيرة الذاتية',
     'nav.downloadCv': 'تحميل السيرة الذاتية',
     'nav.privacyTerms': 'الخصوصية والشروط',
+
+    // Intro Experience
+    'intro.badge': 'النظام جاهز // تأسس 2025',
+    'intro.name': 'إسلام أحمد',
+    'intro.tagline': 'حلول بصرية إبداعية',
+    'intro.roles': 'مصمم جرافيك وموشن جرافيك',
+    'intro.pressStart': 'اضغط للبدء',
+    'intro.skip': 'تخطي المقدمة',
+    'intro.initializing': 'جاري تهيئة التجربة...',
+    'intro.soundHint': 'المؤثرات الصوتية مفعلة • انقر للدخول',
 
     // CV Viewer
     'cv.title': 'السيرة الذاتية',
@@ -205,21 +269,31 @@ const translations: Record<Language, Record<string, string>> = {
 
     // Hero
     'hero.greeting': 'مرحبًا، أنا',
-    'hero.cta.primary': 'تواصل معي',
-    'hero.cta.secondary': 'استكشف أعمالي',
+    'hero.designerName': 'إسلام أحمد',
+    'hero.role': 'مصمم جرافيك وموشن جرافيك',
+    'hero.brandStatement': 'حلول بصرية إبداعية',
+    'hero.cta.primary': 'تصفح أعمالي',
+    'hero.cta.secondary': 'تواصل معي',
     'hero.scrollDown': 'انتقل للاستكشاف',
+    'hero.location': 'القاهرة، مصر',
+    'hero.experienceBadge': 'نشط منذ 2025',
 
     // About
-    'about.eyebrow': 'عن الفلسفة الإبداعية',
+    'about.eyebrow': 'نبذة عني',
     'about.heading': 'تصميم بغاية. حركة بهدف.',
     'about.stat.experience': 'سنوات من الخبرة',
     'about.stat.projects': 'مشروع منجز',
     'about.stat.clients': 'عميل ومؤسسة',
     'about.stat.tools': 'أداة وتقنية متقنة',
 
+    // Philosophy
+    'philosophy.eyebrow': 'فلسفة التصميم',
+    'philosophy.title': 'جاذبية في حركة',
+    'philosophy.quote': 'الوزن، الكتلة، القصور الذاتي، والتباطؤ المدروس. في التصميم البصري كما في قوانين الفيزياء، كل عنصر يجب أن يحمل غاية ووزناً بصرياً مقنعاً.',
+
     // Experience
     'experience.eyebrow': 'المسار المهني',
-    'experience.heading': 'رحلة التطور الإبداعي والوكالات',
+    'experience.heading': 'رحلة التطور الإبداعي والنمو',
     'experience.present': 'حتى الآن',
 
     // Skills
@@ -227,24 +301,50 @@ const translations: Record<Language, Record<string, string>> = {
     'skills.heading': 'الكفاءات الإبداعية والبرمجية',
 
     // Projects
-    'projects.eyebrow': 'أبرز الأعمال',
-    'projects.heading': 'معرض الموشن جرافيك والتصميم التحريري',
-    'projects.filter.all': 'الكل',
+    'projects.eyebrow': 'أعمال مختارة',
+    'projects.heading': 'معرض الأعمال الحركية والبصرية',
+    'projects.filter.all': 'كافة المشاريع',
     'projects.filter.motion': 'موشن جرافيك',
     'projects.filter.design': 'تصميم جرافيك',
     'projects.filter.branding': 'الهوية البصرية',
     'projects.filter.social': 'سوشيال ميديا',
     'projects.filter.poster': 'تصميم الملصقات',
     'projects.filter.campaign': 'تصميم الحملات',
-    'projects.viewDetails': 'عرض تفاصيل المشروع',
+    'projects.viewDetails': 'استعراض المشروع',
     'projects.viewLive': 'مشاهدة العرض',
     'projects.empty': 'سيتم إضافة مشاريع قريباً.',
+
+    // Project Modal
+    'projects.modal.close': 'إغلاق',
+    'projects.modal.prev': 'المشروع السابق',
+    'projects.modal.next': 'المشروع التالي',
+    'projects.modal.client': 'العميل',
+    'projects.modal.year': 'السنة',
+    'projects.modal.tools': 'البرامج والتقنيات',
+    'projects.modal.watchVideo': 'مشاهدة الفيديو كاملاً',
+    'projects.modal.gallery': 'معرض الصور الداعمة',
+    'projects.modal.driveLink': 'فتح ملفات ومواد المشروع',
 
     // Services
     'services.eyebrow': 'الخدمات المتخصصة',
     'services.heading': 'حلول بصرية مصممة لنجاح علامتك',
     'services.motionGroup': 'الموشن جرافيك ومونتاج الفيديو',
     'services.designGroup': 'التصميم الجرافيكي وبناء الهوية',
+    'services.contactCta': 'تواصل معي للبدء',
+
+    // Workflow
+    'workflow.eyebrow': 'مسار العمل',
+    'workflow.heading': 'من الفكرة إلى الشاشة',
+    'workflow.step1.title': '01 — تحديد الأهداف',
+    'workflow.step1.desc': 'فهم عميق لأهداف المشروع، نبرة الهوية، والجمهور المستهدف والنتائج المرجوة.',
+    'workflow.step2.title': '02 — البحث والتحليل',
+    'workflow.step2.desc': 'دراسة معيارية بصرية شاملة، جمع المودبورد، واختيار الخطوط والألوان الملائمة.',
+    'workflow.step3.title': '03 — الفكرة والتخطيط',
+    'workflow.step3.desc': 'رسم تسلسلات التحريك، بناء الهيكل البصري، وتنسيق التكوين الفني المتناسق.',
+    'workflow.step4.title': '04 — التنفيذ الإبداعي',
+    'workflow.step4.desc': 'تنفيذ احترافي دقيق عبر فوتوشوب، إليستريتور، وأفتر إفكتس بفيزياء حركة مدروسة.',
+    'workflow.step5.title': '05 — التسليم النهائي',
+    'workflow.step5.desc': 'تصدير نهائي بأعلى جودة لمختلف المنصات الرقمية مع تسليم منظم لكافة الملفات المصدرية.',
 
     // Testimonials / Client Feedback
     'testimonials.eyebrow': 'آراء وتقييمات العملاء',
@@ -256,11 +356,24 @@ const translations: Record<Language, Record<string, string>> = {
     'testimonials.next': 'التالي',
     'testimonials.empty': 'سيتم نشر لقطات آراء العملاء قريباً.',
 
-    // Contact / Start a Project
-    'contact.eyebrow': 'التعاون والمشاريع',
-    'contact.heading': 'ابدأ مشروعك',
-    'contact.subheading': 'هل لديك فكرة أو مشروع في ذهنك؟ أخبرني قليلاً عنه ولنصنع معاً عملاً استثنائياً.',
+    // Contact
+    'contact.eyebrow': 'تواصل مباشر',
+    'contact.heading': 'لنصنع معاً عملاً بصرياً استثنائياً',
+    'contact.subheading': 'تواصل فوري ومباشر عبر واتساب أو البريد الإلكتروني دون استمارات معقدة.',
+    'contact.whatsappCta': 'محادثة عبر واتساب',
+    'contact.emailCta': 'مراسلة بالبريد المباشر',
+    'contact.location': 'القاهرة، مصر',
     'contact.directChannels': 'قنوات التواصل المباشر',
+
+    // Footer
+    'footer.brandTitle': 'إسلام أحمد',
+    'footer.brandSubtitle': 'مصمم جرافيك وموشن جرافيك',
+    'footer.tagline': 'حلول بصرية إبداعية — مصممة بغاية، ومتحركة بجاذبية.',
+    'footer.rights': 'جميع الحقوق محفوظة.',
+    'footer.backToTop': 'للأعلى',
+    'footer.adminLink': 'لوحة التحكم',
+
+    // Contact / Start a Project
     'contact.form.name': 'اسمك الكريم',
     'contact.form.namePlaceholder': 'أدخل اسمك بالكامل',
     'contact.form.contactMethod': 'طريقة التواصل المفضلة',
@@ -287,11 +400,6 @@ const translations: Record<Language, Record<string, string>> = {
     'contact.form.successMessage': 'شكراً لتواصلك. لقد استلمت تفاصيل مشروعك وسأقوم بالرد عليك عبر وسيلة التواصل المفضلة لديك قريباً.',
     'contact.form.backToPortfolio': 'العودة للموقع',
     'contact.form.errorDefault': 'حدث خطأ أثناء إرسال طلبك. يرجى المحاولة مرة أخرى.',
-
-    // Footer
-    'footer.rights': 'جميع الحقوق محفوظة.',
-    'footer.backToTop': 'للأعلى',
-    'footer.adminLink': 'لوحة التحكم',
 
     // Detail page
     'detail.back': 'العودة للأعمال',

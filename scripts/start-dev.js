@@ -202,12 +202,12 @@ async function main() {
     }
   }
 
-  console.log(`[dev] Launching Next.js Turbopack on http://localhost:${PORT}...\n`);
+  console.log(`[dev] Launching Next.js on http://localhost:${PORT}...\n`);
 
-  // Spawn Next.js
+  // Spawn Next.js with --webpack for rock-solid stability with Tailwind PostCSS
   const devProcess = spawn(
     process.execPath,
-    [nextBin, 'dev', '-p', String(PORT), '-H', HOSTNAME],
+    [nextBin, 'dev', '--webpack', '-p', String(PORT), '-H', HOSTNAME],
     {
       cwd: process.cwd(),
       stdio: 'inherit',

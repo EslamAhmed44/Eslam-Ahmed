@@ -4,15 +4,15 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLanguage } from '../navigation/LanguageContext';
-import { MagneticButton } from '../ui/MagneticButton';
+import { sound } from '@/lib/audio/sound';
 import { SocialLink } from '@/lib/types';
 import {
   ArrowDown,
   ArrowUpRight,
-  MessageSquare,
-  Palette,
-  Video,
   Globe,
+  MapPin,
+  Sparkles,
+  Compass,
 } from 'lucide-react';
 import {
   LinkedInIcon,
@@ -38,139 +38,125 @@ interface HeroSectionProps {
 export const HeroSection: React.FC<HeroSectionProps> = ({
   designerName,
   designerNameAr,
-  heroHeadline,
-  heroHeadlineAr,
-  rotatingRoles,
-  rotatingRolesAr,
   whatsappUrl,
   socialLinks,
   profileImage = '/images/islam-ahmed.jpg',
 }) => {
-  const { language, dir, t } = useLanguage();
-  const [roleIndex, setRoleIndex] = useState(0);
-  const activeRoles = language === 'ar' ? rotatingRolesAr : rotatingRoles;
-  const currentRole = activeRoles[roleIndex % activeRoles.length] || '';
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setRoleIndex((prev) => (prev + 1) % activeRoles.length);
-    }, 3200);
-    return () => clearInterval(interval);
-  }, [activeRoles.length]);
+  const { language, t } = useLanguage();
 
   const getSocialIcon = (iconName: string, platform: string) => {
     const p = platform.toLowerCase();
-    if (p.includes('whatsapp')) return <WhatsAppIcon className="w-4 h-4" />;
-    if (p.includes('linkedin')) return <LinkedInIcon className="w-4 h-4" />;
-    if (p.includes('behance')) return <BehanceIcon className="w-4 h-4" />;
-    if (p.includes('vimeo')) return <VimeoIcon className="w-4 h-4" />;
-    if (p.includes('youtube')) return <YouTubeIcon className="w-4 h-4" />;
-    if (p.includes('instagram')) return <InstagramIcon className="w-4 h-4" />;
-    return <Globe className="w-4 h-4" />;
+    if (p.includes('whatsapp')) return <WhatsAppIcon className="w-4 h-4 text-[#25D366]" />;
+    if (p.includes('linkedin')) return <LinkedInIcon className="w-4 h-4 text-[#0A66C2]" />;
+    if (p.includes('behance')) return <BehanceIcon className="w-4 h-4 text-[#0057FF]" />;
+    if (p.includes('vimeo')) return <VimeoIcon className="w-4 h-4 text-[#1AB7EA]" />;
+    if (p.includes('youtube')) return <YouTubeIcon className="w-4 h-4 text-[#FF0000]" />;
+    if (p.includes('instagram')) return <InstagramIcon className="w-4 h-4 text-[#E4405F]" />;
+    return <Globe className="w-4 h-4 text-[#F59E0B]" />;
   };
+
+  const name = language === 'ar' ? (designerNameAr || 'إسلام أحمد') : (designerName || 'Islam Ahmed');
+  const role = language === 'ar' ? 'مصمم جرافيك وموشن جرافيك' : 'Graphic & Motion Graphic Designer';
+  const brandStatement = language === 'ar' ? 'حلول بصرية إبداعية' : 'Creative Visual Solutions';
 
   return (
     <section
       id="home"
-      className="relative min-h-[95vh] flex items-center justify-center pt-28 pb-16 md:py-32 overflow-hidden"
+      className="relative min-h-[96vh] flex items-center justify-center pt-32 pb-20 md:py-36 overflow-hidden bg-[var(--bg-primary)] transition-colors duration-300"
     >
       {/* Cinematic Ambient Glow Backdrops */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] rounded-full bg-[#F59E0B]/10 blur-[130px] pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-[350px] h-[350px] rounded-full bg-[#FF7A18]/08 blur-[110px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-[#F59E0B]/08 blur-[150px] pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-[450px] h-[450px] rounded-full bg-[#FF7A18]/06 blur-[130px] pointer-events-none" />
 
-      {/* Subtle Motion Grid Line Texture */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_40%,#000_70%,transparent_100%)] pointer-events-none" />
+      {/* Structural Editorial Grid Texture */}
+      <div className="absolute inset-0 bg-editorial-grid pointer-events-none [mask-image:radial-gradient(ellipse_70%_60%_at_50%_40%,#000_70%,transparent_100%)]" />
 
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 w-full">
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-8 w-full z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
           {/* Left Column: Typographic Narrative */}
-          <div className="lg:col-span-7 flex flex-col items-start z-10 text-start">
-            {/* Status Pill Badge */}
+          <div className="lg:col-span-7 flex flex-col items-start text-start">
+            {/* Editorial Status Badge */}
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#151A23] border border-[#F0F3F6]/10 text-xs font-medium text-[#94A3B8] mb-6"
+              className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[var(--bg-surface)] border border-[var(--border-subtle)] text-xs font-mono text-[var(--text-secondary)] mb-6 shadow-sm"
             >
               <span className="w-2 h-2 rounded-full bg-[#F59E0B] animate-pulse" />
-              <span>Available for Commercial & Motion Projects</span>
+              <span>{t('hero.experienceBadge')}</span>
+              <span className="text-[#64748B]">•</span>
+              <span className="flex items-center gap-1 text-[#F59E0B]">
+                <MapPin className="w-3 h-3" />
+                <span>{t('hero.location')}</span>
+              </span>
             </motion.div>
 
-            {/* Greeting */}
-            <motion.p
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-base sm:text-lg font-mono tracking-widest text-[#94A3B8] uppercase mb-2"
-            >
-              {language === 'ar' ? heroHeadlineAr : heroHeadline}
-            </motion.p>
-
-            {/* Designer Name (Bold Monumental Editorial) */}
+            {/* Designer Name (Monumental Editorial Display) */}
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.2 }}
-              className="text-5xl sm:text-6xl md:text-7xl xl:text-8xl font-black tracking-tight text-[#F0F3F6] mb-4"
+              transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="text-5xl sm:text-7xl md:text-8xl xl:text-9xl font-black tracking-tight text-[var(--text-primary)] mb-4 leading-none"
             >
-              {language === 'ar' ? designerNameAr : designerName}
+              {name}
             </motion.h1>
 
-            {/* Kinetic Rotating Role */}
-            <div className="h-12 sm:h-14 flex items-center mb-8 overflow-hidden">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentRole}
-                  initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
-                  animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                  exit={{ opacity: 0, y: -24, filter: 'blur(8px)' }}
-                  transition={{ duration: 0.45, ease: 'easeOut' }}
-                  className="text-2xl sm:text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#F59E0B] via-[#FF7A18] to-[#F59E0B] bg-clip-text text-transparent"
-                >
-                  {currentRole}
-                </motion.div>
-              </AnimatePresence>
-            </div>
+            {/* Professional Title */}
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#F59E0B] tracking-tight mb-4"
+            >
+              {role}
+            </motion.h2>
+
+            {/* Main Brand Statement */}
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              className="text-lg sm:text-xl md:text-2xl font-light text-[var(--text-secondary)] tracking-wide mb-10 max-w-2xl leading-relaxed"
+            >
+              {brandStatement} — <span className="font-mono text-sm uppercase tracking-widest text-[#F59E0B]">GRAVITY IN MOTION</span>
+            </motion.p>
 
             {/* Hero CTAs */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
+              transition={{ duration: 0.6, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
               className="flex flex-wrap items-center gap-4 sm:gap-5 mb-10 w-full sm:w-auto"
             >
-              {/* Primary: Tawasul Ma'i -> WhatsApp */}
-              <MagneticButton
-                href={whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                variant="primary"
-                className="w-full sm:w-auto text-base px-8 py-4"
-              >
-                <span className="flex items-center gap-2">
-                  <span>{t('hero.cta.primary')}</span>
-                  <ArrowUpRight className="w-4 h-4" />
-                </span>
-              </MagneticButton>
-
-              {/* Secondary: View Projects */}
-              <MagneticButton
+              {/* Primary CTA: View My Work */}
+              <a
                 href="#projects"
-                variant="secondary"
-                className="w-full sm:w-auto text-base px-8 py-4"
+                onClick={() => sound.playClick()}
+                className="group relative inline-flex items-center justify-center gap-3 px-8 py-4 rounded-full bg-[#F59E0B] text-[#07090D] font-mono font-bold text-sm tracking-wider uppercase shadow-[0_0_25px_rgba(245,158,11,0.35)] hover:shadow-[0_0_40px_rgba(245,158,11,0.6)] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
+              >
+                <span>{t('hero.cta.primary')}</span>
+                <ArrowDown className="w-4 h-4 transition-transform group-hover:translate-y-1" />
+              </a>
+
+              {/* Secondary CTA: Contact Me */}
+              <a
+                href="#contact"
+                onClick={() => sound.playClick()}
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-[var(--bg-surface)] border border-[var(--border-strong)] text-[var(--text-primary)] font-mono font-semibold text-sm tracking-wider uppercase hover:border-[#F59E0B] hover:text-[#F59E0B] transition-all duration-300 cursor-pointer"
               >
                 <span>{t('hero.cta.secondary')}</span>
-              </MagneticButton>
+                <ArrowUpRight className="w-4 h-4" />
+              </a>
             </motion.div>
 
-            {/* Social Links Bar */}
+            {/* Verified Social Connect Bar */}
             <motion.div
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
+              transition={{ duration: 0.6, delay: 0.55 }}
               className="flex items-center gap-3"
             >
-              <span className="text-xs font-mono uppercase tracking-wider text-[#94A3B8]/70 me-2">
+              <span className="text-xs font-mono uppercase tracking-wider text-[var(--text-tertiary)] me-2">
                 Connect:
               </span>
               {socialLinks.map((link) => (
@@ -180,7 +166,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={link.platform}
-                  className="w-10 h-10 rounded-full flex items-center justify-center bg-[#151A23] border border-[#F0F3F6]/10 text-[#94A3B8] hover:text-[#F59E0B] hover:border-[#F59E0B]/50 hover:bg-[#10141C] transition-all duration-300"
+                  onClick={() => sound.playClick()}
+                  className="w-10 h-10 rounded-full flex items-center justify-center bg-[var(--bg-surface)] border border-[var(--border-subtle)] hover:border-[#F59E0B]/50 hover:bg-[var(--bg-surface-elevated)] hover:scale-110 active:scale-95 transition-all duration-300"
                 >
                   {getSocialIcon(link.icon, link.platform)}
                 </a>
@@ -188,57 +175,58 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             </motion.div>
           </div>
 
-          {/* Right Column: Circular Framed Portrait Visual with Subtle Motion */}
+          {/* Right Column: Professional Portrait with Cinematic Editorial Framing */}
           <div className="lg:col-span-5 flex justify-center items-center relative">
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0.92 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.9, delay: 0.3 }}
+              transition={{ duration: 0.9, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
               className="relative w-72 h-72 sm:w-88 sm:h-88 md:w-96 md:h-96 flex items-center justify-center transform-gpu"
             >
               {/* Outer Precision Orbit Ring */}
-              <div className="absolute inset-0 rounded-full border border-dashed border-[#F59E0B]/25 animate-[spin_40s_linear_infinite] transform-gpu will-change-transform pointer-events-none" />
+              <div className="absolute inset-0 rounded-full border border-dashed border-[#F59E0B]/25 animate-[spin_40s_linear_infinite] transform-gpu pointer-events-none" />
               
-              {/* Secondary Fine Technical Counter-Ring */}
-              <div className="absolute -inset-3 rounded-full border border-dotted border-[#F0F3F6]/08 animate-[spin_65s_linear_infinite_reverse] transform-gpu will-change-transform pointer-events-none" />
-              <div className="absolute -inset-5 rounded-full border border-[#F0F3F6]/05 pointer-events-none" />
+              {/* Technical Marker Rings */}
+              <div className="absolute -inset-3 rounded-full border border-dotted border-[var(--border-subtle)] animate-[spin_65s_linear_infinite_reverse] transform-gpu pointer-events-none" />
+              <div className="absolute -inset-6 rounded-full border border-[var(--border-subtle)] pointer-events-none" />
 
-              {/* Refined Cinematic Studio Rim Glow */}
-              <div className="absolute -inset-1 rounded-full bg-gradient-to-tr from-[#F59E0B]/25 via-transparent to-[#FF7A18]/20 blur-md pointer-events-none transform-gpu will-change-transform" />
+              {/* Studio Rim Glow */}
+              <div className="absolute -inset-1 rounded-full bg-gradient-to-tr from-[#F59E0B]/25 via-transparent to-[#FF7A18]/20 blur-md pointer-events-none transform-gpu" />
 
-              {/* Orbiting Satellite Node with Constant Premium Motion */}
-              <div className="absolute inset-0 rounded-full animate-[spin_28s_linear_infinite] transform-gpu will-change-transform pointer-events-none">
-                <span className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-[#F59E0B] shadow-[0_0_10px_rgba(245,158,11,0.65)] ring-2 ring-[#07090D]" />
+              {/* Orbiting Satellite Node */}
+              <div className="absolute inset-0 rounded-full animate-[spin_28s_linear_infinite] transform-gpu pointer-events-none">
+                <span className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3.5 h-3.5 rounded-full bg-[#F59E0B] shadow-[0_0_12px_rgba(245,158,11,0.8)] ring-2 ring-[var(--bg-primary)]" />
               </div>
 
-              {/* Circular Framed Photo Container (Identity & Natural Texture Fully Preserved) */}
-              <div className="relative w-[90%] h-[90%] rounded-full overflow-hidden border-2 border-[#F0F3F6]/20 bg-[#151A23] shadow-2xl">
+              {/* Verified Portrait Container */}
+              <div className="relative w-[88%] h-[88%] rounded-full overflow-hidden border-2 border-[var(--border-strong)] bg-[#10141C] shadow-2xl">
                 <Image
                   src={profileImage}
-                  alt={designerName}
+                  alt={name}
                   fill
                   priority
-                  className="object-cover object-center scale-[1.03] transition-transform duration-700 ease-out hover:scale-[1.08]"
+                  className="object-cover object-center scale-[1.02] transition-transform duration-700 ease-out hover:scale-108"
                   sizes="(max-width: 768px) 280px, (max-width: 1200px) 380px, 420px"
                 />
                 {/* Subtle Cinematic Vignette */}
                 <div className="absolute inset-0 rounded-full ring-1 ring-inset ring-black/40 pointer-events-none" />
               </div>
 
-              {/* Motion Designer Floating Badge */}
-              <div className="absolute -bottom-2 -left-2 sm:bottom-4 sm:left-0 px-4 py-2 rounded-2xl bg-[#10141C]/90 backdrop-blur-xl border border-[#F0F3F6]/10 shadow-xl flex items-center gap-2 text-xs font-semibold text-[#F0F3F6]">
+              {/* Bottom Editorial Floating Pill */}
+              <div className="absolute -bottom-3 -left-2 sm:bottom-4 sm:left-0 px-4 py-2 rounded-2xl bg-[var(--bg-surface)]/90 backdrop-blur-xl border border-[var(--border-strong)] shadow-xl flex items-center gap-2 text-xs font-mono font-semibold text-[var(--text-primary)]">
                 <span className="w-2 h-2 rounded-full bg-[#F59E0B]" />
-                <span>Motion & Visuals</span>
+                <span>ISLAM AHMED // CAIRO</span>
               </div>
             </motion.div>
           </div>
         </div>
 
         {/* Scroll Down Indicator */}
-        <div className="mt-14 lg:mt-20 flex justify-center">
+        <div className="mt-16 lg:mt-24 flex justify-center">
           <a
             href="#about"
-            className="flex flex-col items-center gap-2 text-xs font-mono text-[#94A3B8]/60 hover:text-[#F59E0B] transition-colors"
+            onClick={() => sound.playClick()}
+            className="flex flex-col items-center gap-2 text-xs font-mono text-[var(--text-tertiary)] hover:text-[#F59E0B] transition-colors cursor-pointer"
           >
             <span>{t('hero.scrollDown')}</span>
             <ArrowDown className="w-4 h-4 animate-bounce" />

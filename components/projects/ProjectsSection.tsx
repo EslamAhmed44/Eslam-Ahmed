@@ -1,10 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Project } from '@/lib/types';
 import { ProjectCard } from './ProjectCard';
+import { ProjectModal } from './ProjectModal';
 import { useLanguage } from '../navigation/LanguageContext';
-import { Sparkles } from 'lucide-react';
+import { sound } from '@/lib/audio/sound';
+import { Sparkles, Grid } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface ProjectsSectionProps {
   projects: Project[];
@@ -13,13 +16,12 @@ interface ProjectsSectionProps {
 export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) => {
   const { t } = useLanguage();
   const [activeFilter, setActiveFilter] = useState<string>('All');
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
-  // Dynamically collect all available unique categories from projects + defaults
-  const categoriesList = React.useMemo(() => {
+  // Dynamically extract unique categories from actual project data + core creative fields
+  const categoriesList = useMemo(() => {
     const set = new Set<string>();
-    ['Motion Graphics', 'Graphic Design', 'Branding', 'Social Media', 'Poster Design'].forEach((c) =>
-      set.add(c)
-    );
+    ['Motion Graphics', 'Graphic Design', 'Branding', 'Social Media'].forEach((c) => set.add(c));
     projects.forEach((p) => {
       if (Array.isArray(p.categories)) {
         p.categories.forEach((c) => c && set.add(c));
@@ -30,7 +32,7 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
     return Array.from(set);
   }, [projects]);
 
-  const categories = [
+  const filterTabs = [
     { id: 'All', label: t('projects.filter.all') },
     ...categoriesList.map((cat) => {
       const lower = cat.toLowerCase();
@@ -45,84 +47,102 @@ export const ProjectsSection: React.FC<ProjectsSectionProps> = ({ projects }) =>
     }),
   ];
 
-  const filteredProjects =
-    activeFilter === 'All'
-      ? projects
-      : projects.filter((p) => {
-          if (Array.isArray(p.categories) && p.categories.length > 0) {
-            return p.categories.some(
-              (c) => c.trim().toLowerCase() === activeFilter.trim().toLowerCase()
-            );
-          }
-          return p.category?.trim().toLowerCase() === activeFilter.trim().toLowerCase();
-        });
+  const filteredProjects = useMemo(() => {
+    if (activeFilter === 'All') return projects;
+    return projects.filter((p) => {
+      if (Array.isArray(p.categories) && p.categories.length > 0) {
+        return p.categories.some(
+          (c) => c.trim().toLowerCase() === activeFilter.trim().toLowerCase()
+        );
+      }
+      return p.category?.trim().toLowerCase() === activeFilter.trim().toLowerCase();
+    });
+  }, [projects, activeFilter]);
 
-  // Layout assignment for asymmetric editorial grid
+  // Mixed Editorial Layout assignment
   const getLayoutVariant = (index: number): 'large' | 'tall' | 'wide' | 'standard' => {
-    const cycle = index % 4;
+    const cycle = index % 3;
     if (cycle === 0) return 'large';
     if (cycle === 1) return 'tall';
-    if (cycle === 2) return 'tall';
-    return 'large';
+    return 'wide';
+  };
+
+  const handleFilterClick = (id: string) => {
+    sound.playClick();
+    setActiveFilter(id);
   };
 
   return (
-    <section id="projects" className="relative py-24 md:py-36 bg-[#07090D] overflow-hidden">
-      {/* Ambient Radial Spotlight */}
-      <div className="absolute top-1/3 right-0 w-[600px] h-[600px] rounded-full bg-[#F59E0B]/06 blur-[150px] pointer-events-none" />
+    <section id="projects" className="relative py-28 md:py-40 bg-[var(--bg-primary)] overflow-hidden">
+      {/* Structural ambient light */}
+      <div className="absolute top-1/4 right-0 w-[550px] h-[550px] rounded-full bg-[#F59E0B]/05 blur-[160px] pointer-events-none" />
+      <div className="absolute bottom-10 left-10 w-[400px] h-[400px] rounded-full bg-[#FF7A18]/04 blur-[130px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        {/* Header and Filter Row */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+        {/* Editorial Section Header */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-16 border-b border-[var(--border-subtle)] pb-10">
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <Sparkles className="w-4 h-4 text-[#F59E0B]" />
+              <span className="w-2 h-2 rounded-full bg-[#F59E0B]" />
               <span className="text-xs font-mono uppercase tracking-widest text-[#F59E0B]">
                 {t('projects.eyebrow')}
               </span>
             </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-[#F0F3F6]">
+            <h2 className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight text-[var(--text-primary)]">
               {t('projects.heading')}
             </h2>
           </div>
 
-          {/* Category Filter Pills */}
-          <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-full bg-[#10141C] border border-[#F0F3F6]/10 self-start md:self-auto">
-            {categories.map((cat) => (
+          {/* Interactive Category Filter Pills */}
+          <div className="flex flex-wrap items-center gap-2 p-1.5 rounded-full bg-[var(--bg-secondary)] border border-[var(--border-subtle)] self-start lg:self-auto">
+            {filterTabs.map((tab) => (
               <button
-                key={cat.id}
-                onClick={() => setActiveFilter(cat.id)}
-                className={`px-4 py-2 rounded-full text-xs font-semibold transition-all duration-300 ${
-                  activeFilter === cat.id
-                    ? 'bg-gradient-to-r from-[#F59E0B] to-[#FF7A18] text-[#07090D] shadow-[0_0_16px_rgba(245,158,11,0.3)]'
-                    : 'text-[#94A3B8] hover:text-[#F0F3F6] hover:bg-[#151A23]'
+                key={tab.id}
+                onClick={() => handleFilterClick(tab.id)}
+                className={`px-4 py-2 rounded-full text-xs font-mono font-semibold transition-all duration-300 cursor-pointer ${
+                  activeFilter === tab.id
+                    ? 'bg-[#F59E0B] text-[#07090D] shadow-[0_0_18px_rgba(245,158,11,0.35)]'
+                    : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)]'
                 }`}
               >
-                {cat.label}
+                {tab.label}
               </button>
             ))}
           </div>
         </div>
 
-        {/* Asymmetric Editorial Grid */}
+        {/* Mixed Editorial Portfolio Grid */}
         {filteredProjects.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 sm:gap-8">
-            {filteredProjects.map((project, idx) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                layoutVariant={getLayoutVariant(idx)}
-                index={idx}
-                priority={idx < 2}
-              />
-            ))}
-          </div>
+          <motion.div
+            layout
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 md:gap-8"
+          >
+            <AnimatePresence>
+              {filteredProjects.map((proj, idx) => (
+                <ProjectCard
+                  key={proj.id}
+                  project={proj}
+                  layoutVariant={getLayoutVariant(idx)}
+                  onSelect={(p) => setSelectedProject(p)}
+                />
+              ))}
+            </AnimatePresence>
+          </motion.div>
         ) : (
-          <div className="p-16 rounded-3xl bg-[#10141C] border border-dashed border-[#F0F3F6]/15 text-center">
-            <p className="text-lg font-mono text-[#94A3B8]">{t('projects.empty')}</p>
+          <div className="text-center py-20 p-8 rounded-3xl bg-[var(--bg-surface)] border border-[var(--border-subtle)]">
+            <p className="text-[#94A3B8] font-mono">{t('projects.empty')}</p>
           </div>
         )}
       </div>
+
+      {/* Internal Interactive Modal */}
+      <ProjectModal
+        project={selectedProject}
+        allProjects={projects}
+        isOpen={Boolean(selectedProject)}
+        onClose={() => setSelectedProject(null)}
+        onSelectProject={(p) => setSelectedProject(p)}
+      />
     </section>
   );
 };
