@@ -345,6 +345,127 @@
       "orientation": "landscape",
       "createdAt": "2026-10-03T00:58:31.669Z",
       "updatedAt": "2026-10-03T01:01:18.986Z"
+    },
+    {
+      "id": "proj-1794534802932",
+      "slug": "project-1794534802932",
+      "title": "The Impact Drop 2D",
+      "titleAr": "",
+      "category": "Motion Graphics",
+      "categories": [
+        "Motion Graphics"
+      ],
+      "description": "The Impact Drop 2D\n\nمشهد 2D Motion Graphics مدته 16 ثانية، رسمته وحرّكته بالكامل من الصفر في Adobe Illustrator و    Adobe After Effects\n\nيبدأ المشهد في الظلام. يدخل تلفزيون من خارج الفريم ويصطدم بالكومودينو، فتهتز العناصر حول مكان الاصطدام. بعدها تضيء الأباجورة وتعرض شاشة التلفزيون فيديو أنيميشن الطيارة من أعمالي السابقة في الثانية 15 ينزل هوك من السقف ويسحب التلفزيون إلى أعلى، وتنطفئ الشاشة.\n\nالتفاصيل التقنية:\nرسمت العناصر في Illustrator وفصلتها إلى طبقات.\nيضم المشروع في After Effects أكثر من 23 طبقة، منها طبقات Illustrator وطبقات Shape Layers مسؤولة عن التدرجات اللونية من الغامق إلى الفاتح وتأثيرات الإضاءة.\nضبطت حركة الاصطدام بتأثيرات الـ Stretch والـ Deformation، وحرّكت الكاميرا في المشهد\n\n",
+      "descriptionAr": "",
+      "client": "",
+      "clientName": "",
+      "projectDate": "2026",
+      "coverImage": "/uploads/1794534857855-The_Impact_Drop_2D.png",
+      "gallery": [
+        "/uploads/1794534892892-Timeline.png",
+        "/uploads/1794534857855-The_Impact_Drop_2D.png"
+      ],
+      "images": [
+        "/uploads/1794534892892-Timeline.png",
+        "/uploads/1794534857855-The_Impact_Drop_2D.png"
+      ],
+      "videoUrl": "/uploads/1794534867142-The_Impact_Drop_2D.mp4",
+      "videos": [
+        {
+          "id": "med-1794534867152-0",
+          "url": "/uploads/1794534867142-The_Impact_Drop_2D.mp4",
+          "title": "The Impact Drop 2D",
+          "type": "direct"
+        }
+      ],
+      "youtubeUrl": "https://youtu.be/YI2EC0LXYkM",
+      "vimeoUrl": "",
+      "googleDriveUrl": "",
+      "googleDriveMaterialsUrl": "",
+      "behanceUrl": "",
+      "tools": [
+        "Illustrator",
+        "After Effects",
+        "Color Theory",
+        "Motion Design"
+      ],
+      "softwareUsed": [
+        "Illustrator",
+        "After Effects",
+        "Color Theory",
+        "Motion Design"
+      ],
+      "skillIds": [
+        "s-22",
+        "s-6",
+        "s-2",
+        "s-7"
+      ],
+      "resolvedTools": [
+        {
+          "id": "s-22",
+          "name": "Illustrator",
+          "iconUrl": "/icons/software/illustrator.svg"
+        },
+        {
+          "id": "s-6",
+          "name": "After Effects",
+          "iconUrl": "/icons/software/after-effects.svg"
+        },
+        {
+          "id": "s-2",
+          "name": "Color Theory",
+          "iconUrl": "/uploads/1790369899478-color-guide.png"
+        },
+        {
+          "id": "s-7",
+          "name": "Motion Design",
+          "iconUrl": "/uploads/1790369934354-motion-graphic.png"
+        }
+      ],
+      "projectUrl": "",
+      "featured": true,
+      "tags": [
+        "Design",
+        "Campaign"
+      ],
+      "mediaItems": [
+        {
+          "id": "med-1794534892899-0",
+          "type": "image",
+          "url": "/uploads/1794534892892-Timeline.png",
+          "title": "Timeline",
+          "sortOrder": 1,
+          "aspectRatio": 1.8877,
+          "width": 1597,
+          "height": 846
+        },
+        {
+          "id": "med-1794534867152-0",
+          "type": "video",
+          "url": "/uploads/1794534867142-The_Impact_Drop_2D.mp4",
+          "title": "The Impact Drop 2D",
+          "sortOrder": 2
+        },
+        {
+          "id": "med-1794534802932-1",
+          "type": "image",
+          "url": "/uploads/1794534857855-The_Impact_Drop_2D.png",
+          "title": "Cover Visual",
+          "sortOrder": 3,
+          "aspectRatio": 1.7778,
+          "width": 10667,
+          "height": 6000
+        }
+      ],
+      "sortOrder": 4,
+      "status": "published",
+      "width": 10667,
+      "height": 6000,
+      "aspectRatio": 1.7778,
+      "orientation": "landscape",
+      "createdAt": "2026-11-13T01:55:54.994Z",
+      "updatedAt": "2026-11-13T01:55:54.994Z"
     }
   ],
   "experiences": [
@@ -781,6 +902,30 @@
     }
   ],
   "media": [
+    {
+      "name": "Timeline.png",
+      "url": "/uploads/1794534892892-Timeline.png",
+      "type": "image",
+      "sizeBytes": 171850,
+      "id": "med-1794534892894",
+      "uploadedAt": "2026-11-13T01:54:52.894Z"
+    },
+    {
+      "name": "The Impact Drop 2D.mp4",
+      "url": "/uploads/1794534867142-The_Impact_Drop_2D.mp4",
+      "type": "video",
+      "sizeBytes": 7692184,
+      "id": "med-1794534867147",
+      "uploadedAt": "2026-11-13T01:54:27.147Z"
+    },
+    {
+      "name": "The Impact Drop 2D.png",
+      "url": "/uploads/1794534857855-The_Impact_Drop_2D.png",
+      "type": "image",
+      "sizeBytes": 1911928,
+      "id": "med-1794534857858",
+      "uploadedAt": "2026-11-13T01:54:17.858Z"
+    },
     {
       "name": "Flight Takeoff & Landing Animation.mp4",
       "url": "/uploads/1790989272661-Flight_Takeoff___Landing_Animation.mp4",
